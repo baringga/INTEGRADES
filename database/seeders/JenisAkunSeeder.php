@@ -13,8 +13,8 @@ class JenisAkunSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenis_akun')->insert([
-            ['jenisAkun' => 'Volunteer'],
-            ['jenisAkun' => 'Komunitas'],
+            ['jenisAkun' => 'Volunteer Desa'],
+            ['jenisAkun' => 'Masyarakat Desa'],
         ]);
     }
 }

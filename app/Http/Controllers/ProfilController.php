@@ -15,16 +15,18 @@ class ProfilController extends Controller
             return redirect()->route('login');
         }
 
-        if ($user->jenis_akun_id == 1) {
-            // Volunteer
+        // Arahkan ke controller yang sesuai berdasarkan peran
+        if ($user->jenis_akun_id == 1) { // Asumsi 1 = Volunteer Desa
             return app(\App\Http\Controllers\ProfilVolunteerController::class)->show();
-        } elseif ($user->jenis_akun_id == 2) {
-            // Community
-            return app(\App\Http\Controllers\ProfilCommunityController::class)->show();
+        } elseif ($user->jenis_akun_id == 2) { // Asumsi 2 = Masyarakat Desa
+            // Nanti kita buat controller untuk Masyarakat Desa
+            // Untuk sekarang, kita bisa arahkan ke view sederhana
+            return view('profilmasyarakat', compact('user'));
         } else {
             abort(403, 'Tipe akun tidak dikenali.');
         }
     }
+
     public function update(\Illuminate\Http\Request $request)
     {
         $user = auth()->user();
@@ -39,13 +41,11 @@ class ProfilController extends Controller
             ],
             'nomorTelepon' => 'required|string|max:20',
             'fotoProfil' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
-            'portofolio' => 'nullable|string|max:1000',
+            'portofolio' => 'nullable|url|max:1000', // Validasi portofolio sebagai URL
         ]);
 
-        // Update foto profil jika ada
         if ($request->hasFile('fotoProfil')) {
-            $file = $request->file('fotoProfil');
-            $path = $file->store('foto_profil', 'public');
+            $path = $request->file('fotoProfil')->store('foto_profil', 'public');
             $user->fotoProfil = $path;
         }
 
@@ -55,8 +55,8 @@ class ProfilController extends Controller
         $user->updated_at = now();
         $user->save();
 
-        // Update portofolio komunitas jika user komunitas
-        if ($user->jenis_akun_id == 2 && $request->has('portofolio')) {
+        // Update portofolio jika pengguna adalah Volunteer Desa
+        if ($user->jenis_akun_id == 1 && $request->filled('portofolio')) {
             \App\Models\AkunKomunitas::updateOrCreate(
                 ['akun_id' => $user->id],
                 ['portofolio' => $request->portofolio]

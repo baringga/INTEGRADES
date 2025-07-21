@@ -2,16 +2,13 @@
 
 <a href="{{ url('/campaign/'.$campaign->id) }}" class="block max-w-sm bg-white rounded-2xl overflow-hidden border transition-transform hover:scale-[1.03]"
     style="border-color: rgba(0, 0, 0, 0.15);">
-    @if($campaign->coverImage && $campaign->coverImage->gambar)
-        @php
-            $gambar = $campaign->coverImage->gambar;
-            $isUrl = Str::startsWith($gambar, ['http://', 'https://']);
-            // FLAG{PAI--DelonTop3BjierKelazz}
-        @endphp
-        <img src="{{ $isUrl ? $gambar : asset('storage/' . $gambar) }}" alt="Gambar item" class="w-full h-52 object-cover">
-    @else
-        <div class="w-full h-52 bg-gray-200 flex items-center justify-center text-gray-400 text-xl">No Image</div>
-    @endif
+    <div class="campaign-images">
+        @if($campaign->gambar_campaign && $campaign->gambar_campaign->count())
+            <img src="{{ asset('storage/' . $campaign->gambar_campaign->first()->gambar) }}" alt="Gambar Campaign" class="w-full h-52 object-cover"/>
+        @else
+            <img src="{{ asset('default.jpg') }}" alt="Default Campaign" class="w-full h-52 object-cover"/>
+        @endif
+    </div>
 
     <div class="p-6 min-h-[220px] flex flex-col justify-between">
         <div>

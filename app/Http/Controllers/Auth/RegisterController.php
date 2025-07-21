@@ -14,13 +14,12 @@ class RegisterController extends Controller
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|max:100|unique:akun,email',
             'password' => 'required|min:6|confirmed',
-            'role'     => 'required|in:komunitas,volunteer',
-            'portofolio' => 'required_if:role,komunitas|string',
+            'role'     => 'required|in:volunteer_desa,masyarakat_desa',
             'terms'    => 'accepted',
         ]);
 
         try {
-            $jenisAkunId = \DB::table('jenis_akun')->where('jenisAkun', ucfirst($request->role))->value('id');
+            $jenisAkunId = \DB::table('jenis_akun')->where('jenisAkun', str_replace('_', ' ', ucwords($request->role)))->value('id');
             if (!$jenisAkunId) {
                 return back()->withErrors(['role' => 'Jenis akun tidak valid.'])->withInput();
             }
@@ -35,14 +34,14 @@ class RegisterController extends Controller
                 'created_at'    => now(),
             ]);
 
-            if ($request->role === 'komunitas') {
+            // Jika yang mendaftar adalah Volunteer Desa, buatkan entri portofolio kosong
+            if ($request->role === 'volunteer_desa') {
                 \DB::table('akun_komunitas')->insert([
                     'akun_id'   => $akunId,
-                    'portofolio'=> $request->portofolio,
+                    'portofolio'=> '', // Portofolio awalnya kosong
                 ]);
             }
 
-            // Redirect ke halaman sukses dengan session
             return redirect()->route('reg-success')->with('success', 'Akun berhasil dibuat!');
         } catch (\Exception $e) {
             return back()->withErrors(['register' => 'Gagal membuat akun. Silakan coba lagi.'])->withInput();

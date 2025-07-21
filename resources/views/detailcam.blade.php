@@ -36,7 +36,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <!-- Kolom kiri: Swiper + pagination -->
                 <div>
-                    <x-swiper-gallery :gambar="$campaign->gambar_campaign" />
+                    @foreach($campaign->gambar_campaign as $gambar)
+                        <img src="{{ asset('storage/' . $gambar->gambar) }}" alt="Gambar Campaign" />
+                    @endforeach
                     <p class="text-600 font-semibold mt-2">Lokasi Campaign</p>
                     <p class="flex items-center text-gray-500 mt-2 text-[16px]">
                         <!-- Ikon Lokasi -->

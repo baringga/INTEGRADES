@@ -11,22 +11,28 @@ use Illuminate\Support\Facades\DB;
 
 class CampaignController extends Controller
 {
+    // Fungsi untuk menampilkan detail campaign (bisa digunakan untuk semua user)
     public function show($id)
     {
-        $user = auth()->user();
+        $campaign = \App\Models\Campaign::with(['akun', 'gambar_campaign', 'partisipanCampaigns.akun'])->findOrFail($id);
+        $komentar = \App\Models\Komentar::with(['akun', 'likes'])->where('campaign_id', $id)->orderBy('waktu', 'desc')->get();
+        return view('detailcampaign', compact('campaign', 'komentar')); // Menggunakan satu view terpadu
+    }
 
-        // Ambil campaign beserta gambar
-        $campaign = \App\Models\Campaign::with([
-            'akun',
-            'gambar_campaign',
-            'partisipanCampaigns.akun'
-        ])->findOrFail($id);
+    // Fungsi untuk menampilkan form tambah campaign
+    public function create()
+    {
+        $user = Auth::user();
+        $akunKomunitas = AkunKomunitas::where('akun_id', $user->id)->first();
 
-        // Ambil komentar
-        $komentar = \App\Models\Komentar::with(['akun', 'likes'])
-            ->where('campaign_id', $id)
-            ->orderBy('waktu', 'desc')
-            ->get();
+        // Cek apakah user adalah Volunteer Desa dan sudah mengisi portofolio
+        if ($user->jenis_akun_id != 1 || !$akunKomunitas || empty($akunKomunitas->portofolio)) {
+            // Redirect ke halaman profil dengan pesan untuk melengkapi portofolio
+            return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda sebelum membuat campaign.');
+        }
+
+        return view('TambahCampaign');
+
 
         // Cek role berdasarkan jenis_akun_id
         if ($user->jenis_akun_id == 1) {
@@ -42,8 +48,7 @@ class CampaignController extends Controller
         }
     }
 
-    public function showCom($id)
-    {
+    public function showCom($id){
         // Ambil campaign beserta gambar dan partisipan+usernya sekaligus (eager loading)
         $campaign = \App\Models\Campaign::with([
             'gambar_campaign',
@@ -103,7 +108,7 @@ class CampaignController extends Controller
             GambarCampaign::create([
                 'campaign_id' => $campaign->id,
                 'gambar' => $path,
-                'isCover' => ($index === 0), // Gambar pertama menjadi cover
+                'isCover' => ($index === 0), // Gambar pertama jadi cover
             ]);
         }
 
@@ -138,7 +143,7 @@ class CampaignController extends Controller
 
     public function unbookmark($id, Request $request)
     {
-        $akunId = auth()->id();
+        $akunId = auth()->id;
         \DB::table('campaign_ditandai')
             ->where('akun_id', $akunId)
             ->where('campaign_id', $id)

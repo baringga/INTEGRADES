@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $userCampaigns = collect();
         if ($user && $user->jenis_akun_id == 2) {
             // Ambil semua campaign yang dibuat oleh komunitas ini
-            $userCampaigns = \App\Models\Campaign::with('coverImage')
+            $userCampaigns = \App\Models\Campaign::with(['coverImage', 'gambar_campaign'])
                 ->where('akun_id', $user->id)
                 ->orderByDesc('waktu')
                 ->take(3)

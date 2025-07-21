@@ -25,15 +25,15 @@ return new class extends Migration {
 
         Schema::create('akun_komunitas', function (Blueprint $table) {
             $table->foreignId('akun_id')->constrained('akun');
-            $table->text('portofolio');
+            $table->text('portofolio')->nullable(); // Portofolio sekarang boleh kosong
         });
 
         Schema::create('campaign', function (Blueprint $table) {
             $table->id();
             $table->foreignId('akun_id')
-                ->nullable() // Boleh null
+                ->nullable()
                 ->constrained('akun')
-                ->nullOnDelete(); // Jika akun dihapus, akun_id jadi null
+                ->nullOnDelete();
             $table->string('nama', 100)->nullable();
             $table->dateTime('waktu')->nullable();
             $table->dateTime('waktu_diperbarui')->nullable();
@@ -42,7 +42,7 @@ return new class extends Migration {
             $table->string('kontak', 100)->nullable();
             $table->integer('kuota_partisipan')->nullable();
         });
-        
+
         Schema::create('campaign_ditandai', function (Blueprint $table) {
             $table->foreignId('akun_id')->constrained('akun');
             $table->foreignId('campaign_id')->constrained('campaign');
@@ -78,6 +78,19 @@ return new class extends Migration {
             $table->string('email', 100)->nullable();
             $table->string('nomorTelepon', 100)->nullable();
             $table->text('motivasi')->nullable();
+            $table->string('status', 50)->default('pending'); // Kolom status ditambahkan
+        });
+
+        // Tabel baru untuk pengaduan
+        Schema::create('pengaduan', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('akun_id')->constrained('akun');
+            $table->string('judul', 150);
+            $table->text('isi_pengaduan');
+            $table->string('lokasi', 255);
+            $table->string('foto')->nullable();
+            $table->string('status', 50)->default('dilaporkan');
+            $table->timestamps();
         });
 
         Schema::create('session', function (Blueprint $table) {
@@ -90,6 +103,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('session');
+        Schema::dropIfExists('pengaduan'); // Tambahkan drop untuk tabel baru
         Schema::dropIfExists('partisipan_campaign');
         Schema::dropIfExists('komentar_disukai');
         Schema::dropIfExists('komentar');
