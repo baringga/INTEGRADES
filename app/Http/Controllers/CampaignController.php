@@ -7,61 +7,60 @@ use Illuminate\Http\Request;
 use App\Models\Campaign;
 use App\Models\AkunKomunitas;
 use App\Models\GambarCampaign;
+use App\Models\PartisipanCampaign;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CampaignController extends Controller
 {
-    // Fungsi untuk menampilkan detail campaign (bisa digunakan untuk semua user)
+    /**
+     * Menampilkan halaman detail campaign untuk semua pengguna.
+     */
     public function show($id)
     {
-        $campaign = \App\Models\Campaign::with(['akun', 'gambar_campaign', 'partisipanCampaigns.akun'])->findOrFail($id);
-        $komentar = \App\Models\Komentar::with(['akun', 'likes'])->where('campaign_id', $id)->orderBy('waktu', 'desc')->get();
-        return view('detailcampaign', compact('campaign', 'komentar')); // Menggunakan satu view terpadu
-    }
-
-    // Fungsi untuk menampilkan form tambah campaign
-    public function create()
-    {
-        $user = Auth::user();
-        $akunKomunitas = AkunKomunitas::where('akun_id', $user->id)->first();
-
-        // Cek apakah user adalah Volunteer Desa dan sudah mengisi portofolio
-        if ($user->jenis_akun_id != 1 || !$akunKomunitas || empty($akunKomunitas->portofolio)) {
-            // Redirect ke halaman profil dengan pesan untuk melengkapi portofolio
-            return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda sebelum membuat campaign.');
-        }
-
-        return view('TambahCampaign');
-
-
-        // Cek role berdasarkan jenis_akun_id
-        if ($user->jenis_akun_id == 1) {
-            return view('detailcam', compact('campaign', 'komentar'));
-        } elseif ($user->jenis_akun_id == 2) {
-            if ($campaign->akun_id == $user->id) {
-                return view('detailcommunity', compact('campaign', 'komentar'));
-            } else {
-                return view('detailcam', compact('campaign', 'komentar'));
-            }
-        } else {
-            abort(403, 'Role tidak dikenali');
-        }
-    }
-
-    public function showCom($id){
-        // Ambil campaign beserta gambar dan partisipan+usernya sekaligus (eager loading)
-        $campaign = \App\Models\Campaign::with([
+        $campaign = Campaign::with([
+            'akun',
             'gambar_campaign',
             'partisipanCampaigns.akun'
         ])->findOrFail($id);
 
-        // Kirim ke blade
-        return view('detailcommunity', compact('campaign'));
+        $komentar = \App\Models\Komentar::with(['akun', 'likes'])
+            ->where('campaign_id', $id)
+            ->orderBy('waktu', 'desc')
+            ->get();
+
+        // Cukup satu view untuk semua
+        return view('detailcam', compact('campaign', 'komentar'));
     }
 
+    /**
+     * Menampilkan form untuk membuat campaign baru.
+     * Hanya bisa diakses oleh Volunteer Desa yang sudah melengkapi portofolio.
+     */
+    public function create()
+    {
+        $user = Auth::user();
+
+        // Pastikan user adalah Volunteer Desa (asumsi ID 1)
+        if ($user->jenis_akun_id != 1) {
+            return redirect()->route('dashboard')->with('error', 'Hanya Volunteer Desa yang dapat membuat campaign.');
+        }
+
+        $profilVolunteer = AkunKomunitas::where('akun_id', $user->id)->first();
+
+        // Cek apakah portofolio sudah diisi
+        if (!$profilVolunteer || empty($profilVolunteer->portofolio)) {
+            return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda di profil sebelum membuat campaign.');
+        }
+
+        return view('TambahCampaign');
+    }
+
+    /**
+     * Menyimpan campaign baru ke database.
+     */
     public function store(Request $request)
     {
-        // 1. Validasi input
         $request->validate([
             'nama_campaign' => 'required|string|max:100',
             'deskripsi_campaign' => 'required|string',
@@ -70,26 +69,10 @@ class CampaignController extends Controller
             'alamat_campaign' => 'required|string',
             'gambar_latar' => 'required|array|max:3',
             'gambar_latar.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
-        ], [
-            'gambar_latar.required' => 'Setidaknya satu gambar harus diunggah.',
-            'gambar_latar.max' => 'Anda dapat mengunggah hingga 3 gambar.',
-            'gambar_latar.*.image' => 'File harus berupa gambar.',
-            'gambar_latar.*.mimes' => 'Gambar harus berformat JPEG, PNG, JPG, atau SVG.',
-            'gambar_latar.*.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
-            'nama_campaign.required' => 'Nama campaign wajib diisi.',
-            'deskripsi_campaign.required' => 'Deskripsi campaign wajib diisi.',
-            'waktu.required' => 'Waktu pelaksanaan wajib diisi.',
-            'kuota_partisipan.required' => 'Kuota partisipan wajib diisi.',
-            'alamat_campaign.required' => 'Alamat campaign wajib diisi.',
         ]);
 
-        // Cek apakah user adalah komunitas
         $user = Auth::user();
-        if ($user->jenisAkun->jenisAkun !== 'Komunitas') {
-            abort(403, 'Hanya akun komunitas yang dapat membuat campaign.');
-        }
 
-        // 2. Simpan data campaign
         $campaign = new Campaign();
         $campaign->akun_id = $user->id;
         $campaign->nama = $request->nama_campaign;
@@ -101,184 +84,142 @@ class CampaignController extends Controller
         $campaign->kuota_partisipan = $request->kuota_partisipan;
         $campaign->save();
 
-        // 3. Upload dan simpan gambar
-        $files = $request->file('gambar_latar');
-        foreach ($files as $index => $file) {
+        foreach ($request->file('gambar_latar') as $index => $file) {
             $path = $file->store('gambar_campaign', 'public');
             GambarCampaign::create([
                 'campaign_id' => $campaign->id,
                 'gambar' => $path,
-                'isCover' => ($index === 0), // Gambar pertama jadi cover
+                'isCover' => ($index === 0),
             ]);
         }
 
-        // 4. Redirect ke halaman detail campaign yang baru dibuat
         return redirect()->route('campaign.tambah')->with([
             'success' => 'Campaign berhasil dibuat!',
             'new_campaign_id' => $campaign->id
         ]);
     }
 
-    public function bookmark($id, Request $request)
-    {
-        $akunId = Auth::id();
-        // Cek jika sudah pernah bookmark
-        $exists = DB::table('campaign_ditandai')
-            ->where('akun_id', $akunId)
-            ->where('campaign_id', $id)
-            ->exists();
-
-        if (!$exists) {
-            DB::table('campaign_ditandai')->insert([
-                'akun_id' => $akunId,
-                'campaign_id' => $id,
-            ]);
-        }
-
-        if ($request->expectsJson()) {
-            return response()->json(['success' => true]);
-        }
-        return back()->with('success', 'Campaign berhasil ditandai!');
-    }
-
-    public function unbookmark($id, Request $request)
-    {
-        $akunId = auth()->id;
-        \DB::table('campaign_ditandai')
-            ->where('akun_id', $akunId)
-            ->where('campaign_id', $id)
-            ->delete();
-
-        if ($request->expectsJson()) {
-            return response()->json(['success' => true]);
-        }
-        return back()->with('success', 'Bookmark dihapus!');
-    }
-
+    /**
+     * Menampilkan halaman untuk mengedit campaign.
+     */
     public function edit($id)
     {
-        $user = auth()->user();
         $campaign = Campaign::findOrFail($id);
 
-        // Hanya izinkan jika user komunitas dan pemilik campaign
-        if ($user->jenis_akun_id == 2 && $campaign->akun_id == $user->id) {
-            return view('editcampaign', compact('campaign'));
-        } else {
-            abort(403, 'Anda tidak memiliki akses untuk mengedit campaign ini');
+        // Pastikan hanya pembuat campaign yang bisa mengedit
+        if ($campaign->akun_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki akses untuk mengedit campaign ini.');
         }
+
+        return view('editcampaign', compact('campaign'));
     }
 
-    public function update(Request $request, $id){
-    // 1. Validasi input
-    $request->validate([
-        'nama_campaign' => 'required|string|max:100',
-        'deskripsi_campaign' => 'required|string',
-        'waktu' => 'required|date_format:d-m-Y H:i',
-        'kuota_partisipan' => 'required|integer|min:1',
-        'alamat_campaign' => 'required|string',
-        // Validasi untuk gambar baru. `nullable` karena tidak wajib upload baru.
-        'gambar_latar' => 'nullable|array',
-        'gambar_latar.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
-    ], [
-        'gambar_latar.*.image' => 'File yang diunggah harus berupa gambar.',
-        'gambar_latar.*.mimes' => 'Gambar harus berformat: jpeg, png, jpg, atau svg.',
-        'gambar_latar.*.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
-    ]);
-
-    $campaign = Campaign::findOrFail($id);
-
-    // 2. Update data teks campaign
-    $campaign->nama = $request->nama_campaign;
-    $campaign->deskripsi = $request->deskripsi_campaign;
-    $campaign->waktu = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $request->waktu)->format('Y-m-d H:i:s');
-    $campaign->kuota_partisipan = $request->kuota_partisipan;
-    $campaign->lokasi = $request->alamat_campaign;
-    $campaign->waktu_diperbarui = now();
-    $campaign->save();
-
-    // 3. Hapus gambar lama (jika ada yang ditandai untuk dihapus)
-    if ($request->has('gambar_dihapus')) {
-        $gambarIdsToDelete = $request->input('gambar_dihapus', []);
-        $gambarsToDelete = GambarCampaign::whereIn('id', $gambarIdsToDelete)->get();
-
-        foreach ($gambarsToDelete as $gambar) {
-            // Hapus file dari storage jika bukan URL
-            if (!filter_var($gambar->gambar, FILTER_VALIDATE_URL)) {
-                \Storage::disk('public')->delete($gambar->gambar);
-            }
-            $gambar->delete();
-        }
-    }
-
-    // 4. Tambah gambar baru
-    if ($request->hasFile('gambar_latar')) {
-        $files = $request->file('gambar_latar');
-        if (!is_array($files)) {
-            $files = [$files];
-        }
-        // Cek apakah sudah ada gambar cover
-        $sudahAdaCover = GambarCampaign::where('campaign_id', $campaign->id)->where('isCover', 1)->exists();
-        foreach ($files as $idx => $file) {
-            if ($file && $file->isValid()) {
-                $path = $file->store('gambar_campaign', 'public');
-                GambarCampaign::create([
-                    'campaign_id' => $campaign->id,
-                    'gambar' => $path,
-                    // Jika sudah ada cover, semua gambar baru isCover = 0
-                    // Jika belum ada cover, gambar pertama jadi cover
-                    'isCover' => (!$sudahAdaCover && $idx === 0) ? 1 : 0,
-                ]);
-            }
-        }
-    }
-
-    return redirect()->back()->with('success', 'Campaign berhasil diperbarui!');
-    }
-
-
-    public function akun()
+    /**
+     * Memperbarui data campaign di database.
+     */
+    public function update(Request $request, $id)
     {
-        return $this->belongsTo(\App\Models\User::class, 'akun_id');
-    }
+        $request->validate([
+            'nama_campaign' => 'required|string|max:100',
+            'deskripsi_campaign' => 'required|string',
+            'waktu' => 'required|date_format:d-m-Y H:i',
+            'kuota_partisipan' => 'required|integer|min:1',
+            'alamat_campaign' => 'required|string',
+            'gambar_latar' => 'nullable|array',
+            'gambar_latar.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+        ]);
 
-    public function nullify($id)
-    {
-        $campaign = \App\Models\Campaign::findOrFail($id);
+        $campaign = Campaign::findOrFail($id);
 
-        // Set semua kolom selain id menjadi NULL
-        $campaign->nama = null;
-        $campaign->waktu = null;
-        $campaign->waktu_diperbarui = null;
-        $campaign->deskripsi = null;
-        $campaign->lokasi = null;
-        $campaign->kontak = null;
-        $campaign->kuota_partisipan = null;
+        // Pastikan hanya pembuat campaign yang bisa mengupdate
+        if ($campaign->akun_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $campaign->nama = $request->nama_campaign;
+        $campaign->deskripsi = $request->deskripsi_campaign;
+        $campaign->waktu = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $request->waktu)->format('Y-m-d H:i:s');
+        $campaign->kuota_partisipan = $request->kuota_partisipan;
+        $campaign->lokasi = $request->alamat_campaign;
+        $campaign->waktu_diperbarui = now();
         $campaign->save();
 
-        return redirect()->route('dashboard')->with('success', 'Data campaign telah dinull-kan!');
+        if ($request->hasFile('gambar_latar')) {
+            foreach ($request->file('gambar_latar') as $file) {
+                $path = $file->store('gambar_campaign', 'public');
+                GambarCampaign::create(['campaign_id' => $campaign->id, 'gambar' => $path]);
+            }
+        }
+
+        return redirect()->route('editcampaign', $campaign->id)->with('success', 'Campaign berhasil diperbarui!');
     }
 
-    public function hapusGambar($id)
+    /**
+     * Menampilkan halaman manajemen partisipan.
+     */
+    public function manage($id)
     {
-        $gambar = GambarCampaign::find($id);
-        if ($gambar) {
-            $campaignId = $gambar->campaign_id;
-            $wasCover = $gambar->isCover == 1;
-            // Hapus file dari storage jika bukan URL
-            if (!filter_var($gambar->gambar, FILTER_VALIDATE_URL)) {
-                \Storage::disk('public')->delete($gambar->gambar);
-            }
-            $gambar->delete();
-            // Jika yang dihapus adalah cover, set 1 gambar lain jadi cover
-            if ($wasCover) {
-                $gambarLain = GambarCampaign::where('campaign_id', $campaignId)->first();
-                if ($gambarLain) {
-                    $gambarLain->isCover = 1;
-                    $gambarLain->save();
-                }
-            }
-            return response()->json(['success' => true]);
+        $campaign = Campaign::with('partisipanCampaigns.akun.akunKomunitas')->findOrFail($id);
+
+        // Pastikan hanya pembuat campaign yang bisa mengakses
+        if ($campaign->akun_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
-        return response()->json(['success' => false], 404);
+
+        return view('campaign.manage', compact('campaign'));
+    }
+
+    /**
+     * Mengubah status partisipan (Approve/Reject).
+     */
+    public function updateStatus(Request $request, $partisipanId)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,rejected',
+        ]);
+
+        $partisipan = PartisipanCampaign::findOrFail($partisipanId);
+        $campaign = $partisipan->campaign;
+
+        // Pastikan hanya pembuat campaign yang bisa mengubah status
+        if ($campaign->akun_id !== Auth::id()) {
+            abort(403, 'Aksi tidak diizinkan.');
+        }
+
+        // Cek kuota sebelum menyetujui
+        if ($request->status === 'approved') {
+            $jumlahPartisipanDisetujui = PartisipanCampaign::where('campaign_id', $campaign->id)->where('status', 'approved')->count();
+            if ($campaign->kuota_partisipan && $jumlahPartisipanDisetujui >= $campaign->kuota_partisipan) {
+                return back()->with('error', 'Gagal menyetujui. Kuota partisipan sudah penuh.');
+            }
+        }
+
+        $partisipan->status = $request->status;
+        $partisipan->save();
+
+        return back()->with('success', 'Status partisipan berhasil diperbarui.');
+    }
+
+    /**
+     * Menambahkan bookmark.
+     */
+    public function bookmark($id)
+    {
+        $user = Auth::user();
+        $isBookmarked = DB::table('campaign_ditandai')->where('akun_id', $user->id)->where('campaign_id', $id)->exists();
+
+        if (!$isBookmarked) {
+            DB::table('campaign_ditandai')->insert(['akun_id' => $user->id, 'campaign_id' => $id]);
+        }
+        return back();
+    }
+
+    /**
+     * Menghapus bookmark.
+     */
+    public function unbookmark($id)
+    {
+        DB::table('campaign_ditandai')->where('akun_id', Auth::id())->where('campaign_id', $id)->delete();
+        return back();
     }
 }

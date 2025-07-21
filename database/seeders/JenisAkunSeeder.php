@@ -12,9 +12,13 @@ class JenisAkunSeeder extends Seeder
      */
     public function run(): void
     {
+        // Menghapus data lama untuk memastikan kebersihan data
+        DB::table('jenis_akun')->delete();
+
+        // Menambahkan peran baru
         DB::table('jenis_akun')->insert([
-            ['jenisAkun' => 'Volunteer Desa'],
-            ['jenisAkun' => 'Masyarakat Desa'],
+            ['id' => 1, 'jenisAkun' => 'Volunteer Desa'],
+            ['id' => 2, 'jenisAkun' => 'Masyarakat Desa'],
         ]);
     }
 }

@@ -1,11 +1,9 @@
 <nav class="sticky top-0 bg-white shadow-sm px-12 z-30">
     <div class="container mx-auto px-4 flex items-center justify-between h-28">
-        <!-- Logo kiri -->
         <a href="/" class="flex items-center">
             <img src="{{ asset('Logo.png') }}" alt="Logo" class="h-22 w-auto" />
         </a>
 
-        <!-- Hamburger button (mobile) -->
         <button id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false"
             class="lg:hidden focus:outline-none">
             <svg class="h-6 w-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -17,40 +15,48 @@
             </svg>
         </button>
 
-        <!-- Menu kanan (desktop) -->
         @auth
-            <ul id="navbar-menu" class="hidden lg:flex space-x-8 font-light" style="color: #810000;">
+            <ul id="navbar-menu" class="hidden lg:flex items-center space-x-6 font-light" style="color: #810000;">
                 <li>
                     <a href="/dashboard"
                         class="relative px-1 pb-3
-        {{ request()->is('dashboard') ? 'text-[#810000] border-b-2 border-[#810000]' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
+                        {{ request()->is('dashboard') ? 'text-[#810000] border-b-2 border-[#810000] font-semibold' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
                         HOME
                     </a>
                 </li>
                 <li>
                     <a href="/profil"
                         class="relative px-1 pb-3
-        {{ request()->is('profil') ? 'text-[#810000] border-b-2 border-[#810000]' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
+                        {{ request()->is('profil') ? 'text-[#810000] border-b-2 border-[#810000] font-semibold' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
                         PROFIL
                     </a>
                 </li>
-                @if(Auth::user()->jenis_akun_id == 2)
+
+                {{-- Tombol hanya untuk Volunteer Desa (ID 1) --}}
+                @if(Auth::user()->jenis_akun_id == 1)
                     <li>
                         <a href="{{ route('campaign.tambah') }}"
-                           class="bg-[#810000] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#a30000] transition">
+                           class="bg-[#810000] text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-[#a30000] transition">
                             + Buat Campaign
                         </a>
                     </li>
                 @endif
+
+                {{-- Tombol untuk semua user yang sudah login --}}
+                <li>
+                    <a href="{{ route('pengaduan.create') }}"
+                       class="bg-gray-100 text-[#810000] px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-200 transition">
+                        Buat Pengaduan
+                    </a>
+                </li>
+
                 <li class="relative">
-                    <!-- Tombol titik tiga -->
                     <button id="logout-dropdown-btn" class="relative px-1 pb-3 text-[#810000] hover:border-b-2 hover:border-[#810000] flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
                     </button>
 
-                    <!-- Dropdown konfirmasi logout -->
                     <div id="logout-dropdown" class="hidden absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                         <div class="p-4">
                             <p class="text-gray-700 text-sm mb-4">Keluar dari akun Anda?</p>
@@ -87,7 +93,6 @@
         @endauth
     </div>
 
-    <!-- Mobile menu (hidden by default) -->
     @auth
         <ul id="mobile-menu" class="lg:hidden hidden flex-col bg-white border-t border-gray-200">
             <li class="border-b border-gray-200">
@@ -102,16 +107,24 @@
                     PROFIL
                 </a>
             </li>
-            @if(Auth::user()->jenis_akun_id == 2)
-                <li class="border-b border-gray-200">
+
+            @if(Auth::user()->jenis_akun_id == 1)
+                <li class="border-b border-gray-200 p-2">
                     <a href="{{ route('campaign.tambah') }}"
-                       class="block px-4 py-2 bg-[#810000] text-white rounded-md font-semibold hover:bg-[#a30000] transition">
+                       class="block text-center px-4 py-2 bg-[#810000] text-white rounded-md font-semibold hover:bg-[#a30000] transition">
                         + Buat Campaign
                     </a>
                 </li>
             @endif
+
+            <li class="border-b border-gray-200 p-2">
+                <a href="{{ route('pengaduan.create') }}"
+                   class="block text-center px-4 py-2 bg-gray-100 text-[#810000] rounded-md font-semibold hover:bg-gray-200 transition">
+                    Buat Pengaduan
+                </a>
+            </li>
+
             <li class="pb-2">
-                <!-- Tombol titik tiga untuk mobile -->
                 <button id="mobile-logout-dropdown-btn" class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -119,7 +132,6 @@
                     Menu
                 </button>
 
-                <!-- Dropdown konfirmasi logout untuk mobile -->
                 <div id="mobile-logout-dropdown" class="hidden bg-gray-50 border-t border-gray-200">
                     <div class="p-4">
                         <p class="text-gray-700 text-sm mb-4">Keluar dari akun Anda?</p>
@@ -198,10 +210,10 @@
 
         // Tutup dropdown ketika klik di luar
         document.addEventListener('click', (e) => {
-            if (!logoutBtn.contains(e.target) && !logoutDropdown.contains(e.target)) {
+            if (logoutBtn && !logoutBtn.contains(e.target) && !logoutDropdown.contains(e.target)) {
                 logoutDropdown.classList.add('hidden');
             }
-            if (!mobileLogoutBtn.contains(e.target) && !mobileLogoutDropdown.contains(e.target)) {
+            if (mobileLogoutBtn && !mobileLogoutBtn.contains(e.target) && !mobileLogoutDropdown.contains(e.target)) {
                 mobileLogoutDropdown.classList.add('hidden');
             }
         });

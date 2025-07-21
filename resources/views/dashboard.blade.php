@@ -1,87 +1,67 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda Pengaduan Desa</title>
+    @vite('resources/css/app.css')
+</head>
+<body class="mb-20 bg-gray-50">
+    @include('components.navbar')
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
-        @vite('resources/css/app.css')
-    </head>
-
-    <body class="mb-20">
-        @include('components.navbar')
-        <div class="mx-20 pt-20 flex items-center gap-4 ">
-            @include('components.search-filter')
-        </div>
-        <main class="mx-20 pt-10">
-            <div class="mb-4 pr-8 flex items-center justify-between">
-                <h1 class="text-[32px] font-[700] text-black" style="font-family: 'Poppins', sans-serif !important;">
-                    @if(Auth::check() && Auth::user()->jenis_akun_id == 1)
-                        CAMPAIGN YANG TERDAFTAR
-                    @else
-                        CAMPAIGN YANG DIBUAT
-                    @endif
-                </h1>
-                @guest
-                    <span class="text-[16px] text-gray-400 font-[600] cursor-not-allowed opacity-60"
-                        style="font-family: 'Poppins', sans-serif;">
-                        LIHAT SEMUA
-                    </span>
-                @else
-                    @if (Auth::user()->jenis_akun_id == 1)
-                        <a href="{{ route('campaign.followed') }}" class="text-[16px] text-[#810000] hover:underline font-[600]"
-                            style="font-family: 'Poppins', sans-serif;">
-                            LIHAT SEMUA
-                        </a>
-                    @else
-                        <a href="{{ route('campaign.created') }}" class="text-[16px] text-[#810000] hover:underline font-[600]"
-                            style="font-family: 'Poppins', sans-serif;">
-                            LIHAT SEMUA
-                        </a>
-                    @endif
-                @endguest
-            </div>
-
-            {{-- Grid Campaign --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                @guest
-                    <div class="col-span-3 text-center text-gray-500 py-20">Login untuk melihat campaign terdaftar
-                    </div>
-                @else
-                    @forelse($userCampaigns as $campaign)
-                        @if(!is_null($campaign->nama) && \Carbon\Carbon::parse($campaign->waktu)->isFuture())
-                            @include('components.campaign-item', ['campaign' => $campaign])
-                        @endif
-                    @empty
-                        <div class="col-span-3 text-center text-gray-500 py-20">Belum ada campaign yang kamu ikuti
-                        </div>
-                    @endforelse
-                @endguest
-            </div>
-        </main>
-        <main class="mx-20 pt-15">
-            <div class="mb-4 pr-8 flex items-center justify-between">
-                <h1 class="text-[32px] font-[700] text-black" style="font-family: 'Poppins', sans-serif !important;">
-                    CAMPAIGN REKOMENDASI
-                </h1>
-                <a href="/campaign-recommendations" class="text-[16px] text-[#810000] hover:underline font-[600]"
-                    style="font-family: 'Roboto', sans-serif;">
-                    LIHAT SEMUA
+    <main class="max-w-4xl mx-auto py-10 px-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Laporan Warga</h1>
+            @auth
+            <div>
+                <a href="{{ route('pengaduan.create') }}" class="bg-[#810000] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a30000] transition">
+                    + Buat Pengaduan
                 </a>
             </div>
+            @endauth
+        </div>
 
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-4" role="alert">{{ session('success') }}</div>
+        @endif
 
-            {{-- Grid Campaign --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                @forelse($recommendedCampaigns as $campaign)
-                    @if(!is_null($campaign->nama) && \Carbon\Carbon::parse($campaign->waktu)->isFuture())
-                        @include('components.campaign-item', ['campaign' => $campaign])
+        <div class="space-y-4">
+            @forelse($pengaduanList as $pengaduan)
+                <div class="bg-white p-5 rounded-lg border border-gray-200 transition hover:shadow-md">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            @if($pengaduan->status == 'selesai')
+                                <p class="text-xs text-white bg-green-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Selesai</p>
+                            @elseif($pengaduan->status == 'diproses')
+                                <p class="text-xs text-white bg-blue-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Diproses</p>
+                            @else
+                                <p class="text-xs text-white bg-yellow-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Dilaporkan</p>
+                            @endif
+                            <h2 class="font-bold text-lg text-gray-800">{{ $pengaduan->judul }}</h2>
+                            <p class="text-sm text-gray-500 mt-1">
+                                <span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}
+                            </p>
+                            <p class="text-sm text-gray-500">
+                                <span class="font-semibold">Pelapor:</span> {{ $pengaduan->akun->namaPengguna }}
+                            </p>
+                        </div>
+                        <span class="text-xs text-gray-400">{{ $pengaduan->created_at->diffForHumans() }}</span>
+                    </div>
+                    <p class="text-gray-600 mt-3 text-sm">
+                        {{ $pengaduan->isi_pengaduan }}
+                    </p>
+                    @if($pengaduan->foto)
+                    <div class="mt-4">
+                        <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan" class="rounded-lg max-w-sm">
+                    </div>
                     @endif
-                @empty
-                    <div class="col-span-3 text-center text-gray-500 py-10">Belum ada campaign rekomendasi</div>
-                @endforelse
-            </div>
-        </main>
-    </body>
-
-    </html>
+                </div>
+            @empty
+                <div class="text-center py-16">
+                    <p class="text-gray-500">Belum ada pengaduan yang dibuat.</p>
+                </div>
+            @endforelse
+        </div>
+    </main>
+</body>
+</html>

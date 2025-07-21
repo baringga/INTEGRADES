@@ -17,15 +17,16 @@ return new class extends Migration {
             $table->string('email', 100);
             $table->string('password', 100);
             $table->string('namaPengguna', 100);
-            $table->text('fotoProfil');
-            $table->string('nomorTelepon', 100);
+            $table->text('fotoProfil')->nullable();
+            $table->string('nomorTelepon', 100)->nullable();
             $table->foreignId('jenis_akun_id')->constrained('jenis_akun');
             $table->timestamps();
         });
 
+        // Tabel ini sekarang akan kita sebut sebagai "profil_volunteer" dalam logika kita
         Schema::create('akun_komunitas', function (Blueprint $table) {
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->text('portofolio')->nullable(); // Portofolio sekarang boleh kosong
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
+            $table->text('portofolio')->nullable(); // Dibuat boleh kosong (nullable)
         });
 
         Schema::create('campaign', function (Blueprint $table) {
@@ -44,71 +45,66 @@ return new class extends Migration {
         });
 
         Schema::create('campaign_ditandai', function (Blueprint $table) {
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->foreignId('campaign_id')->constrained('campaign');
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
+            $table->foreignId('campaign_id')->constrained('campaign')->onDelete('cascade');
         });
 
         Schema::create('gambar_campaign', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->constrained('campaign');
+            $table->foreignId('campaign_id')->constrained('campaign')->onDelete('cascade');
             $table->text('gambar');
             $table->boolean('isCover')->default(false);
         });
 
         Schema::create('komentar', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->foreignId('campaign_id')->constrained('campaign');
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
+            $table->foreignId('campaign_id')->constrained('campaign')->onDelete('cascade');
             $table->string('komentar', 280);
             $table->datetime('waktu');
             $table->datetime('updated_at')->nullable();
         });
 
         Schema::create('komentar_disukai', function (Blueprint $table) {
-            $table->foreignId('komentar_id')->constrained('komentar');
-            $table->foreignId('akun_id')->constrained('akun');
+            $table->foreignId('komentar_id')->constrained('komentar')->onDelete('cascade');
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
             $table->unique(['komentar_id', 'akun_id']);
         });
 
         Schema::create('partisipan_campaign', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->foreignId('campaign_id')->constrained('campaign');
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
+            $table->foreignId('campaign_id')->constrained('campaign')->onDelete('cascade');
             $table->string('nama', 100)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('nomorTelepon', 100)->nullable();
             $table->text('motivasi')->nullable();
-            $table->string('status', 50)->default('pending'); // Kolom status ditambahkan
+            // KOLOM BARU UNTUK PERSETUJUAN
+            $table->string('status', 20)->default('pending'); // pending, approved, rejected
         });
 
-        // Tabel baru untuk pengaduan
+        // TABEL BARU UNTUK PENGADUAN
         Schema::create('pengaduan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->string('judul', 150);
+            $table->foreignId('akun_id')->constrained('akun')->onDelete('cascade');
+            $table->string('judul', 255);
             $table->text('isi_pengaduan');
-            $table->string('lokasi', 255);
-            $table->string('foto')->nullable();
-            $table->string('status', 50)->default('dilaporkan');
+            $table->string('lokasi', 255)->nullable();
+            $table->string('foto', 255)->nullable();
+            $table->string('status', 20)->default('dilaporkan'); // dilaporkan, diproses, selesai
             $table->timestamps();
-        });
-
-        Schema::create('session', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('akun_id')->constrained('akun');
-            $table->dateTime('waktu');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('session');
-        Schema::dropIfExists('pengaduan'); // Tambahkan drop untuk tabel baru
-        Schema::dropIfExists('partisipan_campaign');
+        // Urutan drop disesuaikan untuk keamanan relasi
         Schema::dropIfExists('komentar_disukai');
         Schema::dropIfExists('komentar');
         Schema::dropIfExists('gambar_campaign');
         Schema::dropIfExists('campaign_ditandai');
+        Schema::dropIfExists('partisipan_campaign');
+        Schema::dropIfExists('pengaduan');
         Schema::dropIfExists('campaign');
         Schema::dropIfExists('akun_komunitas');
         Schema::dropIfExists('akun');
