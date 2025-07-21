@@ -14,26 +14,17 @@ class ProfilController extends Controller
      */
     public function show()
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        if (!$user) {
-            return redirect()->route('login');
-        }
+        // Campaign yang dibuat user
+        $campaigns = \App\Models\Campaign::where('akun_id', $user->id)->latest()->get();
 
-        $pengaduanSaya = Pengaduan::where('akun_id', $user->id)
-                                  ->orderBy('created_at', 'desc')
-                                  ->get();
+        // Campaign yang diikuti user (misal relasi many-to-many dengan tabel pivot 'partisipan')
+        $campaignsDiikuti = $user->campaignsDiikuti()->latest()->get();
+        // Jika tidak ada relasi, sesuaikan query dengan struktur tabel partisipan Anda
 
-        if ($user->jenis_akun_id == 1) { // 1 = Volunteer Desa
-            return app(\App\Http\Controllers\ProfilVolunteerController::class)->show($pengaduanSaya);
-        } elseif ($user->jenis_akun_id == 2) { // 2 = Masyarakat Desa
-            return view('profilmasyarakat', [
-                'user' => $user,
-                'pengaduanSaya' => $pengaduanSaya
-            ]);
-        } else {
-            abort(403, 'Tipe akun tidak dikenali.');
-        }
+        // Kirim ke view
+        return view('profilvolunteer', compact('user', 'campaigns', 'campaignsDiikuti'));
     }
 
     /**
@@ -43,15 +34,19 @@ class ProfilController extends Controller
     {
         $user = Auth::user();
 
-        // Update data user
+        // Jika ada upload foto
+        if ($request->hasFile('fotoProfil')) {
+            $path = $request->file('fotoProfil')->store('foto', 'public');
+            $user->fotoProfil = $path;
+        }
+
+        // Update data lain
         $user->namaPengguna = $request->namaPengguna;
         $user->email = $request->email;
         $user->nomorTelepon = $request->nomorTelepon;
-        // ...update foto profil jika ada...
-
         $user->save();
 
-        return back()->with('success', 'Profil berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
     }
 
     /**

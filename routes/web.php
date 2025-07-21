@@ -11,6 +11,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\PartisipanCampaignController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\VolunteerProfileController;
 
 // Rute Publik (Bisa diakses tanpa login)
 Route::get('/', function () { return view('landingpage'); });
@@ -43,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     // Rute Campaign
     Route::get('/campaign/tambah', [CampaignController::class, 'create'])->name('campaign.tambah');
     Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign.store');
-    Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('detailcam');
+    Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('campaign.detail');
     Route::get('/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('editcampaign');
     Route::put('/campaign/{id}', [CampaignController::class, 'update'])->name('campaign.update');
 
@@ -56,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
     // Profil
     Route::get('/profil', [ProfilController::class, 'show'])->name('profil');
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profil.update');
+    Route::get('/volunteer/profile/edit', [VolunteerProfileController::class, 'edit'])->name('volunteer.profile.edit');
 
     // RUTE UNTUK HALAMAN "LIHAT SEMUA"
     Route::get('/profil/laporan-saya', [ProfilController::class, 'laporanSaya'])->name('profil.laporan');

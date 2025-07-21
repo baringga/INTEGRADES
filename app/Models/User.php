@@ -72,4 +72,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(\App\Models\Komentar::class, 'komentar_disukai', 'akun_id', 'komentar_id');
     }
+
+    /**
+     * Get the campaigns that the user follows.
+     */
+    public function campaignsDiikuti()
+    {
+        return $this->belongsToMany(\App\Models\Campaign::class, 'partisipan', 'akun_id', 'campaign_id');
+    }
 }
