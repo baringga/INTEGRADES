@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Pengaduan; // Tambahkan ini untuk mengakses model Pengaduan
+use App\Models\AkunKomunitas; // Diperlukan untuk update portofolio
 
 class ProfilController extends Controller
 {
+    /**
+     * Menampilkan halaman profil yang sesuai berdasarkan peran pengguna.
+     */
     public function show()
     {
         $user = Auth::user();
@@ -15,19 +20,29 @@ class ProfilController extends Controller
             return redirect()->route('login');
         }
 
-        // Arahkan ke controller yang sesuai berdasarkan peran
-        if ($user->jenis_akun_id == 1) { // Asumsi 1 = Volunteer Desa
-            return app(\App\Http\Controllers\ProfilVolunteerController::class)->show();
-        } elseif ($user->jenis_akun_id == 2) { // Asumsi 2 = Masyarakat Desa
-            // Nanti kita buat controller untuk Masyarakat Desa
-            // Untuk sekarang, kita bisa arahkan ke view sederhana
-            return view('profilmasyarakat', compact('user'));
+        // Ambil data pengaduan yang dibuat oleh user ini
+        $pengaduanSaya = Pengaduan::where('akun_id', $user->id)
+                                  ->orderBy('created_at', 'desc')
+                                  ->get();
+
+        if ($user->jenis_akun_id == 1) { // 1 = Volunteer Desa
+            // Di tahap selanjutnya, kita akan mengirimkan data pengaduan ini ke ProfilVolunteerController
+            return app(\App\Http\Controllers\ProfilVolunteerController::class)->show($pengaduanSaya);
+        } elseif ($user->jenis_akun_id == 2) { // 2 = Masyarakat Desa
+            // Kirim data user dan data pengaduannya ke view
+            return view('profilmasyarakat', [
+                'user' => $user,
+                'pengaduanSaya' => $pengaduanSaya
+            ]);
         } else {
             abort(403, 'Tipe akun tidak dikenali.');
         }
     }
 
-    public function update(\Illuminate\Http\Request $request)
+    /**
+     * Memperbarui informasi profil pengguna.
+     */
+    public function update(Request $request)
     {
         $user = auth()->user();
         $request->validate([
@@ -41,7 +56,7 @@ class ProfilController extends Controller
             ],
             'nomorTelepon' => 'required|string|max:20',
             'fotoProfil' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
-            'portofolio' => 'nullable|url|max:1000', // Validasi portofolio sebagai URL
+            'portofolio' => 'nullable|url|max:1000',
         ]);
 
         if ($request->hasFile('fotoProfil')) {
@@ -55,9 +70,9 @@ class ProfilController extends Controller
         $user->updated_at = now();
         $user->save();
 
-        // Update portofolio jika pengguna adalah Volunteer Desa
+        // Update portofolio jika pengguna adalah Volunteer Desa (ID 1)
         if ($user->jenis_akun_id == 1 && $request->filled('portofolio')) {
-            \App\Models\AkunKomunitas::updateOrCreate(
+            AkunKomunitas::updateOrCreate(
                 ['akun_id' => $user->id],
                 ['portofolio' => $request->portofolio]
             );

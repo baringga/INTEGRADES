@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pengaduan; // Pastikan Model Pengaduan sudah dibuat
+use App\Models\Pengaduan;
 use Illuminate\Support\Facades\Auth;
 
 class PengaduanController extends Controller
 {
-    // Menampilkan semua pengaduan di dashboard
-    public function index()
-    {
-        $pengaduan = Pengaduan::with('akun')->orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['pengaduanList' => $pengaduan]);
-    }
+    // HAPUS FUNGSI index() DARI SINI KARENA SUDAH TIDAK DIGUNAKAN
 
     // Menampilkan form untuk membuat pengaduan baru
     public function create()

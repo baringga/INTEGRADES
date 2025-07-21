@@ -12,33 +12,15 @@ use App\Http\Controllers\PartisipanCampaignController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\PengaduanController;
 
-/*
-|--------------------------------------------------------------------------
-| Rute Publik (Bisa diakses tanpa login)
-|--------------------------------------------------------------------------
-*/
-Route::get('/', function () {
-    return view('landingpage');
-});
-
-// -- BLOK RUTE AUTENTIKASI YANG PERLU DITAMBAHKAN KEMBALI --
-Route::get('/login', function () {
-    return view('account.login');
-})->name('login');
-
+// Rute Publik (Bisa diakses tanpa login)
+Route::get('/', function () { return view('landingpage'); });
+Route::get('/login', function () { return view('account.login'); })->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('password-reset', function () {
-    return view('account.password-reset');
-})->name('password.request');
-
+Route::get('password-reset', function () { return view('account.password-reset'); })->name('password.request');
 Route::post('password-reset', [ForgotPasswordController::class, 'checkEmail'])->name('password.reset.check');
 Route::get('change-password', [ForgotPasswordController::class, 'showChangePasswordForm'])->name('password.reset.form');
 Route::post('change-password', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
-// -- AKHIR BLOK --
-
 Route::get('/register', function (\Illuminate\Http\Request $request) {
     $role = $request->query('role');
     if (!in_array($role, ['volunteer_desa', 'masyarakat_desa'])) {
@@ -46,27 +28,19 @@ Route::get('/register', function (\Illuminate\Http\Request $request) {
     }
     return view('account.register', compact('role'));
 })->name('register');
-
 Route::post('/register', [RegisterController::class, 'register'])->name('account.register');
+Route::get('/reg-success', function () { return view('account.reg-success'); })->name('reg-success');
 
-Route::get('/reg-success', function () {
-    return view('account.reg-success');
-})->name('reg-success');
-
-
-/*
-|--------------------------------------------------------------------------
-| Rute yang Memerlukan Login (Autentikasi)
-|--------------------------------------------------------------------------
-*/
+// Rute yang Memerlukan Login (Autentikasi)
 Route::middleware(['auth'])->group(function () {
 
-    // Dashboard & Pengaduan
-    Route::get('/dashboard', [PengaduanController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Rute Pengaduan
     Route::get('/pengaduan/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
     Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
-    // Campaign
+    // Rute Campaign
     Route::get('/campaign/tambah', [CampaignController::class, 'create'])->name('campaign.tambah');
     Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign.store');
     Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('detailcam');
@@ -83,6 +57,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profil', [ProfilController::class, 'show'])->name('profil');
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profil.update');
 
+    // RUTE UNTUK HALAMAN "LIHAT SEMUA"
+    Route::get('/profil/laporan-saya', [ProfilController::class, 'laporanSaya'])->name('profil.laporan');
+    Route::get('/campaigns/diikuti', [DashboardController::class, 'campaignFollowed'])->name('campaign.followed');
+    Route::get('/campaigns/dibuat', [DashboardController::class, 'campaignCreated'])->name('campaign.created');
+    Route::get('/campaigns/rekomendasi', [DashboardController::class, 'allRekomendasi'])->name('campaign.recommendations');
+
     // Fitur Lainnya
     Route::get('/search', [SearchController::class, 'search'])->name('search');
     Route::post('/campaign/{id}/bookmark', [CampaignController::class, 'bookmark'])->name('campaign.bookmark');
@@ -94,7 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/komentar/{id}', [KomentarController::class, 'update'])->name('komentar.update');
     Route::delete('/komentar/{id}', [KomentarController::class, 'destroy'])->name('komentar.destroy');
 });
-
 
 // Handle 404
 Route::fallback(function () {

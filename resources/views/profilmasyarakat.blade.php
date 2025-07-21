@@ -53,10 +53,22 @@
         <div>
             <h2 class="text-xl font-bold text-center mb-4">Riwayat Pengaduan Saya</h2>
             <div class="space-y-4">
-                {{-- Nanti di sini kita akan menampilkan daftar pengaduan yang dibuat oleh user ini --}}
-                <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
-                    <p>Fitur riwayat pengaduan akan segera tersedia.</p>
-                </div>
+                @forelse($pengaduanSaya as $pengaduan)
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-md text-gray-800">{{ $pengaduan->judul }}</h3>
+                                <p class="text-sm text-gray-500 mt-1">Lokasi: {{ $pengaduan->lokasi }}</p>
+                            </div>
+                            <span class="text-xs text-gray-400">{{ $pengaduan->created_at->diffForHumans() }}</span>
+                        </div>
+                        <p class="text-gray-600 mt-2 text-sm">{{ $pengaduan->isi_pengaduan }}</p>
+                    </div>
+                @empty
+                    <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
+                        <p>Anda belum pernah membuat pengaduan.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -66,8 +78,6 @@
                 <button @click="showEdit = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
                 <form method="POST" action="{{ route('profil.update') }}" enctype="multipart/form-data" class="flex flex-col gap-4">
                     @csrf
-                    {{-- Form input nama, email, telepon, dan foto profil. Tidak ada portofolio di sini --}}
-                    {{-- ... (Isi form sama seperti modal di profilvolunteer, TAPI TANPA portofolio) ... --}}
                     <div>
                         <label class="block text-sm font-medium mb-1">Nama</label>
                         <input type="text" name="namaPengguna" value="{{ $user->namaPengguna }}" class="w-full rounded-lg border px-3 py-2" required>
