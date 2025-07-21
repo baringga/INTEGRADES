@@ -36,9 +36,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <!-- Kolom kiri: Swiper + pagination -->
                 <div>
-                    @foreach($campaign->gambar_campaign as $gambar)
-                        <img src="{{ asset('storage/' . $gambar->gambar) }}" alt="Gambar Campaign" />
-                    @endforeach
+                    <div>
+                        <x-swiper-gallery :gambar="$campaign->gambar_campaign" />
+                    </div>
                     <p class="text-600 font-semibold mt-2">Lokasi Campaign</p>
                     <p class="flex items-center text-gray-500 mt-2 text-[16px]">
                         <!-- Ikon Lokasi -->
@@ -189,7 +189,7 @@
                         @else
                             <a
                                 href="{{ route('partisipan.create', $campaign->id) }}"
-                                class="mt-6 inline-block px-6 py-3 bg-[#810000] hover:bg-yellow-600 text-white rounded-3xl shadow transition-colors duration-200 focus:outline-none"
+                                class="mt-6 inline-block px-6 py-3 bg-[#74A740] hover:bg-yellow-600 text-white rounded-3xl shadow transition-colors duration-200 focus:outline-none"
                             >
                                 IKUTI CAMPAIGN
                             </a>
@@ -267,14 +267,14 @@
                             id="commentInput"
                             name="komentar"
                             type="text"
-                            class="w-full border-0 border-b border-gray-300 rounded-none px-0 py-2 text-sm focus:outline-none focus:ring-0 focus:border-[#810000]"
+                            class="w-full border-0 border-b border-gray-300 rounded-none px-0 py-2 text-sm focus:outline-none focus:ring-0 focus:border-[#74A740]"
                             placeholder="Tulis komentar kamu..."
                             autocomplete="off"
                             maxlength="280"
                             required
                         >
                     </div>
-                    <button type="submit" class="bg-[#810000] text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
+                    <button type="submit" class="bg-[#74A740] text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
                         Kirim
                     </button>
                 </form>
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.className = 'edit-comment-form flex gap-2 mt-1';
                 form.innerHTML = `
                     <input type="text" class="border rounded px-2 py-1 text-sm flex-1" value="${oldText}" maxlength="280" required>
-                    <button type="submit" class="bg-[#810000] text-white px-3 py-1 rounded text-xs">Kirim</button>
+                    <button type="submit" class="bg-[#74A740] text-white px-3 py-1 rounded text-xs">Kirim</button>
                     <button type="button" class="cancel-edit text-gray-500 px-2 text-xs">Batal</button>
                 `;
                 textDiv.style.display = 'none';

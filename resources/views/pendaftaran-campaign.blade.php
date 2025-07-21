@@ -66,7 +66,7 @@
 
                     <!-- Daftar -->
                     <button type="button" @click="submitForm"
-                        class="w-full h-14 bg-[#810000] hover:bg-[#810000]/90 text-white rounded-2xl text-lg font-medium">
+                        class="w-full h-14 bg-[#74A740] hover:bg-[#74A740]/90 text-white rounded-2xl text-lg font-medium">
                         Daftar
                     </button>
                 </div>

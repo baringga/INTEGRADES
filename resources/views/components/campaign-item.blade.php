@@ -3,11 +3,16 @@
 <a href="{{ url('/campaign/'.$campaign->id) }}" class="block max-w-sm bg-white rounded-2xl overflow-hidden border transition-transform hover:scale-[1.03]"
     style="border-color: rgba(0, 0, 0, 0.15);">
     <div class="campaign-images">
-        @if($campaign->gambar_campaign && $campaign->gambar_campaign->count())
-            <img src="{{ asset('storage/' . $campaign->gambar_campaign->first()->gambar) }}" alt="Gambar Campaign" class="w-full h-52 object-cover"/>
-        @else
-            <img src="{{ asset('default.jpg') }}" alt="Default Campaign" class="w-full h-52 object-cover"/>
-        @endif
+        @php
+            $gambar = $campaign->gambar_campaign->first();
+            $src = $gambar
+                ? (filter_var($gambar->gambar, FILTER_VALIDATE_URL)
+                    ? $gambar->gambar
+                    : asset('storage/' . $gambar->gambar))
+                : asset('default.jpg');
+        @endphp
+
+        <img src="{{ $src }}" alt="Gambar Campaign" class="w-full h-52 object-cover"/>
     </div>
 
     <div class="p-6 min-h-[220px] flex flex-col justify-between">
@@ -27,7 +32,7 @@
                     <div class="h-full" style="width: {{ $persen }}%; background-color: #3B9E51;"></div>
                 </div>
                 <button onclick="{{ url('/campaign/'.$campaign->id) }}"
-                    class="text-xs px-3 py-2 text-white bg-[#810000] border border-[#810000] rounded-lg hover:bg-transparent hover:text-[#810000] hover:border whitespace-nowrap">
+                    class="text-xs px-3 py-2 text-white bg-[#74A740] border border-[#74A740] rounded-lg hover:bg-transparent hover:text-[#74A740] hover:border whitespace-nowrap">
                     LIHAT DETAIL
                 </button>
             </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bersih.in - Platform Aksi Lingkungan</title>
+    <title>INTEGRADES - Platform Aksi Lingkungan</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Tailwind Config -->
@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#810000',
+                        primary: '#74A740',
                         dark: '#121a0f',
                         gray: '#545454',
                         light: '#fafafa',
@@ -186,9 +186,9 @@
     .group:hover .group-hover\:text-shine {
         background: linear-gradient(
             to right,
-            #810000 20%,
+            #74A740 20%,
             #ff1a1a 30%,
-            #810000 70%,
+            #74A740 70%,
             #660000 80%
         );
         -webkit-background-clip: text;
@@ -238,7 +238,7 @@
                     dan komunitas yang lebih sehat.
                 </p>
                 <a href="{{ route('register') }}">
-                    <button class="bg-[#810000] hover:bg-[#a30000] text-white px-8 py-3 text-lg font-semibold rounded-md transition-all duration-300 hover:scale-110 hover:shadow-xl animate-pulse hover:animate-none btn-hover-effect">
+                    <button class="bg-[#74A740] hover:bg-[#a507834] text-white px-8 py-3 text-lg font-semibold rounded-md transition-all duration-300 hover:scale-110 hover:shadow-xl animate-pulse hover:animate-none btn-hover-effect">
                         Mulai Sekarang!
                     </button>
                 </a>
@@ -326,7 +326,7 @@
                     </h4>
                     <p class="text-gray text-sm mb-4">Volunteer</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "Bersih.in mempermudah saya menemukan aksi lingkungan yang relevan. Prosesnya cepat dan dampaknya langsung terasa."
+                        "INTEGRADES mempermudah saya menemukan aksi lingkungan yang relevan. Prosesnya cepat dan dampaknya langsung terasa."
                     </p>
                 </div>
 
@@ -340,7 +340,7 @@
                     </h4>
                     <p class="text-gray text-sm mb-4">Volunteer</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "Platform yang efektif untuk menyalurkan keinginan berkontribusi. Bersih.in membantu mengorganisir aksi jadi lebih terstruktur."
+                        "Platform yang efektif untuk menyalurkan keinginan berkontribusi. INTEGRADES membantu mengorganisir aksi jadi lebih terstruktur."
                     </p>
                 </div>
 
@@ -354,7 +354,7 @@
                     </h4>
                     <p class="text-gray text-sm mb-4">Volunteer</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "Dengan Bersih.in, melakukan aksi lingkungan jadi lebih mudah. Sangat membantu untuk mencapai tujuan bersama."
+                        "Dengan INTEGRADES, melakukan aksi lingkungan jadi lebih mudah. Sangat membantu untuk mencapai tujuan bersama."
                     </p>
                 </div>
             </div>
@@ -364,7 +364,7 @@
     <!-- Footer -->
     <footer class="py-8 px-4 bg-light border-t border-gray-200">
         <div class="max-w-7xl mx-auto text-center">
-            <p class="text-gray text-sm">@2025 Bersih.in. Hak cipta dilindungi.</p>
+            <p class="text-gray text-sm">@2025 INTEGRADES. Hak cipta dilindungi.</p>
         </div>
     </footer>
 

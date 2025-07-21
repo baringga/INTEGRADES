@@ -22,7 +22,7 @@
                 @csrf
                 <div class="mb-4">
                     <input type="email" name="email" placeholder="Email"
-                        class="w-full text-sm rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#810000] @error('email') @enderror"
+                        class="w-full text-sm rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#74A740] @error('email') @enderror"
                         value="{{ old('email') }}" required
                         style="background-color: #DDEDEE; color: #6b9a9a; ::placeholder { color: #55A7AA; }">
                     @error('email')
@@ -30,7 +30,7 @@
                     @enderror
                 </div>
 
-                <button class="w-full bg-[#810000] text-white text-sm font-normal rounded-full py-3" type="submit">
+                <button class="w-full bg-[#74A740] text-white text-sm font-normal rounded-full py-3" type="submit">
                     Konfirmasi Email
                 </button>
             </form>
@@ -38,7 +38,7 @@
             <div class="text-center mt-6">
                 <p class="text-sm text-black">
                     Kembali ke
-                    <a href="{{ route('login') }}" class="text-[#810000] cursor-pointer">Login</a>
+                    <a href="{{ route('login') }}" class="text-[#74A740] cursor-pointer">Login</a>
                 </p>
 
             </div>

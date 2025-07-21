@@ -12,4 +12,17 @@ class AkunKomunitas extends Model
 
     protected $primaryKey = 'akun_id';
     public $incrementing = false;
+
+    public function create()
+    {
+        $user = Auth::user();
+        $profilVolunteer = \App\Models\AkunKomunitas::where('akun_id', $user->id)->first();
+
+        // Cek portofolio: harus ada dan tidak kosong setelah trim
+        if (!$profilVolunteer || trim($profilVolunteer->portofolio) === '') {
+            return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda di profil sebelum membuat campaign.');
+        }
+
+        return view('TambahCampaign');
+    }
 }

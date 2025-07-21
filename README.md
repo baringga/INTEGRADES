@@ -1,10 +1,10 @@
-# Bersih.in
+# INTEGRADES
 
 ![IMAGE ALT](https://github.com/mahdaf/bersihinbykel5/blob/bd0892170e3e66a0bfdf104bd40822594731426d/Logo%20Bersihin.png)
 
 ## Deskripsi Aplikasi
 
-Bersih.in adalah aplikasi digital yang mendukung pengelolaan sampah melalui partisipasi masyarakat. Aplikasi ini hadir untuk menjawab permasalahan pengelolaan sampah di Indonesia, di mana sekitar 11,3 juta ton sampah belum tertangani setiap tahunnya. Aplikasi ini memfasilitasi kolaborasi antara komunitas, masyarakat, dan pemerintah dalam mengorganisir kampanye kebersihan. Komunitas dapat membuat dan mempublikasikan kegiatan, sementara volunteer dapat menemukan dan bergabung dalam aksi lingkungan berdasarkan lokasi, waktu, dan jenis kegiatan. Bersih.in mendorong partisipasi aktif dalam menjaga lingkungan yang bersih dan sehat.
+INTEGRADES adalah aplikasi digital yang mendukung pengelolaan sampah melalui partisipasi masyarakat. Aplikasi ini hadir untuk menjawab permasalahan pengelolaan sampah di Indonesia, di mana sekitar 11,3 juta ton sampah belum tertangani setiap tahunnya. Aplikasi ini memfasilitasi kolaborasi antara komunitas, masyarakat, dan pemerintah dalam mengorganisir kampanye kebersihan. Komunitas dapat membuat dan mempublikasikan kegiatan, sementara volunteer dapat menemukan dan bergabung dalam aksi lingkungan berdasarkan lokasi, waktu, dan jenis kegiatan. INTEGRADES mendorong partisipasi aktif dalam menjaga lingkungan yang bersih dan sehat.
 
 ## Fitur Aplikasi
 

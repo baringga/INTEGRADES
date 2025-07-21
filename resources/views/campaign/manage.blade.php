@@ -29,7 +29,6 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pendaftar</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Motivasi</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Portofolio</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -39,13 +38,6 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $partisipan->akun->namaPengguna }}</td>
                             <td class="px-6 py-4 whitespace-normal text-sm text-gray-500 max-w-xs">{{ $partisipan->motivasi ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                @if($partisipan->akun->akunKomunitas && $partisipan->akun->akunKomunitas->portofolio)
-                                    <a href="{{ $partisipan->akun->akunKomunitas->portofolio }}" target="_blank" class="text-blue-600 hover:underline">Lihat Portofolio</a>
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
-                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 @if($partisipan->status == 'approved')
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Disetujui</span>
@@ -74,7 +66,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Belum ada pendaftar.</td>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">Belum ada pendaftar.</td>
                         </tr>
                         @endforelse
                     </tbody>

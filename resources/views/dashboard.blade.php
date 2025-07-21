@@ -19,7 +19,7 @@
                 <h1 class="text-3xl font-bold text-gray-800">Laporan Warga</h1>
                 @auth
                 <div>
-                    <a href="{{ route('pengaduan.create') }}" class="bg-[#810000] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a30000] transition">
+                    <a href="{{ route('pengaduan.create') }}" class="bg-[#74A740] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a507834] transition">
                         + Buat Pengaduan
                     </a>
                 </div>
@@ -73,7 +73,7 @@
             <section>
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
                     <h2 class="text-2xl font-bold text-gray-800">Laporan Anda</h2>
-                    <a href="{{ route('profil.laporan') }}" class="text-sm font-semibold text-[#810000] hover:underline">LIHAT SEMUA</a>
+                    <a href="{{ route('profil.laporan') }}" class="text-sm font-semibold text-[#74A740] hover:underline">LIHAT SEMUA</a>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @forelse($laporanAnda as $laporan)
@@ -93,7 +93,7 @@
             <section>
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
                     <h2 class="text-2xl font-bold text-gray-800">Campaign yang Anda Ikuti</h2>
-                    <a href="{{ route('campaign.followed') }}" class="text-sm font-semibold text-[#810000] hover:underline">LIHAT SEMUA</a>
+                    <a href="{{ route('campaign.followed') }}" class="text-sm font-semibold text-[#74A740] hover:underline">LIHAT SEMUA</a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
                     @forelse($campaignDiikuti as $campaign)
@@ -108,7 +108,7 @@
             <section>
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
                     <h2 class="text-2xl font-bold text-gray-800">Campaign yang Anda Buat</h2>
-                    <a href="{{ route('campaign.created') }}" class="text-sm font-semibold text-[#810000] hover:underline">LIHAT SEMUA</a>
+                    <a href="{{ route('campaign.created') }}" class="text-sm font-semibold text-[#74A740] hover:underline">LIHAT SEMUA</a>
                 </div>
                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
                     @forelse($campaignDibuat as $campaign)
@@ -123,7 +123,7 @@
             <section>
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
                     <h2 class="text-2xl font-bold text-gray-800">Rekomendasi Campaign</h2>
-                    <a href="{{ route('campaign.recommendations') }}" class="text-sm font-semibold text-[#810000] hover:underline">LIHAT SEMUA</a>
+                    <a href="{{ route('campaign.recommendations') }}" class="text-sm font-semibold text-[#74A740] hover:underline">LIHAT SEMUA</a>
                 </div>
                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
                     @forelse($rekomendasiCampaign as $campaign)

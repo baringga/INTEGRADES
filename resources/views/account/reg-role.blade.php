@@ -9,7 +9,7 @@
 <body class="bg-white">
     @include('components.navbar')
     <div class="flex flex-col items-center justify-center min-h-screen pt-8">
-        <h1 class="text-4xl font-bold text-[#810000] mb-2 text-center mt-8">
+        <h1 class="text-4xl font-bold text-[#74A740] mb-2 text-center mt-8">
             Selamat datang!
         </h1>
         <p class="text-gray-700 text-base mb-10 text-center">
@@ -24,7 +24,7 @@
                     Bisa membuat & mengikuti campaign, serta membuat pengaduan.
                 </p>
                 <a href="{{ route('register', ['role' => 'volunteer_desa']) }}" class="w-full">
-                    <button class="w-full bg-[#810000] text-white rounded-full py-2 font-semibold hover:bg-[#a30000] transition">
+                    <button class="w-full bg-[#74A740] text-white rounded-full py-2 font-semibold hover:bg-[#a507834] transition">
                         Daftar sebagai Volunteer
                     </button>
                 </a>
@@ -37,7 +37,7 @@
                     Hanya bisa membuat pengaduan kondisi desa.
                 </p>
                 <a href="{{ route('register', ['role' => 'masyarakat_desa']) }}" class="w-full">
-                    <button class="w-full bg-[#810000] text-white rounded-full py-2 font-semibold hover:bg-[#a30000] transition">
+                    <button class="w-full bg-[#74A740] text-white rounded-full py-2 font-semibold hover:bg-[#a507834] transition">
                         Daftar sebagai Masyarakat
                     </button>
                 </a>

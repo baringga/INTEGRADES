@@ -5,7 +5,7 @@
             <!-- Search Icon -->
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg
-                    class="h-5 w-5 text-[#810000]"
+                    class="h-5 w-5 text-[#74A740]"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -25,7 +25,7 @@
                 type="text"
                 name="q"
                 placeholder="Cari campaign..."
-                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#810000]"
+                class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#74A740]"
                 style="font-family: Poppins"
                 value="{{ request('q') }}"
             />
@@ -40,7 +40,7 @@
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-7 w-7 stroke-current text-[#810000] group-hover:text-black"
+                class="h-7 w-7 stroke-current text-[#74A740] group-hover:text-black"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="2"
@@ -62,11 +62,11 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <input type="date" name="start_date" value="{{ request('start_date') }}"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#810000]">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#74A740]">
                         </div>
                         <div>
                             <input type="date" name="end_date" value="{{ request('end_date') }}"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#810000]">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#74A740]">
                         </div>
                     </div>
                 </div>
@@ -76,13 +76,13 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
                     <input type="text" name="location" value="{{ request('location') }}"
                         placeholder="Masukkan lokasi"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#810000]">
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#74A740]">
                 </div>
 
                 {{-- Filter Kuota --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Kuota Partisipan</label>
-                    <select name="quota" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#810000]">
+                    <select name="quota" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#74A740]">
                         <option value="">Semua</option>
                         <option value="1-10" {{ request('quota') == '1-10' ? 'selected' : '' }}>1-10 orang</option>
                         <option value="11-50" {{ request('quota') == '11-50' ? 'selected' : '' }}>11-50 orang</option>
@@ -98,7 +98,7 @@
                         Reset
                     </button>
                     <button type="submit" id="applyFilterBtn"
-                        class="px-4 py-2 bg-[#810000] text-white rounded-md hover:bg-[#6b0000] transition-colors">
+                        class="px-4 py-2 bg-[#74A740] text-white rounded-md hover:bg-[#6b0000] transition-colors">
                         Terapkan
                     </button>
                 </div>

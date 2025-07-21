@@ -92,9 +92,9 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Foto Profil</label>
-                         <input type="file" name="fotoProfil" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#DDEDEE] file:text-[#810000] hover:file:bg-[#c9e0e1]">
+                         <input type="file" name="fotoProfil" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#DDEDEE] file:text-[#74A740] hover:file:bg-[#c9e0e1]">
                     </div>
-                    <button type="submit" class="w-full bg-[#810000] text-white rounded-lg py-2 font-semibold mt-2">Simpan Perubahan</button>
+                    <button type="submit" class="w-full bg-[#74A740] text-white rounded-lg py-2 font-semibold mt-2">Simpan Perubahan</button>
                 </form>
             </div>
         </div>

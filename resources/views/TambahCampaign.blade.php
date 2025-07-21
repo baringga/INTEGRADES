@@ -35,10 +35,10 @@
         .swiper-pagination-bullet-active {
             background: #c1121f;
         }
-        .suggestion-box{border:2px solid #810000;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}
+        .suggestion-box{border:2px solid #74A740;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}
         .suggestion-item{border-bottom:1px solid #f0f0f0;transition:all 0.2s ease;font-size:14px;color:#333;cursor:pointer;padding:10px 16px;pointer-events:auto}
         .suggestion-item:last-child{border-bottom:none}
-        .suggestion-item:hover{background:#f8f8f8;color:#810000;padding-left:20px}
+        .suggestion-item:hover{background:#f8f8f8;color:#74A740;padding-left:20px}
         .map-instruction{position:absolute;top:10px;left:10px;background:rgb(255 255 255 / .9);padding:8px 12px;border-radius:6px;font-size:12px;color:#666;z-index:1000;pointer-events:none;transition:opacity 0.3s ease;border:1px solid #ddd}
     </style>
 </head>
@@ -110,12 +110,12 @@
                         <input type="file" name="gambar_latar[]" accept="image/*" class="hidden" id="gambar-latar-input" multiple>
                     </label>
                     <input type="text" name="nama_campaign" placeholder="Nama campaign"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required value="{{ old('nama_campaign') }}">
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required value="{{ old('nama_campaign') }}">
                     <textarea name="deskripsi_campaign" placeholder="Deskripsi campaign"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base resize-none" rows="2" required>{{ old('deskripsi_campaign') }}</textarea>
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base resize-none" rows="2" required>{{ old('deskripsi_campaign') }}</textarea>
                     <div class="relative">
                         <input type="text" name="waktu" placeholder="dd-mm-yyyy hh:mm"
-                            class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base pr-10"
+                            class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base pr-10"
                             required id="waktu" value="{{ old('waktu') }}">
                         <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[#55A7AA]">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -123,12 +123,12 @@
                             </svg>
                         </span>
                     </div>
-                    <p class="text-xs text-[#810000] mt-1 mb-2">Format: dd-mm-yyyy hh:mm (contoh: 31-12-2024 14:30)</p>
+                    <p class="text-xs text-[#74A740] mt-1 mb-2">Format: dd-mm-yyyy hh:mm (contoh: 31-12-2024 14:30)</p>
                     <input type="number" name="kuota_partisipan" placeholder="Kuota Partisipan"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required value="{{ old('kuota_partisipan') }}">
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required value="{{ old('kuota_partisipan') }}">
                     <div class="relative">
                         <input type="text" name="alamat_campaign" placeholder="Alamat campaign lengkap"
-                            class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base pl-10" id="alamat-campaign" required autocomplete="off">
+                            class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base pl-10" id="alamat-campaign" required autocomplete="off">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#55A7AA]">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2z"/>
@@ -140,7 +140,7 @@
                     <input type="hidden" name="latitude" id="latitude">
                     <input type="hidden" name="longitude" id="longitude">
 
-                    <button type="submit" class="w-full bg-[#810000] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a30000] transition mt-2">
+                    <button type="submit" class="w-full bg-[#74A740] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a507834] transition mt-2">
                         Buat
                     </button>
                 </form>
@@ -156,11 +156,11 @@
             <img src="{{ asset('ilustration.png') }}" class="w-56 md:w-72 mb-6" />
             <div class="flex flex-col gap-2 w-full">
                 <a href="{{ url('/dashboard') }}" class="w-full">
-                    <button class="w-full bg-[#810000] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a30000] transition mb-3">Kembali ke Dashboard</button>
+                    <button class="w-full bg-[#74A740] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a507834] transition mb-3">Kembali ke Dashboard</button>
                 </a>
                 @if(session('new_campaign_id'))
                 <a href="{{ route('detailcam', session('new_campaign_id')) }}" class="w-full">
-                    <button class="w-full border-2 border-[#810000] text-[#810000] rounded-full py-3 font-semibold text-base hover:bg-[#f5eaea] transition">Lihat Campaign</button>
+                    <button class="w-full border-2 border-[#74A740] text-[#74A740] rounded-full py-3 font-semibold text-base hover:bg-[#f5eaea] transition">Lihat Campaign</button>
                 </a>
                 @endif
             </div>
@@ -169,10 +169,10 @@
     <div id="modal-error" class="fixed inset-0 z-50 items-center justify-center backdrop-blur-sm {{ session('error') ? 'flex' : 'hidden' }}">
         <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg flex flex-col items-center px-10 py-8 relative max-w-md w-full">
             <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
-            <h2 class="text-2xl md:text-3xl font-bold text-[#a30000] text-center mb-2">Gagal Membuat Campaign!</h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-[#a507834] text-center mb-2">Gagal Membuat Campaign!</h2>
             <img src="{{ asset('ilustration.png') }}" class="w-56 md:w-72 mb-6" />
-            <div id="modal-error-message" class="w-full text-center text-[#a30000] font-semibold mb-4">{{ session('error') }}</div>
-            <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="w-full bg-[#f5eaea] text-[#a30000] rounded-full py-3 font-semibold text-base hover:bg-[#ffeaea] transition mb-3">Tutup</button>
+            <div id="modal-error-message" class="w-full text-center text-[#a507834] font-semibold mb-4">{{ session('error') }}</div>
+            <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="w-full bg-[#f5eaea] text-[#a507834] rounded-full py-3 font-semibold text-base hover:bg-[#ffeaea] transition mb-3">Tutup</button>
         </div>
     </div>
 
@@ -382,7 +382,7 @@
                                     });
                                     div.addEventListener('mouseenter', function() {
                                         this.style.background = '#f8f8f8';
-                                        this.style.color = '#810000';
+                                        this.style.color = '#74A740';
                                         this.style.paddingLeft = '20px';
                                     });
                                     div.addEventListener('mouseleave', function() {

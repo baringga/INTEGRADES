@@ -100,7 +100,7 @@
                             <img id="preview-foto" src="{{ filter_var($user->fotoProfil, FILTER_VALIDATE_URL) ? $user->fotoProfil : asset('storage/' . $user->fotoProfil) }}" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover border mb-2">
                         @endif
                         <input type="file" name="fotoProfil" accept="image/*" class="hidden" id="fotoProfilInput" onchange="previewFoto(event)">
-                        <button type="button" onclick="document.getElementById('fotoProfilInput').click()" class="text-sm text-[#810000] underline">Ganti Foto</button>
+                        <button type="button" onclick="document.getElementById('fotoProfilInput').click()" class="text-sm text-[#74A740] underline">Ganti Foto</button>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Nama Komunitas</label>
@@ -133,7 +133,7 @@
                             maxlength="1000"
                             placeholder="Tulis portofolio komunitas di sini...">{{ $akunKomunitas->portofolio ?? '' }}</textarea>
                     </div>
-                    <button type="submit" class="w-full bg-[#810000] text-white rounded-lg py-2 font-semibold mt-2">Simpan Perubahan</button>
+                    <button type="submit" class="w-full bg-[#74A740] text-white rounded-lg py-2 font-semibold mt-2">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
@@ -148,7 +148,7 @@
                     All
                     <div x-show="tab === 'all'" x-transition
                         class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[4px] w-16"
-                        style="background-color: #CE1212; border-radius: 9999px;">
+                        style="background-color: #7EBD3E; border-radius: 9999px;">
                     </div>
                 </button>
 
@@ -158,7 +158,7 @@
                     Berlangsung
                     <div x-show="tab === 'berlangsung'" x-transition
                         class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[4px] w-36"
-                        style="background-color: #CE1212; border-radius: 9999px;">
+                        style="background-color: #7EBD3E; border-radius: 9999px;">
                     </div>
                 </button>
 
@@ -168,7 +168,7 @@
                     Selesai
                     <div x-show="tab === 'selesai'" x-transition
                         class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[4px] w-24"
-                        style="background-color: #CE1212; border-radius: 9999px;">
+                        style="background-color: #7EBD3E; border-radius: 9999px;">
                     </div>
                 </button>
                 <div class="absolute left-0 w-full h-px bg-[#e5e7eb]" style="bottom: 0; z-index: 0;"></div>

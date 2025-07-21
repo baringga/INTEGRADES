@@ -12,9 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
 
-    <style>.main-grid{display:flex;width:90%;max-width:1200px;gap:3rem;margin:0 auto;padding-top:2rem}.left-column{flex:1;max-width:45%}.right-column{flex:1.2;max-width:55%}#map{height:130px;border-radius:.75rem;margin-top:.5rem}.form-container{background-color:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgb(0 0 0 / .1)}.form-input,.form-textarea{background-color:#f5f5f5;border:none;padding:12px 16px;margin-bottom:16px;font-size:14px;width:100%}.form-input{border-radius:8px}.form-input:focus{outline:0;box-shadow:0 0 0 2px #810000}.form-textarea{border-radius:8px;resize:vertical;min-height:80px}.form-label,.form-submit-btn{font-size:16px;font-weight:600}.form-label{margin-bottom:8px;display:block}.form-date-container{position:relative}.form-date-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#555}.form-submit-btn{background-color:#810000;color:#fff;border:none;border-radius:20px;padding:12px 0;width:100%;cursor:pointer;margin-top:8px}.form-submit-btn:hover{background-color:#6a0000}.syarat-list{margin-top:8px;padding-left:20px}.syarat-list li{margin-bottom:6px;list-style-type:decimal}.upload-container{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #55a7aa;border-radius:12px;background-color:#ddedee;cursor:pointer;margin-bottom:1.5rem}.upload-icon{height:2rem;width:2rem;color:#55a7aa;margin-bottom:.5rem}.upload-text{color:#55a7aa;font-weight:600;text-align:center}.page-header{display:flex;align-items:center;width:100%;margin-bottom:1rem}.back-button{font-size:1.5rem;color:#225151;margin-right:1rem}.page-title{font-size:1.5rem;font-weight:700;color:#000;text-align:center;flex-grow:1}.image-preview{border-radius:.75rem;max-width:28rem;height:20rem;object-fit:cover;box-shadow:0 4px 6px -1px rgb(0 0 0 / .1);width:100%;margin-bottom:1rem}.carousel-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-bottom:1rem}.dot{width:.75rem;height:.75rem;border-radius:9999px;background-color:#d9d9d9}.dot.active{background-color:#c9a74a}.location-container{width:100%;max-width:28rem;margin-top:.5rem}.location-title{font-weight:600;font-size:1.125rem;margin-bottom:.25rem}.location-text{display:flex;align-items:center;color:#4b5563;font-size:.875rem;margin-bottom:.5rem}.location-icon{height:1.25rem;width:1.25rem;color:#225151;margin-right:.25rem}.suggestion-box{border:2px solid #810000;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}.suggestion-item{border-bottom:1px solid #f0f0f0;transition:all 0.2s ease;font-size:14px;color:#333;cursor:pointer;padding:10px 16px;pointer-events:auto}.suggestion-item:last-child{border-bottom:none}.suggestion-item:hover{background:#f8f8f8;color:#810000;padding-left:20px}.map-instruction{position:absolute;top:10px;left:10px;background:rgb(255 255 255 / .9);padding:8px 12px;border-radius:6px;font-size:12px;color:#666;z-index:1000;pointer-events:none;transition:opacity 0.3s ease;border:1px solid #ddd}
+    <style>.main-grid{display:flex;width:90%;max-width:1200px;gap:3rem;margin:0 auto;padding-top:2rem}.left-column{flex:1;max-width:45%}.right-column{flex:1.2;max-width:55%}#map{height:130px;border-radius:.75rem;margin-top:.5rem}.form-container{background-color:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgb(0 0 0 / .1)}.form-input,.form-textarea{background-color:#f5f5f5;border:none;padding:12px 16px;margin-bottom:16px;font-size:14px;width:100%}.form-input{border-radius:8px}.form-input:focus{outline:0;box-shadow:0 0 0 2px #74A740}.form-textarea{border-radius:8px;resize:vertical;min-height:80px}.form-label,.form-submit-btn{font-size:16px;font-weight:600}.form-label{margin-bottom:8px;display:block}.form-date-container{position:relative}.form-date-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#555}.form-submit-btn{background-color:#74A740;color:#fff;border:none;border-radius:20px;padding:12px 0;width:100%;cursor:pointer;margin-top:8px}.form-submit-btn:hover{background-color:#6a0000}.syarat-list{margin-top:8px;padding-left:20px}.syarat-list li{margin-bottom:6px;list-style-type:decimal}.upload-container{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #55a7aa;border-radius:12px;background-color:#ddedee;cursor:pointer;margin-bottom:1.5rem}.upload-icon{height:2rem;width:2rem;color:#55a7aa;margin-bottom:.5rem}.upload-text{color:#55a7aa;font-weight:600;text-align:center}.page-header{display:flex;align-items:center;width:100%;margin-bottom:1rem}.back-button{font-size:1.5rem;color:#225151;margin-right:1rem}.page-title{font-size:1.5rem;font-weight:700;color:#000;text-align:center;flex-grow:1}.image-preview{border-radius:.75rem;max-width:28rem;height:20rem;object-fit:cover;box-shadow:0 4px 6px -1px rgb(0 0 0 / .1);width:100%;margin-bottom:1rem}.carousel-dots{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-bottom:1rem}.dot{width:.75rem;height:.75rem;border-radius:9999px;background-color:#d9d9d9}.dot.active{background-color:#c9a74a}.location-container{width:100%;max-width:28rem;margin-top:.5rem}.location-title{font-weight:600;font-size:1.125rem;margin-bottom:.25rem}.location-text{display:flex;align-items:center;color:#4b5563;font-size:.875rem;margin-bottom:.5rem}.location-icon{height:1.25rem;width:1.25rem;color:#225151;margin-right:.25rem}.suggestion-box{border:2px solid #74A740;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}.suggestion-item{border-bottom:1px solid #f0f0f0;transition:all 0.2s ease;font-size:14px;color:#333;cursor:pointer;padding:10px 16px;pointer-events:auto}.suggestion-item:last-child{border-bottom:none}.suggestion-item:hover{background:#f8f8f8;color:#74A740;padding-left:20px}.map-instruction{position:absolute;top:10px;left:10px;background:rgb(255 255 255 / .9);padding:8px 12px;border-radius:6px;font-size:12px;color:#666;z-index:1000;pointer-events:none;transition:opacity 0.3s ease;border:1px solid #ddd}
     /* Tambahan CSS untuk peta dan suggestion */
-    #map{cursor:crosshair;transition:all 0.3s ease}#map:hover{box-shadow:0 4px 12px rgb(0 0 0 / .15)}.suggestion-box{border:2px solid #810000;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}.suggestion-item{border-bottom:1px solid #f0f0f0;transition:all 0.2s ease;font-size:14px;color:#333;cursor:pointer;padding:10px 16px;pointer-events:auto}.suggestion-item:last-child{border-bottom:none}.suggestion-item:hover{background:#f8f8f8;color:#810000;padding-left:20px}.map-instruction{position:absolute;top:10px;left:10px;background:rgb(255 255 255 / .9);padding:8px 12px;border-radius:6px;font-size:12px;color:#666;z-index:1000;pointer-events:none;transition:opacity 0.3s ease;border:1px solid #ddd}
+    #map{cursor:crosshair;transition:all 0.3s ease}#map:hover{box-shadow:0 4px 12px rgb(0 0 0 / .15)}.suggestion-box{border:2px solid #74A740;border-top:none;background:#fff;box-shadow:0 4px 12px rgb(129 0 0 / .1);z-index:9999;position:absolute;top:100%;left:0;right:0;max-height:200px;overflow-y:auto;pointer-events:auto}.suggestion-item{border-bottom:1px solid #f0f0f0;transition:all 0.2s ease;font-size:14px;color:#333;cursor:pointer;padding:10px 16px;pointer-events:auto}.suggestion-item:last-child{border-bottom:none}.suggestion-item:hover{background:#f8f8f8;color:#74A740;padding-left:20px}.map-instruction{position:absolute;top:10px;left:10px;background:rgb(255 255 255 / .9);padding:8px 12px;border-radius:6px;font-size:12px;color:#666;z-index:1000;pointer-events:none;transition:opacity 0.3s ease;border:1px solid #ddd}
     </style>
 
     <script>
@@ -78,7 +78,7 @@
                     @foreach($campaign->gambar_campaign as $gambar)
                         <div class="gambar-item-lama" data-id="{{ $gambar->id }}" style="position:relative; display:inline-block;">
                             <img src="{{ filter_var($gambar->gambar, FILTER_VALIDATE_URL) ? $gambar->gambar : asset('storage/' . $gambar->gambar) }}" alt="Gambar Campaign" style="width:110px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #ccc;">
-                            <button type="button" onclick="removeOldImage(this)" style="position:absolute;top:2px;right:2px;background:#fff;border:none;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;"><span style="color:#810000;font-size:18px;">&times;</span></button>
+                            <button type="button" onclick="removeOldImage(this)" style="position:absolute;top:2px;right:2px;background:#fff;border:none;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;"><span style="color:#74A740;font-size:18px;">&times;</span></button>
                         </div>
                     @endforeach
                 </div>
@@ -94,14 +94,14 @@
                     type="text"
                     name="nama_campaign"
                     placeholder="Nama Campaign"
-                    class="input-form-custom focus:ring-2 focus:ring-[#810000]"
+                    class="input-form-custom focus:ring-2 focus:ring-[#74A740]"
                     value="{{ old('nama_campaign', $campaign->nama) }}"
                     required
                 />
 
                 <label class="form-label">Deskripsi Campaign</label>
                 <textarea
-                    class="input-form-custom focus:ring-2 focus:ring-[#810000]"
+                    class="input-form-custom focus:ring-2 focus:ring-[#74A740]"
                     name="deskripsi_campaign"
                     placeholder="Ganti deskripsi campaign"
                     required
@@ -111,7 +111,7 @@
                 <div class="form-date-container">
                     <input
                         type="text"
-                        class="input-form-custom focus:ring-2 focus:ring-[#810000]"
+                        class="input-form-custom focus:ring-2 focus:ring-[#74A740]"
                         name="waktu"
                         id="waktu"
                         placeholder="Ganti tanggal & jam pelaksanaan"
@@ -124,7 +124,7 @@
                 <label class="form-label">Kuota Partisipan</label>
                 <input
                     type="number"
-                    class="input-form-custom focus:ring-2 focus:ring-[#810000]"
+                    class="input-form-custom focus:ring-2 focus:ring-[#74A740]"
                     name="kuota_partisipan"
                     min="1"
                     placeholder="Ganti kuota partisipan"
@@ -136,7 +136,7 @@
                 <div style="position:relative;">
                     <input
                         type="text"
-                        class="input-form-custom focus:ring-2 focus:ring-[#810000]"
+                        class="input-form-custom focus:ring-2 focus:ring-[#74A740]"
                         name="alamat_campaign"
                         id="alamat-campaign"
                         placeholder="Ganti alamat atau cari lokasi..."
@@ -167,20 +167,20 @@
             <h2 class="text-2xl md:text-3xl font-bold text-[#225151] text-center mb-2">Perubahan<br>Disimpan!</h2>
             <img src="{{ asset('ilustration.png') }}" class="w-56 md:w-72 mb-6" />
             <a href="{{ url('campaign/' . $campaign->id) }}" class="w-full">
-                <button class="w-full bg-[#810000] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a30000] transition mb-3">Lihat Campaign</button>
+                <button class="w-full bg-[#74A740] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a507834] transition mb-3">Lihat Campaign</button>
             </a>
             <a href="{{ url('/dashboard') }}" class="w-full">
-                <button class="w-full border-2 border-[#810000] text-[#810000] rounded-full py-3 font-semibold text-base hover:bg-[#f5eaea] transition">Kembali ke beranda</button>
+                <button class="w-full border-2 border-[#74A740] text-[#74A740] rounded-full py-3 font-semibold text-base hover:bg-[#f5eaea] transition">Kembali ke beranda</button>
             </a>
         </div>
     </div>
     <div id="modal-error" class="fixed inset-0 z-50 items-center justify-center backdrop-blur-sm hidden">
         <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg flex flex-col items-center px-10 py-8 relative max-w-md w-full">
             <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
-            <h2 class="text-2xl md:text-3xl font-bold text-[#a30000] text-center mb-2">Perubahan<br>Gagal Disimpan!</h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-[#a507834] text-center mb-2">Perubahan<br>Gagal Disimpan!</h2>
             <img src="{{ asset('ilustration.png') }}" class="w-56 md:w-72 mb-6" />
-            <div id="modal-error-message" class="w-full text-center text-[#a30000] font-semibold mb-4"></div>
-            <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="w-full bg-[#f5eaea] text-[#a30000] rounded-full py-3 font-semibold text-base hover:bg-[#ffeaea] transition mb-3">Tutup</button>
+            <div id="modal-error-message" class="w-full text-center text-[#a507834] font-semibold mb-4"></div>
+            <button onclick="document.getElementById('modal-error').classList.add('hidden')" class="w-full bg-[#f5eaea] text-[#a507834] rounded-full py-3 font-semibold text-base hover:bg-[#ffeaea] transition mb-3">Tutup</button>
         </div>
     </div>
 
@@ -460,7 +460,7 @@
                                     // Tambahkan hover effect
                                     div.addEventListener('mouseenter', function() {
                                         this.style.background = '#f8f8f8';
-                                        this.style.color = '#810000';
+                                        this.style.color = '#74A740';
                                         this.style.paddingLeft = '20px';
                                     });
 

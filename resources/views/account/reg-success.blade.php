@@ -21,7 +21,7 @@
             </h1>
             <img src="{{ asset('ilustration.png') }}" alt="Pendaftaran Berhasil" class="w-72 md:w-96 mb-8" />
             <a href="{{ route('login') }}">
-                <button class="bg-[#810000] text-white rounded-full px-10 py-3 font-semibold text-base hover:bg-[#a30000] transition">
+                <button class="bg-[#74A740] text-white rounded-full px-10 py-3 font-semibold text-base hover:bg-[#a507834] transition">
                     Login
                 </button>
             </a>

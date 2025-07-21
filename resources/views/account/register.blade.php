@@ -33,33 +33,33 @@
                 @csrf
                 <input type="hidden" name="role" value="{{ $role ?? request('role') }}">
                 <input type="text" name="name" placeholder="Nama lengkap"
-                    class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required>
+                    class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required>
                 <input type="email" name="email" placeholder="Email"
-                    class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required>
+                    class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required>
                 <div class="relative">
                     <input type="password" name="password" placeholder="Kata sandi"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required>
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required>
                 </div>
                 <div class="relative">
                     <input type="password" name="password_confirmation" placeholder="Konfirmasi kata sandi"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base" required>
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base" required>
                 </div>
                 @if(($role ?? request('role')) === 'komunitas')
                 <div class="relative">
                     <textarea name="portofolio" placeholder="Portofolio komunitas"
-                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#810000] text-base min-h-[100px]" required></textarea>
+                        class="rounded-xl py-3 px-5 w-full bg-[#DDEDEE] text-[#55A7AA] placeholder-[#55A7AA] focus:outline-none focus:ring-2 focus:ring-[#74A740] text-base min-h-[100px]" required></textarea>
                 </div>
                 @endif
                 <div class="flex items-center mt-2 mb-2">
-                    <input type="checkbox" id="terms" name="terms" class="mr-2 w-5 h-5 rounded border-gray-300 focus:ring-[#810000]">
+                    <input type="checkbox" id="terms" name="terms" class="mr-2 w-5 h-5 rounded border-gray-300 focus:ring-[#74A740]">
                     <label for="terms" class="text-gray-700 text-sm">Saya setuju dengan syarat dan ketentuan yang berlaku</label>
                 </div>
-                <button type="submit" class="w-full bg-[#810000] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a30000] transition mt-2">
+                <button type="submit" class="w-full bg-[#74A740] text-white rounded-full py-3 font-semibold text-base hover:bg-[#a507834] transition mt-2">
                     Daftar
                 </button>
             </form>
             <div class="text-center mt-8">
-                <p class="text-black text-base">Sudah memiliki akun? <a href="{{ route('login') }}" class="text-[#810000] font-semibold">Masuk</a></p>
+                <p class="text-black text-base">Sudah memiliki akun? <a href="{{ route('login') }}" class="text-[#74A740] font-semibold">Masuk</a></p>
             </div>
         </div>
     </div>

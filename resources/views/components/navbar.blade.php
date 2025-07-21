@@ -16,18 +16,18 @@
         </button>
 
         @auth
-            <ul id="navbar-menu" class="hidden lg:flex items-center space-x-6 font-light" style="color: #810000;">
+            <ul id="navbar-menu" class="hidden lg:flex items-center space-x-6 font-light" style="color: #74A740;">
                 <li>
                     <a href="/dashboard"
                         class="relative px-1 pb-3
-                        {{ request()->is('dashboard') ? 'text-[#810000] border-b-2 border-[#810000] font-semibold' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
+                        {{ request()->is('dashboard') ? 'text-[#74A740] border-b-2 border-[#74A740] font-semibold' : 'text-[#74A740] hover:border-b-2 hover:border-[#74A740]' }}">
                         HOME
                     </a>
                 </li>
                 <li>
                     <a href="/profil"
                         class="relative px-1 pb-3
-                        {{ request()->is('profil') ? 'text-[#810000] border-b-2 border-[#810000] font-semibold' : 'text-[#810000] hover:border-b-2 hover:border-[#810000]' }}">
+                        {{ request()->is('profil') ? 'text-[#74A740] border-b-2 border-[#74A740] font-semibold' : 'text-[#74A740] hover:border-b-2 hover:border-[#74A740]' }}">
                         PROFIL
                     </a>
                 </li>
@@ -36,7 +36,7 @@
                 @if(Auth::user()->jenis_akun_id == 1)
                     <li>
                         <a href="{{ route('campaign.tambah') }}"
-                           class="bg-[#810000] text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-[#a30000] transition">
+                           class="bg-[#74A740] text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-[#a507834] transition">
                             + Buat Campaign
                         </a>
                     </li>
@@ -45,13 +45,13 @@
                 {{-- Tombol untuk semua user yang sudah login --}}
                 <li>
                     <a href="{{ route('pengaduan.create') }}"
-                       class="bg-gray-100 text-[#810000] px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-200 transition">
+                       class="bg-gray-100 text-[#74A740] px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-200 transition">
                         Buat Pengaduan
                     </a>
                 </li>
 
                 <li class="relative">
-                    <button id="logout-dropdown-btn" class="relative px-1 pb-3 text-[#810000] hover:border-b-2 hover:border-[#810000] flex items-center gap-2">
+                    <button id="logout-dropdown-btn" class="relative px-1 pb-3 text-[#74A740] hover:border-b-2 hover:border-[#74A740] flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
@@ -63,7 +63,7 @@
                             <div class="flex space-x-2">
                                 <form method="POST" action="{{ route('logout') }}" class="flex-1">
                                     @csrf
-                                    <button type="submit" class="w-full px-3 py-2 bg-[#E7424B] text-white text-sm rounded-md hover:bg-[#c7323a] transition">
+                                    <button type="submit" class="w-full px-3 py-2 bg-[#507834] text-white text-sm rounded-md hover:bg-[#7EBD3E] transition">
                                         Log Out
                                     </button>
                                 </form>
@@ -79,13 +79,13 @@
             <ul id="navbar-menu" class="hidden lg:flex space-x-8 font-light">
                 <li>
                     <a href="/login"
-                        class="relative inline-block px-10 py-2 text-white bg-[#E7424B] border-2 border-[#E7424B] rounded-md hover:bg-[#c7323a] hover:border-[#c7323a] focus:outline-none focus:ring-2 focus:ring-[#E7424B] focus:ring-opacity-50">
+                        class="relative inline-block px-10 py-2 text-white bg-[#507834] border-2 border-[#  ] rounded-md hover:bg-[#7EBD3E] hover:border-[#7EBD3E] focus:outline-none focus:ring-2 focus:ring-[#507834] focus:ring-opacity-50">
                         Masuk
                     </a>
                 </li>
                 <li>
                     <a href="/register"
-                        class="relative inline-block px-10 py-2 text-[#E7424B] border-2 border-[#E7424B] rounded-md hover:bg-[#E7424B] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#E7424B] focus:ring-opacity-50">
+                        class="relative inline-block px-10 py-2 text-[#507834] border-2 border-[#507834] rounded-md hover:bg-[#507834] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#507834] focus:ring-opacity-50">
                         Daftar
                     </a>
                 </li>
@@ -111,7 +111,7 @@
             @if(Auth::user()->jenis_akun_id == 1)
                 <li class="border-b border-gray-200 p-2">
                     <a href="{{ route('campaign.tambah') }}"
-                       class="block text-center px-4 py-2 bg-[#810000] text-white rounded-md font-semibold hover:bg-[#a30000] transition">
+                       class="block text-center px-4 py-2 bg-[#74A740] text-white rounded-md font-semibold hover:bg-[#a507834] transition">
                         + Buat Campaign
                     </a>
                 </li>
@@ -119,7 +119,7 @@
 
             <li class="border-b border-gray-200 p-2">
                 <a href="{{ route('pengaduan.create') }}"
-                   class="block text-center px-4 py-2 bg-gray-100 text-[#810000] rounded-md font-semibold hover:bg-gray-200 transition">
+                   class="block text-center px-4 py-2 bg-gray-100 text-[#74A740] rounded-md font-semibold hover:bg-gray-200 transition">
                     Buat Pengaduan
                 </a>
             </li>
@@ -138,7 +138,7 @@
                         <div class="flex space-x-2">
                             <form method="POST" action="{{ route('logout') }}" class="flex-1">
                                 @csrf
-                                <button type="submit" class="w-full px-3 py-2 bg-[#E7424B] text-white text-sm rounded-md hover:bg-[#c7323a] transition">
+                                <button type="submit" class="w-full px-3 py-2 bg-[#507834] text-white text-sm rounded-md hover:bg-[#7EBD3E] transition">
                                     Log Out
                                 </button>
                             </form>
@@ -154,13 +154,13 @@
         <ul id="mobile-menu" class="lg:hidden hidden flex-col bg-white border-t border-gray-200 px-4 py-4 space-y-2">
             <li>
                 <a href="/login"
-                    class="block w-full px-4 py-2 text-white bg-[#E7424B] border-2 border-[#E7424B] rounded-md text-center hover:bg-[#c7323a] hover:border-[#c7323a] transition">
+                    class="block w-full px-4 py-2 text-white bg-[#507834] border-2 border-[#507834] rounded-md text-center hover:bg-[#7EBD3E] hover:border-[#7EBD3E] transition">
                     Masuk
                 </a>
             </li>
             <li>
                 <a href="/register"
-                    class="block w-full px-4 py-2 text-[#E7424B] border-2 border-[#E7424B] rounded-md text-center hover:bg-[#E7424B] hover:text-white hover:border-[#c7323a] transition">
+                    class="block w-full px-4 py-2 text-[#507834] border-2 border-[#507834] rounded-md text-center hover:bg-[#507834] hover:text-white hover:border-[#7EBD3E] transition">
                     Daftar
                 </a>
             </li>

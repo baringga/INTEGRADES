@@ -18,11 +18,7 @@ class CampaignController extends Controller
      */
     public function show($id)
     {
-        $campaign = Campaign::with([
-            'akun',
-            'gambar_campaign',
-            'partisipanCampaigns.akun'
-        ])->findOrFail($id);
+        $campaign = Campaign::with('gambar_campaign')->findOrFail($id);
 
         $komentar = \App\Models\Komentar::with(['akun', 'likes'])
             ->where('campaign_id', $id)
@@ -41,17 +37,11 @@ class CampaignController extends Controller
     {
         $user = Auth::user();
 
-        // Pastikan user adalah Volunteer Desa (asumsi ID 1)
-        if ($user->jenis_akun_id != 1) {
-            return redirect()->route('dashboard')->with('error', 'Hanya Volunteer Desa yang dapat membuat campaign.');
-        }
-
-        $profilVolunteer = AkunKomunitas::where('akun_id', $user->id)->first();
-
-        // Cek apakah portofolio sudah diisi
-        if (!$profilVolunteer || empty($profilVolunteer->portofolio)) {
-            return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda di profil sebelum membuat campaign.');
-        }
+        // Hapus/komentari seluruh pengecekan portofolio
+        // $profilVolunteer = AkunKomunitas::where('akun_id', $user->id)->first();
+        // if (!$profilVolunteer || trim($profilVolunteer->portofolio) === '') {
+        //     return redirect()->route('profil')->with('error', 'Harap lengkapi URL portofolio Anda di profil sebelum membuat campaign.');
+        // }
 
         return view('TambahCampaign');
     }

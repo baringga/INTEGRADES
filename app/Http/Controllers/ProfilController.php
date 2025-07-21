@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Pengaduan; // Tambahkan ini untuk mengakses model Pengaduan
-use App\Models\AkunKomunitas; // Diperlukan untuk update portofolio
+use App\Models\Pengaduan;
+use App\Models\AkunKomunitas;
 
 class ProfilController extends Controller
 {
@@ -20,16 +20,13 @@ class ProfilController extends Controller
             return redirect()->route('login');
         }
 
-        // Ambil data pengaduan yang dibuat oleh user ini
         $pengaduanSaya = Pengaduan::where('akun_id', $user->id)
                                   ->orderBy('created_at', 'desc')
                                   ->get();
 
         if ($user->jenis_akun_id == 1) { // 1 = Volunteer Desa
-            // Di tahap selanjutnya, kita akan mengirimkan data pengaduan ini ke ProfilVolunteerController
             return app(\App\Http\Controllers\ProfilVolunteerController::class)->show($pengaduanSaya);
         } elseif ($user->jenis_akun_id == 2) { // 2 = Masyarakat Desa
-            // Kirim data user dan data pengaduannya ke view
             return view('profilmasyarakat', [
                 'user' => $user,
                 'pengaduanSaya' => $pengaduanSaya
@@ -44,40 +41,32 @@ class ProfilController extends Controller
      */
     public function update(Request $request)
     {
-        $user = auth()->user();
-        $request->validate([
-            'namaPengguna' => 'required|string|max:100',
-            'email' => [
-                'required',
-                'email',
-                'max:100',
-                'unique:akun,email,' . $user->id,
-                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/'
-            ],
-            'nomorTelepon' => 'required|string|max:20',
-            'fotoProfil' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
-            'portofolio' => 'nullable|url|max:1000',
-        ]);
+        $user = Auth::user();
 
-        if ($request->hasFile('fotoProfil')) {
-            $path = $request->file('fotoProfil')->store('foto_profil', 'public');
-            $user->fotoProfil = $path;
-        }
-
+        // Update data user
         $user->namaPengguna = $request->namaPengguna;
         $user->email = $request->email;
         $user->nomorTelepon = $request->nomorTelepon;
-        $user->updated_at = now();
+        // ...update foto profil jika ada...
+
         $user->save();
 
-        // Update portofolio jika pengguna adalah Volunteer Desa (ID 1)
-        if ($user->jenis_akun_id == 1 && $request->filled('portofolio')) {
-            AkunKomunitas::updateOrCreate(
-                ['akun_id' => $user->id],
-                ['portofolio' => $request->portofolio]
-            );
-        }
-
         return back()->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    /**
+     * Menampilkan semua pengaduan yang dibuat oleh pengguna (halaman "Lihat Semua").
+     */
+    public function laporanSaya()
+    {
+        $user = Auth::user();
+
+        $pengaduanSaya = Pengaduan::where('akun_id', $user->id)
+                                  ->orderBy('created_at', 'desc')
+                                  ->paginate(10); // Menggunakan paginate untuk halaman ini
+
+        return view('profil.laporan-saya', [
+            'pengaduanSaya' => $pengaduanSaya
+        ]);
     }
 }

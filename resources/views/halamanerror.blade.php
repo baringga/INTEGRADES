@@ -23,7 +23,7 @@
             </div>
 
             {{-- Back to Homepage Button --}}
-            <a href="/dashboard" class="inline-block border-2 border-[#810000] text-[#810000] bg-transparent hover:bg-[#810000] hover:text-white rounded-full px-8 py-3 text-base font-medium transition-colors duration-200">
+            <a href="/dashboard" class="inline-block border-2 border-[#74A740] text-[#74A740] bg-transparent hover:bg-[#74A740] hover:text-white rounded-full px-8 py-3 text-base font-medium transition-colors duration-200">
                 Kembali ke beranda
             </a>
         </div>

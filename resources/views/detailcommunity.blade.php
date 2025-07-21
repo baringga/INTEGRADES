@@ -57,7 +57,7 @@
                     <!-- Edit -->
                     <a href="{{ route('editcampaign', $campaign->id) }}" title="Edit Campaign">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                            viewBox="0 0 24 24" stroke="#810000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            viewBox="0 0 24 24" stroke="#74A740" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                             <path d="M13.5 6.5l4 4" />
                         </svg>
@@ -65,7 +65,7 @@
                     <!-- Hapus -->
                     <a href="#" onclick="confirmDeletion({{ $campaign->id }})" title="Hapus Campaign">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
-                            viewBox="0 0 24 24" stroke="#810000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            viewBox="0 0 24 24" stroke="#74A740" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 7l16 0" />
                             <path d="M10 11l0 6" />
                             <path d="M14 11l0 6" />
@@ -198,14 +198,14 @@
                     id="commentInput"
                     name="komentar"
                     type="text"
-                    class="w-full border-0 border-b border-gray-300 rounded-none px-0 py-2 text-sm focus:outline-none focus:ring-0 focus:border-[#810000]"
+                    class="w-full border-0 border-b border-gray-300 rounded-none px-0 py-2 text-sm focus:outline-none focus:ring-0 focus:border-[#74A740]"
                     placeholder="Tulis komentar kamu..."
                     autocomplete="off"
                     maxlength="280"
                     required
                 >
             </div>
-            <button type="submit" class="bg-[#810000] text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
+            <button type="submit" class="bg-[#74A740] text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
                 Kirim
             </button>
         </form>
@@ -256,7 +256,7 @@ function confirmDeletion(campaignId) {
         html: '<span>Semua data campaign dan seluruh partisipan akan dihapus dari campaign.</span>',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#810000',
+        confirmButtonColor: '#74A740',
         cancelButtonColor: '#b0b0b0',
         confirmButtonText: 'Ya',
         cancelButtonText: 'Batal',
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.className = 'edit-comment-form flex gap-2 mt-1';
                 form.innerHTML = `
                     <input type="text" class="border rounded px-2 py-1 text-sm flex-1" value="${oldText}" maxlength="280" required>
-                    <button type="submit" class="bg-[#810000] text-white px-3 py-1 rounded text-xs">Kirim</button>
+                    <button type="submit" class="bg-[#74A740] text-white px-3 py-1 rounded text-xs">Kirim</button>
                     <button type="button" class="cancel-edit text-gray-500 px-2 text-xs">Batal</button>
                 `;
                 textDiv.style.display = 'none';

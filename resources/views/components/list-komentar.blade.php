@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.className = 'edit-comment-form flex gap-2 mt-1';
                 form.innerHTML = `
                     <input type="text" class="border rounded px-2 py-1 text-sm flex-1" value="${oldText}" maxlength="280" required>
-                    <button type="submit" class="bg-[#810000] text-white px-3 py-1 rounded text-xs">Kirim</button>
+                    <button type="submit" class="bg-[#74A740] text-white px-3 py-1 rounded text-xs">Kirim</button>
                     <button type="button" class="cancel-edit text-gray-500 px-2 text-xs">Batal</button>
                 `;
                 textDiv.style.display = 'none';

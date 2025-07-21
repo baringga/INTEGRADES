@@ -12,6 +12,17 @@ class ProfilVolunteerController extends Controller
     {
         $user = Auth::user();
 
+        // Campaign yang diikuti user (status approved)
+        $campaignsDiikuti = \App\Models\Campaign::with('coverImage')
+            ->whereIn('id', function($query) use ($user) {
+                $query->select('campaign_id')
+                    ->from('partisipan_campaign')
+                    ->where('akun_id', $user->id)
+                    ->where('status', 'approved');
+            })
+            ->whereNotNull('nama')
+            ->get();
+
         // Ambil komentar user beserta nama campaign
         $komentarList = \DB::table('komentar')
             ->join('campaign', 'komentar.campaign_id', '=', 'campaign.id')
@@ -24,16 +35,6 @@ class ProfilVolunteerController extends Controller
                 'campaign.id as campaign_id'
             )
             ->orderByDesc('komentar.waktu')
-            ->get();
-
-        // Campaign yang diikuti user
-        $campaigns = \App\Models\Campaign::with('coverImage')
-            ->whereIn('id', function($query) use ($user) {
-                $query->select('campaign_id')
-                    ->from('partisipan_campaign')
-                    ->where('akun_id', $user->id);
-            })
-            ->whereNotNull('nama') // hanya campaign valid
             ->get();
 
         // Campaign yang ditandai user
@@ -61,6 +62,6 @@ class ProfilVolunteerController extends Controller
             ->orderByDesc('komentar.waktu')
             ->get();
 
-        return view('profilvolunteer', compact('komentarList', 'campaigns', 'campaignsDitandai', 'komentarDisukai', 'user'));
+        return view('profilvolunteer', compact('komentarList', 'campaignsDiikuti', 'campaignsDitandai', 'komentarDisukai', 'user'));
     }
 }
