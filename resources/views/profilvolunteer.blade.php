@@ -97,24 +97,11 @@
 
             {{-- Isi Tab --}}
             <div class="mt-4">
+                {{-- Tab Campaign Diikuti --}}
                 <div x-show="tab === 'campaign_diikuti'">
                     @forelse($campaignsDiikuti as $campaign)
-                        <div class="mb-4 bg-white rounded-lg p-4 shadow">
+                        <div class="mb-6"> {{-- Tambahkan margin bawah di sini --}}
                             @include('components.campaignprofile-item', ['campaign' => $campaign])
-                            @php
-                                $jumlahPartisipan = $campaign->partisipanCampaigns->count();
-                                $kuota = $campaign->kuota_partisipan ?? 0;
-                                $persen = $kuota > 0 ? min(100, round(($jumlahPartisipan / $kuota) * 100)) : 0;
-                            @endphp
-                            <div class="mt-2">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-gray-500">Progress</span>
-                                    <span class="text-gray-700 font-semibold">{{ $jumlahPartisipan }}/{{ $kuota }} partisipan</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-[#74A740] h-2 rounded-full" style="width: {{ $persen }}%"></div>
-                                </div>
-                            </div>
                         </div>
                     @empty
                         <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
@@ -122,13 +109,15 @@
                         </div>
                     @endforelse
                 </div>
+
+                {{-- Tab Campaign Dibuat --}}
                 <div x-show="tab === 'campaign_dibuat'">
                     <h2 class="text-lg font-bold mb-4">Campaign yang Kamu Buat</h2>
                     @forelse($campaigns as $campaign)
                         @php
                             $pendingCount = $campaign->partisipanCampaigns->where('status', 'pending')->count();
                         @endphp
-                        <div class="relative">
+                        <div class="relative mb-6"> {{-- Tambahkan margin bawah di sini --}}
                             @include('components.campaignprofile-item', ['campaign' => $campaign])
                             @if($pendingCount > 0)
                                 <span class="absolute top-2 right-2 bg-yellow-500 text-white text-xs rounded-full px-2 py-1">
@@ -140,6 +129,7 @@
                         <div class="text-gray-500">Belum ada campaign yang kamu buat.</div>
                     @endforelse
                 </div>
+
                 <div x-show="tab === 'pengaduan_saya'">
                     <h2 class="text-lg font-bold mb-4">Pengaduan Saya</h2>
                     @forelse($pengaduanSaya as $pengaduan)

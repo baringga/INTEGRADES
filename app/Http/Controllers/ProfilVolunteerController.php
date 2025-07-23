@@ -15,8 +15,10 @@ class ProfilVolunteerController extends Controller
         // Campaign yang dibuat user
         $campaigns = \App\Models\Campaign::where('akun_id', $user->id)->orderBy('waktu', 'desc')->get();
 
-        // Campaign yang diikuti user
-        $campaignsDiikuti = $user->campaignsDiikuti()->orderBy('waktu', 'desc')->get();
+        // Campaign yang diikuti user (hanya yang sudah di-approve)
+        $campaignsDiikuti = \App\Models\Campaign::whereHas('partisipanCampaigns', function ($q) use ($user) {
+            $q->where('akun_id', $user->id)->where('status', 'approved');
+        })->orderBy('waktu', 'desc')->get();
 
         // Pengaduan yang dibuat user
         $pengaduanSaya = \App\Models\Pengaduan::where('akun_id', $user->id)->orderBy('created_at', 'desc')->get();

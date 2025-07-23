@@ -45,7 +45,7 @@ class PartisipanCampaignController extends Controller
             'email' => $request->email,
             'nomorTelepon' => $request->nomorTelepon,
             'motivasi' => $request->motivasi,
-            'status' => 'pending', // Status pendaftaran diatur sebagai 'pending'
+            'status' => 'pending', // Sudah benar
         ]);
 
         return redirect()->route('partisipan.create', $id)->with('berhasil', true);

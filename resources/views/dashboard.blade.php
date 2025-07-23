@@ -10,6 +10,29 @@
     @include('components.navbar')
 
     <main class="max-w-7xl mx-auto py-10 px-4 space-y-16">
+        {{-- ====================================================== --}}
+        {{-- FORM PENCARIAN --}}
+        {{-- ====================================================== --}}
+        <form method="GET" action="{{ route('dashboard') }}" class="mb-8 flex flex-col md:flex-row gap-3 items-center">
+            <input
+                type="text"
+                name="q"
+                value="{{ request('q') }}"
+                placeholder="Cari data..."
+                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]"
+            />
+            <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]">
+                <option value="">Semua Menu</option>
+                <option value="laporan_warga" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Warga</option>
+                <option value="laporan_anda" {{ request('filter_menu') == 'laporan_anda' ? 'selected' : '' }}>Laporan Anda</option>
+                <option value="campaign_diikuti" {{ request('filter_menu') == 'campaign_diikuti' ? 'selected' : '' }}>Campaign yang Anda Ikuti</option>
+                <option value="campaign_dibuat" {{ request('filter_menu') == 'campaign_dibuat' ? 'selected' : '' }}>Campaign yang Anda Buat</option>
+                <option value="rekomendasi" {{ request('filter_menu') == 'rekomendasi' ? 'selected' : '' }}>Rekomendasi Campaign</option>
+            </select>
+            <button type="submit" class="bg-[#74A740] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#a507834] transition">
+                Cari
+            </button>
+        </form>
 
         {{-- ====================================================== --}}
         {{-- BAGIAN 1: SEMUA LAPORAN WARGA (Untuk semua pengguna) --}}

@@ -13,47 +13,79 @@ class DashboardController extends Controller
     /**
      * Menyiapkan dan menampilkan data untuk halaman dashboard utama.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $q = $request->query('q');
+        $filterMenu = $request->query('filter_menu');
 
-        $semuaPengaduan = Pengaduan::with('akun')->orderBy('created_at', 'desc')->paginate(5, ['*'], 'semua_pengaduan');
+        // Default: tampilkan semua jika tidak ada filter
+        $semuaPengaduan = collect();
+        $laporanAnda = collect();
+        $campaignDiikuti = collect();
+        $campaignDibuat = collect();
+        $rekomendasiCampaign = collect();
 
-        if ($user->jenis_akun_id == 2) {
-            return view('dashboard', [
-                'user' => $user,
-                'semuaPengaduan' => $semuaPengaduan
-            ]);
+        if (!$filterMenu || $filterMenu == 'laporan_warga') {
+            $semuaPengaduan = Pengaduan::with('akun')
+                ->when($q, function($query) use ($q) {
+                    $query->where('judul', 'like', "%$q%")
+                          ->orWhere('isi_pengaduan', 'like', "%$q%");
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'semua_pengaduan');
         }
 
-        $laporanAnda = Pengaduan::where('akun_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->take(3)
-            ->get();
+        if (!$filterMenu || $filterMenu == 'laporan_anda') {
+            $laporanAnda = Pengaduan::where('akun_id', $user->id)
+                ->when($q, function($query) use ($q) {
+                    $query->where('judul', 'like', "%$q%")
+                          ->orWhere('isi_pengaduan', 'like', "%$q%");
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(5, ['*'], 'laporan_anda'); // gunakan paginate
+        }
 
-        $campaignDiikuti = Campaign::whereHas('partisipanCampaigns', function ($query) use ($user) {
-            $query->where('akun_id', $user->id)->where('status', 'approved');
-        })
-        ->with('coverImage')
-        ->orderBy('waktu', 'desc')
-        ->take(3)
-        ->get();
+        if (!$filterMenu || $filterMenu == 'campaign_diikuti') {
+            $campaignDiikuti = Campaign::whereHas('partisipanCampaigns', function ($query) use ($user) {
+                    $query->where('akun_id', $user->id)->where('status', 'approved');
+                })
+                ->when($q, function($query) use ($q) {
+                    $query->where('nama', 'like', "%$q%")
+                          ->orWhere('deskripsi', 'like', "%$q%");
+                })
+                ->with('coverImage')
+                ->orderBy('waktu', 'desc')
+                ->take(3)
+                ->get();
+        }
 
-        $campaignDibuat = Campaign::where('akun_id', $user->id)
-            ->with('coverImage')
-            ->orderBy('waktu', 'desc')
-            ->take(3)
-            ->get();
+        if (!$filterMenu || $filterMenu == 'campaign_dibuat') {
+            $campaignDibuat = Campaign::where('akun_id', $user->id)
+                ->when($q, function($query) use ($q) {
+                    $query->where('nama', 'like', "%$q%")
+                          ->orWhere('deskripsi', 'like', "%$q%");
+                })
+                ->with('coverImage')
+                ->orderBy('waktu', 'desc')
+                ->paginate(6, ['*'], 'campaign_dibuat'); // gunakan paginate
+        }
 
-        $rekomendasiCampaign = Campaign::with('coverImage')
-            ->where('akun_id', '!=', $user->id)
-            ->where('waktu', '>', now())
-            ->whereDoesntHave('partisipanCampaigns', function ($query) use ($user) {
-                $query->where('akun_id', $user->id);
-            })
-            ->orderBy('waktu', 'desc')
-            ->take(3)
-            ->get();
+        if (!$filterMenu || $filterMenu == 'rekomendasi') {
+            $rekomendasiCampaign = Campaign::with('coverImage')
+                ->where('akun_id', '!=', $user->id)
+                ->where('waktu', '>', now())
+                ->whereDoesntHave('partisipanCampaigns', function ($query) use ($user) {
+                    $query->where('akun_id', $user->id);
+                })
+                ->when($q, function($query) use ($q) {
+                    $query->where('nama', 'like', "%$q%")
+                          ->orWhere('deskripsi', 'like', "%$q%");
+                })
+                ->orderBy('waktu', 'desc')
+                ->take(3)
+                ->get();
+        }
 
         return view('dashboard', [
             'user' => $user,
@@ -61,7 +93,9 @@ class DashboardController extends Controller
             'laporanAnda' => $laporanAnda,
             'campaignDiikuti' => $campaignDiikuti,
             'campaignDibuat' => $campaignDibuat,
-            'rekomendasiCampaign' => $rekomendasiCampaign
+            'rekomendasiCampaign' => $rekomendasiCampaign,
+            'filterMenu' => $filterMenu,
+            'q' => $q,
         ]);
     }
 
