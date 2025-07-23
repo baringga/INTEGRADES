@@ -50,10 +50,6 @@ class DashboardController extends Controller
             $campaignDiikuti = Campaign::whereHas('partisipanCampaigns', function ($query) use ($user) {
                     $query->where('akun_id', $user->id)->where('status', 'approved');
                 })
-                ->when($q, function($query) use ($q) {
-                    $query->where('nama', 'like', "%$q%")
-                          ->orWhere('deskripsi', 'like', "%$q%");
-                })
                 ->with('coverImage')
                 ->orderBy('waktu', 'desc')
                 ->paginate(6, ['*'], 'campaign_diikuti');

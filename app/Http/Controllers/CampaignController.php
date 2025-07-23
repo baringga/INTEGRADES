@@ -18,14 +18,12 @@ class CampaignController extends Controller
      */
     public function show($id)
     {
-        $campaign = Campaign::with('gambar_campaign')->findOrFail($id);
-
+        $campaign = Campaign::with('partisipanCampaigns')->findOrFail($id);
         $komentar = \App\Models\Komentar::with(['akun', 'likes'])
             ->where('campaign_id', $id)
             ->orderBy('waktu', 'desc')
             ->get();
 
-        // Cukup satu view untuk semua
         return view('detailcam', compact('campaign', 'komentar'));
     }
 
@@ -149,9 +147,8 @@ class CampaignController extends Controller
      */
     public function manage($id)
     {
-        $campaign = Campaign::with('partisipanCampaigns.akun.akunKomunitas')->findOrFail($id);
+        $campaign = \App\Models\Campaign::with('partisipanCampaigns.akun')->findOrFail($id);
 
-        // Pastikan hanya pembuat campaign yang bisa mengakses
         if ($campaign->akun_id !== Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
@@ -168,20 +165,11 @@ class CampaignController extends Controller
             'status' => 'required|in:approved,rejected',
         ]);
 
-        $partisipan = PartisipanCampaign::findOrFail($partisipanId);
+        $partisipan = \App\Models\PartisipanCampaign::findOrFail($partisipanId);
         $campaign = $partisipan->campaign;
 
-        // Pastikan hanya pembuat campaign yang bisa mengubah status
         if ($campaign->akun_id !== Auth::id()) {
             abort(403, 'Aksi tidak diizinkan.');
-        }
-
-        // Cek kuota sebelum menyetujui
-        if ($request->status === 'approved') {
-            $jumlahPartisipanDisetujui = PartisipanCampaign::where('campaign_id', $campaign->id)->where('status', 'approved')->count();
-            if ($campaign->kuota_partisipan && $jumlahPartisipanDisetujui >= $campaign->kuota_partisipan) {
-                return back()->with('error', 'Gagal menyetujui. Kuota partisipan sudah penuh.');
-            }
         }
 
         $partisipan->status = $request->status;

@@ -155,6 +155,9 @@
                             <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum mengikuti campaign apapun.</p></div>
                         @endforelse
                     </div>
+                    <div class="mt-6">
+                        {{ $campaignDiikuti->links() }}
+                    </div>
                 </div>
             </section>
 

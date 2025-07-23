@@ -13,7 +13,7 @@ class PartisipanCampaignController extends Controller
         return view('form-pendaftaran', ['campaign_id' => $id]);
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request, $campaign_id)
     {
         $request->validate([
             'nama' => 'required|string|max:100',
@@ -22,33 +22,33 @@ class PartisipanCampaignController extends Controller
             'motivasi' => 'nullable|string|max:200',
         ]);
 
-        $campaign = \App\Models\Campaign::findOrFail($id);
+        $campaign = \App\Models\Campaign::findOrFail($campaign_id);
 
         // Cek apakah user sudah terdaftar (terlepas dari status)
         $isRegistered = PartisipanCampaign::where('akun_id', Auth::id())
-                                          ->where('campaign_id', $id)
+                                          ->where('campaign_id', $campaign_id)
                                           ->exists();
         if ($isRegistered) {
-            return redirect()->route('partisipan.create', $id)->with('error', 'Anda sudah terdaftar di campaign ini.');
+            return redirect()->route('partisipan.create', $campaign_id)->with('error', 'Anda sudah terdaftar di campaign ini.');
         }
 
-        $jumlahPartisipanDisetujui = PartisipanCampaign::where('campaign_id', $id)->where('status', 'approved')->count();
+        $jumlahPartisipanDisetujui = PartisipanCampaign::where('campaign_id', $campaign_id)->where('status', 'approved')->count();
 
         if ($campaign->kuota_partisipan && $jumlahPartisipanDisetujui >= $campaign->kuota_partisipan) {
-            return redirect()->route('partisipan.create', $id)->with('penuh', true);
+            return redirect()->route('partisipan.create', $campaign_id)->with('penuh', true);
         }
 
         PartisipanCampaign::create([
             'akun_id' => Auth::id(),
-            'campaign_id' => $id,
+            'campaign_id' => $campaign_id,
             'nama' => $request->nama,
             'email' => $request->email,
             'nomorTelepon' => $request->nomorTelepon,
             'motivasi' => $request->motivasi,
-            'status' => 'pending', // Sudah benar
+            'status' => 'approved', // pastikan ini 'approved'
         ]);
 
-        return redirect()->route('partisipan.create', $id)->with('berhasil', true);
+        return redirect()->route('dashboard')->with('success', 'Berhasil mendaftar campaign!');
     }
 
     public function akun()

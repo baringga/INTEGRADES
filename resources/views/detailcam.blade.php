@@ -523,6 +523,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Panggil sekali di awal
     attachCommentEvents();
 });
-</script>
 </body>
 </html>

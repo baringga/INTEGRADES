@@ -28,7 +28,7 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pendaftar</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Motivasi</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -36,28 +36,28 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($campaign->partisipanCampaigns as $partisipan)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $partisipan->akun->namaPengguna }}</td>
-                            <td class="px-6 py-4 whitespace-normal text-sm text-gray-500 max-w-xs">{{ $partisipan->motivasi ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <td class="border px-4 py-2">{{ $partisipan->akun->namaPengguna }}</td>
+                            <td class="border px-4 py-2">{{ $partisipan->akun->email }}</td>
+                            <td class="border px-4 py-2">
                                 @if($partisipan->status == 'approved')
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Disetujui</span>
+                                    <span class="text-green-600">Disetujui</span>
                                 @elseif($partisipan->status == 'rejected')
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Ditolak</span>
+                                    <span class="text-red-600">Ditolak</span>
                                 @else
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    <span class="text-yellow-600">Pending</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <td class="border px-4 py-2">
                                 @if($partisipan->status == 'pending')
-                                <form action="{{ route('partisipan.updateStatus', $partisipan->id) }}" method="POST" class="inline">
+                                <form action="{{ route('partisipan.updateStatus', $partisipan->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     <input type="hidden" name="status" value="approved">
-                                    <button type="submit" class="text-green-600 hover:text-green-900">Setujui</button>
+                                    <button type="submit" class="text-green-600">Setujui</button>
                                 </form>
-                                <form action="{{ route('partisipan.updateStatus', $partisipan->id) }}" method="POST" class="inline">
+                                <form action="{{ route('partisipan.updateStatus', $partisipan->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     <input type="hidden" name="status" value="rejected">
-                                    <button type="submit" class="text-red-600 hover:text-red-900">Tolak</button>
+                                    <button type="submit" class="text-red-600">Tolak</button>
                                 </form>
                                 @else
                                 <span class="text-gray-400">Selesai</span>
@@ -69,6 +69,10 @@
                 </table>
             </div>
         </div>
+
+        @if(Auth::id() === $campaign->akun_id)
+            <a href="{{ route('campaign.manage', $campaign->id) }}" class="btn bg-[#74A740] text-white rounded-lg px-4 py-2">Kelola Partisipan</a>
+        @endif
     </main>
 </body>
 </html>

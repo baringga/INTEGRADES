@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     // Partisipan & Manajemen Campaign
     Route::get('/campaign/{id}/daftar', [PartisipanCampaignController::class, 'create'])->name('partisipan.create');
     Route::post('/campaign/{id}/daftar', [PartisipanCampaignController::class, 'store'])->name('partisipan.store');
-    Route::get('/campaign/{id}/manage', [CampaignController::class, 'manage'])->name('campaign.manage');
+    Route::get('/campaign/{id}/manage', [\App\Http\Controllers\CampaignController::class, 'manage'])->name('campaign.manage');
     Route::post('/partisipan/{id}/update-status', [\App\Http\Controllers\CampaignController::class, 'updateStatus'])->name('partisipan.updateStatus');
 
     // Profil
