@@ -56,8 +56,7 @@ class DashboardController extends Controller
                 })
                 ->with('coverImage')
                 ->orderBy('waktu', 'desc')
-                ->take(3)
-                ->get();
+                ->paginate(6, ['*'], 'campaign_diikuti');
         }
 
         if (!$filterMenu || $filterMenu == 'campaign_dibuat') {
@@ -83,8 +82,7 @@ class DashboardController extends Controller
                           ->orWhere('deskripsi', 'like', "%$q%");
                 })
                 ->orderBy('waktu', 'desc')
-                ->take(3)
-                ->get();
+                ->paginate(6, ['*'], 'rekomendasi_campaign');
         }
 
         return view('dashboard', [
