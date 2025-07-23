@@ -7,6 +7,7 @@ use App\Models\PartisipanCampaign;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DashboardController extends Controller
 {
@@ -19,12 +20,12 @@ class DashboardController extends Controller
         $q = $request->query('q');
         $filterMenu = $request->query('filter_menu');
 
-        // Default: tampilkan semua jika tidak ada filter
-        $semuaPengaduan = collect();
-        $laporanAnda = collect();
-        $campaignDiikuti = collect();
-        $campaignDibuat = collect();
-        $rekomendasiCampaign = collect();
+        // Default: paginator kosong
+        $semuaPengaduan = new LengthAwarePaginator([], 0, 5);
+        $laporanAnda = new LengthAwarePaginator([], 0, 5);
+        $campaignDiikuti = new LengthAwarePaginator([], 0, 6);
+        $campaignDibuat = new LengthAwarePaginator([], 0, 6);
+        $rekomendasiCampaign = new LengthAwarePaginator([], 0, 6);
 
         if (!$filterMenu || $filterMenu == 'laporan_warga') {
             $semuaPengaduan = Pengaduan::with('akun')
