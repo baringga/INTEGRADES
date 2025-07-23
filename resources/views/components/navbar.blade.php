@@ -1,7 +1,8 @@
 <nav class="sticky top-0 bg-white shadow-sm px-12 z-30">
     <div class="container mx-auto px-4 flex items-center justify-between h-28">
         <a href="/" class="flex items-center">
-            <img src="{{ asset('Logo.png') }}" alt="Logo" class="h-22 w-auto" />
+            <img src="{{ asset('Logo.png') }}" alt="Logo" class="h-20 w-auto" />
+            <span class="font-bold text-4xl text-[#74A740] tracking-wide ml-5">INTEGRADES</span>
         </a>
 
         <button id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false"

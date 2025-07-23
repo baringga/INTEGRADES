@@ -10,58 +10,30 @@ class ProfilVolunteerController extends Controller
 {
     public function show()
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        // Campaign yang diikuti user (status approved)
-        $campaignsDiikuti = \App\Models\Campaign::with('coverImage')
-            ->whereIn('id', function($query) use ($user) {
-                $query->select('campaign_id')
-                    ->from('partisipan_campaign')
-                    ->where('akun_id', $user->id)
-                    ->where('status', 'approved');
-            })
-            ->whereNotNull('nama')
-            ->get();
+        // Campaign yang dibuat user
+        $campaigns = \App\Models\Campaign::where('akun_id', $user->id)->orderBy('waktu', 'desc')->get();
 
-        // Ambil komentar user beserta nama campaign
-        $komentarList = \DB::table('komentar')
+        // Campaign yang diikuti user
+        $campaignsDiikuti = $user->campaignsDiikuti()->orderBy('waktu', 'desc')->get();
+
+        // Pengaduan yang dibuat user
+        $pengaduanSaya = \App\Models\Pengaduan::where('akun_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        // Komentar yang dibuat user
+        $komentarList = \App\Models\Komentar::where('komentar.akun_id', $user->id)
             ->join('campaign', 'komentar.campaign_id', '=', 'campaign.id')
-            ->where('komentar.akun_id', $user->id)
-            ->whereNotNull('campaign.nama') // hanya campaign valid
-            ->select(
-                'komentar.komentar as isi_komentar',
-                'komentar.waktu',
-                'campaign.nama as nama_campaign',
-                'campaign.id as campaign_id'
-            )
-            ->orderByDesc('komentar.waktu')
+            ->select('komentar.*', 'campaign.nama as nama_campaign')
+            ->orderBy('komentar.waktu', 'desc')
             ->get();
 
-        // Campaign yang ditandai user
-        $campaignsDitandai = \App\Models\Campaign::with('coverImage')
-            ->whereIn('id', function($query) use ($user) {
-                $query->select('campaign_id')
-                    ->from('campaign_ditandai')
-                    ->where('akun_id', $user->id);
-            })
-            ->whereNotNull('nama') // hanya campaign valid
-            ->get();
-
-        // Komentar yang disukai user
-        $komentarDisukai = \DB::table('komentar_disukai')
-            ->join('komentar', 'komentar_disukai.komentar_id', '=', 'komentar.id')
-            ->join('campaign', 'komentar.campaign_id', '=', 'campaign.id')
-            ->where('komentar_disukai.akun_id', $user->id)
-            ->whereNotNull('campaign.nama') // hanya campaign valid
-            ->select(
-                'komentar.komentar as isi_komentar',
-                'komentar.waktu',
-                'campaign.nama as nama_campaign',
-                'campaign.id as campaign_id' // tambahkan baris ini!
-            )
-            ->orderByDesc('komentar.waktu')
-            ->get();
-
-        return view('profilvolunteer', compact('komentarList', 'campaignsDiikuti', 'campaignsDitandai', 'komentarDisukai', 'user'));
+        return view('profilvolunteer', compact(
+            'user',
+            'campaigns',
+            'campaignsDiikuti',
+            'pengaduanSaya',
+            'komentarList'
+        ));
     }
 }

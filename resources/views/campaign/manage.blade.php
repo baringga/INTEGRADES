@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse ($campaign->partisipanCampaigns as $partisipan)
+                        @foreach ($campaign->partisipanCampaigns as $partisipan)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $partisipan->akun->namaPengguna }}</td>
                             <td class="px-6 py-4 whitespace-normal text-sm text-gray-500 max-w-xs">{{ $partisipan->motivasi ?? '-' }}</td>
@@ -64,11 +64,7 @@
                                 @endif
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">Belum ada pendaftar.</td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

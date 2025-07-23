@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     // Rute Campaign
     Route::get('/campaign/tambah', [CampaignController::class, 'create'])->name('campaign.tambah');
     Route::post('/campaign', [CampaignController::class, 'store'])->name('campaign.store');
-    Route::get('/campaign/{id}', [CampaignController::class, 'show'])->name('campaign.detail');
+    Route::get('/campaign/{id}', [\App\Http\Controllers\CampaignController::class, 'show'])->name('detailcam');
     Route::get('/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('editcampaign');
     Route::put('/campaign/{id}', [CampaignController::class, 'update'])->name('campaign.update');
 
@@ -52,10 +52,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/campaign/{id}/daftar', [PartisipanCampaignController::class, 'create'])->name('partisipan.create');
     Route::post('/campaign/{id}/daftar', [PartisipanCampaignController::class, 'store'])->name('partisipan.store');
     Route::get('/campaign/{id}/manage', [CampaignController::class, 'manage'])->name('campaign.manage');
-    Route::post('/partisipan/{partisipanId}/update-status', [CampaignController::class, 'updateStatus'])->name('partisipan.updateStatus');
+    Route::post('/partisipan/{id}/update-status', [\App\Http\Controllers\CampaignController::class, 'updateStatus'])->name('partisipan.updateStatus');
 
     // Profil
-    Route::get('/profil', [ProfilController::class, 'show'])->name('profil');
+    Route::get('/profil', [\App\Http\Controllers\ProfilVolunteerController::class, 'show'])->name('profil');
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profil.update');
     Route::get('/volunteer/profile/edit', [VolunteerProfileController::class, 'edit'])->name('volunteer.profile.edit');
 

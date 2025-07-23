@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="mb-20" style="background-color: #FDFEFE;">
     @include('components.navbar')
@@ -47,6 +48,36 @@
             </div>
         </div>
 
+        {{-- Badge Volunteer --}}
+        <div class="flex gap-2 mb-4">
+            @if($campaignsDiikuti->count() >= 5)
+                <span class="inline-block bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">Aktif Ikut Campaign</span>
+            @endif
+            @if($campaigns->count() >= 3)
+                <span class="inline-block bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">Pembuat Campaign</span>
+            @endif
+        </div>
+
+        {{-- Statistik Profil --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-xl p-4 text-center shadow">
+                <div class="text-2xl font-bold text-[#74A740]">{{ $campaignsDiikuti->count() }}</div>
+                <div class="text-gray-600 text-sm">Campaign Diikuti</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center shadow">
+                <div class="text-2xl font-bold text-[#74A740]">{{ $campaigns->count() }}</div>
+                <div class="text-gray-600 text-sm">Campaign Dibuat</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center shadow">
+                <div class="text-2xl font-bold text-[#74A740]">{{ $pengaduanSaya->count() }}</div>
+                <div class="text-gray-600 text-sm">Pengaduan</div>
+            </div>
+            <div class="bg-white rounded-xl p-4 text-center shadow">
+                <div class="text-2xl font-bold text-[#74A740]">{{ $komentarList->count() }}</div>
+                <div class="text-gray-600 text-sm">Komentar</div>
+            </div>
+        </div>
+
         {{-- Sistem Tab --}}
         <div>
             <div class="flex flex-wrap gap-x-8 sm:gap-x-16 mb-2 justify-center relative border-b">
@@ -68,7 +99,23 @@
             <div class="mt-4">
                 <div x-show="tab === 'campaign_diikuti'">
                     @forelse($campaignsDiikuti as $campaign)
-                        @include('components.campaignprofile-item', ['campaign' => $campaign])
+                        <div class="mb-4 bg-white rounded-lg p-4 shadow">
+                            @include('components.campaignprofile-item', ['campaign' => $campaign])
+                            @php
+                                $jumlahPartisipan = $campaign->partisipanCampaigns->count();
+                                $kuota = $campaign->kuota_partisipan ?? 0;
+                                $persen = $kuota > 0 ? min(100, round(($jumlahPartisipan / $kuota) * 100)) : 0;
+                            @endphp
+                            <div class="mt-2">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-500">Progress</span>
+                                    <span class="text-gray-700 font-semibold">{{ $jumlahPartisipan }}/{{ $kuota }} partisipan</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-[#74A740] h-2 rounded-full" style="width: {{ $persen }}%"></div>
+                                </div>
+                            </div>
+                        </div>
                     @empty
                         <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
                             <p>Anda belum mengikuti campaign apapun.</p>
@@ -77,48 +124,44 @@
                 </div>
                 <div x-show="tab === 'campaign_dibuat'">
                     <h2 class="text-lg font-bold mb-4">Campaign yang Kamu Buat</h2>
-                    @if(isset($campaigns) && $campaigns->count())
-                        <div class="flex flex-col gap-6">
-                            @foreach($campaigns as $campaign)
-                                <div class="relative rounded-2xl overflow-hidden shadow-md flex items-center" style="height: 120px;">
-                                    <img src="{{ $campaign->foto ? asset('storage/' . $campaign->foto) : asset('default-campaign.jpg') }}"
-                                         alt="{{ $campaign->judul }}"
-                                         class="w-40 h-full object-cover flex-shrink-0" />
-                                    <div class="flex-1 flex flex-col justify-between h-full p-5 relative z-10">
-                                        <div>
-                                            <div class="text-xl font-bold text-gray-900">{{ $campaign->judul }}</div>
-                                            <div class="mt-2">
-                                                @if($campaign->status == 'Menunggu Verifikasi')
-                                                    <span class="bg-yellow-200 text-yellow-800 text-xs px-3 py-1 rounded-full">Menunggu Verifikasi Sistem</span>
-                                                @elseif($campaign->status == 'Berlangsung')
-                                                    <span class="bg-blue-200 text-blue-800 text-xs px-3 py-1 rounded-full">Berlangsung</span>
-                                                @elseif($campaign->status == 'Selesai')
-                                                    <span class="bg-green-200 text-green-800 text-xs px-3 py-1 rounded-full">Selesai</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-end">
-                                            <a href="{{ route('campaign.detail', $campaign->id) }}"
-                                               class="bg-white rounded-full p-2 shadow hover:bg-gray-100 transition z-30">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                    @forelse($campaigns as $campaign)
+                        @php
+                            $pendingCount = $campaign->partisipanCampaigns->where('status', 'pending')->count();
+                        @endphp
+                        <div class="relative">
+                            @include('components.campaignprofile-item', ['campaign' => $campaign])
+                            @if($pendingCount > 0)
+                                <span class="absolute top-2 right-2 bg-yellow-500 text-white text-xs rounded-full px-2 py-1">
+                                    {{ $pendingCount }} pendaftar baru
+                                </span>
+                            @endif
                         </div>
-                    @else
+                    @empty
                         <div class="text-gray-500">Belum ada campaign yang kamu buat.</div>
-                    @endif
+                    @endforelse
                 </div>
                 <div x-show="tab === 'pengaduan_saya'">
-                    {{-- Diisi dengan daftar pengaduan yang dibuat user --}}
+                    <h2 class="text-lg font-bold mb-4">Pengaduan Saya</h2>
+                    @forelse($pengaduanSaya as $pengaduan)
+                        <div class="bg-white p-4 rounded-lg border mb-2">
+                            <div class="font-semibold">{{ $pengaduan->judul }}</div>
+                            <div class="text-sm text-gray-600">{{ $pengaduan->isi }}</div>
+                        </div>
+                    @empty
+                        <div class="text-gray-500">Belum ada pengaduan yang kamu buat.</div>
+                    @endforelse
                 </div>
                 <div x-show="tab === 'komentar'">
-                    {{-- Kode tab komentar yang lama akan dikembalikan ke sini --}}
-                    {{-- @include('components.komentarprofil-section') --}}
+                    <h2 class="text-lg font-bold mb-4">Komentar Saya</h2>
+                    @forelse($komentarList as $komentar)
+                        <div class="bg-white p-4 rounded-lg border mb-2">
+                            <div class="font-semibold">Pada campaign: <a href="{{ url('/campaign/'.$komentar->campaign_id) }}" class="text-[#74A740] hover:underline">{{ $komentar->nama_campaign }}</a></div>
+                            <div class="text-sm text-gray-600">{{ $komentar->komentar }}</div>
+                            <div class="text-xs text-gray-400 mt-1">{{ \Carbon\Carbon::parse($komentar->waktu)->diffForHumans() }}</div>
+                        </div>
+                    @empty
+                        <div class="text-gray-500">Belum ada komentar yang kamu buat.</div>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -142,14 +185,41 @@
                         <label class="block text-sm font-medium mb-1">Nomor Telepon</label>
                         <input type="text" name="nomorTelepon" value="{{ old('nomorTelepon', $user->nomorTelepon) }}" class="w-full border rounded-lg px-3 py-2">
                     </div>
+                    {{-- Preview Foto Profil --}}
                     <div>
                         <label class="block text-sm font-medium mb-1">Foto Profil</label>
-                        <input type="file" name="fotoProfil" class="w-full border rounded-lg px-3 py-2">
+                        <input type="file" name="fotoProfil" class="w-full border rounded-lg px-3 py-2" onchange="previewFoto(event)">
+                        <img
+                            id="preview-foto"
+                            class="mt-2 w-20 h-20 rounded-full object-cover {{ empty($user->fotoProfil) ? 'hidden' : '' }}"
+                            src="{{ !empty($user->fotoProfil) ? asset('storage/' . $user->fotoProfil) : '' }}"
+                            alt="Preview Foto Profil"
+                        />
                     </div>
                     <button type="submit" class="w-full bg-[#74A740] text-white rounded-lg py-2 font-semibold mt-2">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
     </main>
+
+    <script>
+    function previewFoto(event) {
+        const file = event.target.files[0];
+        const img = document.getElementById('preview-foto');
+        if (!file) {
+            // Jika tidak ada file baru, tampilkan foto lama (jika ada)
+            @if(!empty($user->fotoProfil))
+                img.src = "{{ asset('storage/' . $user->fotoProfil) }}";
+                img.classList.remove('hidden');
+            @else
+                img.src = "";
+                img.classList.add('hidden');
+            @endif
+            return;
+        }
+        img.src = URL.createObjectURL(file);
+        img.classList.remove('hidden');
+    }
+    </script>
 </body>
 </html>
