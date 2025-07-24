@@ -53,7 +53,7 @@
                 <li>
                     <a href="{{ route('pengaduan.create') }}"
                        class="bg-gray-100 text-[#74A740] px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-200 transition">
-                        + Buat Pengaduan
+                        + Buat Laporan
                     </a>
                 </li>
 
@@ -127,7 +127,7 @@
             <li class="border-b border-gray-200 p-2">
                 <a href="{{ route('pengaduan.create') }}"
                    class="block text-center px-4 py-2 bg-gray-100 text-[#74A740] rounded-md font-semibold hover:bg-gray-200 transition">
-                    Buat Pengaduan
+                    Buat Laporan
                 </a>
             </li>
 

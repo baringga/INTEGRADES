@@ -34,7 +34,7 @@
                     class="relative z-10 rounded-lg mb-4 w-64 h-48 object-cover border-4 border-gray-200 shadow-lg">
                 <h2 class="font-semibold text-xl mb-2 text-center mt-2">Masyarakat Desa</h2>
                 <p class="text-gray-700 text-sm text-center mb-6 w-64">
-                    Hanya bisa membuat pengaduan kondisi desa.
+                    Hanya bisa membuat laporan kondisi desa.
                 </p>
                 <a href="{{ route('register', ['role' => 'masyarakat_desa']) }}" class="w-full">
                     <button class="w-full bg-[#74A740] text-white rounded-full py-2 font-semibold hover:bg-[#a507834] transition">

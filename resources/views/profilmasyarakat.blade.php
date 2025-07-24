@@ -70,7 +70,7 @@
                     </div>
                 @empty
                     <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
-                        <p>Anda belum pernah membuat pengaduan.</p>
+                        <p>Anda belum pernah membuat laporan.</p>
                     </div>
                 @endforelse
             </div>
@@ -103,5 +103,11 @@
             </div>
         </div>
     </main>
+ <!-- Footer -->
+    <footer class="py-8 px-4 bg-light border-t border-gray-200">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray text-sm">@2025 INTEGRADES. Hak cipta dilindungi.</p>
+        </div>
+    </footer>
 </body>
 </html>

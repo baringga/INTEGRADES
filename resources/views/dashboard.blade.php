@@ -23,7 +23,7 @@
             />
             <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]">
                 <option value="">Semua Menu</option>
-                <option value="laporan_warga" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Warga</option>
+                <option value="laporan_warga" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Masyarakat</option>
                 <option value="laporan_anda" {{ request('filter_menu') == 'laporan_anda' ? 'selected' : '' }}>Laporan Anda</option>
                 <option value="campaign_diikuti" {{ request('filter_menu') == 'campaign_diikuti' ? 'selected' : '' }}>Campaign yang Anda Ikuti</option>
                 <option value="campaign_dibuat" {{ request('filter_menu') == 'campaign_dibuat' ? 'selected' : '' }}>Campaign yang Anda Buat</option>
@@ -40,11 +40,11 @@
         <section class="mb-8">
             <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-3xl font-bold text-[#74A740]">Laporan Warga</h1>
+                    <h1 class="text-3xl font-bold text-[#74A740]">Laporan Masyarakat</h1>
                     @auth
                     <div>
                         <a href="{{ route('pengaduan.create') }}" class="bg-[#74A740] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a507834] transition">
-                            + Buat Pengaduan
+                            + Buat Laporan
                         </a>
                     </div>
                     @endauth
@@ -66,44 +66,37 @@
                                     @else
                                         <p class="text-xs text-white bg-yellow-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Dilaporkan</p>
                                     @endif
-                                    <h2 class="font-bold text-lg text-gray-800">{{ $pengaduan->judul }}</h2>
-                                    <p class="text-gray-600 mt-3 text-sm"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
-                                    @if($pengaduan->foto)
-                                        <div class="mt-4">
-                                            <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan" class="rounded-lg max-w-sm">
-                                        </div>
-                                    @endif
-                                    @if($pengaduan->tanggapan)
-                                        <div class="mt-4 p-4 bg-gray-50 rounded">
-                                            <span class="font-semibold text-primary">Tanggapan:</span>
-                                            <p class="text-gray-700 text-sm">{{ $pengaduan->tanggapan }}</p>
-                                        </div>
-                                    @endif
+                                    <h1 class="font-bold text-xl text-gray-1000">{{ $pengaduan->judul }}</h1>
+                                    <p class="text-gray-600 mt-3 text-lg"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
                                 </div>
-                                <span class="text-xs text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
+                                <span class="text-sm text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
                             </div>
+
+                            @if(!empty($pengaduan->foto))
+                                <div style="width:100%; text-align:center; margin: 1rem 0;">
+                                    <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan"
+                                         style="display:inline-block; max-width:500px; width:100%; height:auto; border-radius:16px; box-shadow:0 2px 8px #ccc;">
+                                </div>
+                            @endif
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2 mb-2">
                                 <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
                                 </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Kategori:</span> {{ $pengaduan->kategori }}</p>
+                                <div class="bg-gray-50 border rounded-sm p-3">
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kelebihan Desa:</span> {{ $pengaduan->kelebihan_desa }}</p>
                                 </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Kategori Laporan:</span> {{ $pengaduan->kategori_laporan }}</p>
+                                <div class="bg-gray-50 border rounded-sm p-3">
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kekurangan Desa:</span> {{ $pengaduan->kekurangan_desa }}</p>
                                 </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Kelebihan Desa:</span> {{ $pengaduan->kelebihan_desa }}</p>
+                                <div class="bg-gray-50 border rounded-sm p-3">
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Saran Aksi / Harapan:</span> {{ $pengaduan->saran_aksi }}</p>
                                 </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Kekurangan Desa:</span> {{ $pengaduan->kekurangan_desa }}</p>
+                                <div class="bg-gray-50 border rounded-sm p-3">
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Pelapor:</span> {{ $pengaduan->akun->namaPengguna }}</p>
                                 </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Saran Aksi / Harapan:</span> {{ $pengaduan->saran_aksi }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-xs text-gray-500"><span class="font-semibold">Pelapor:</span> {{ $pengaduan->akun->namaPengguna }}</p>
+                                <div class="bg-gray-50 border rounded-sm p-3">
+                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kategori Laporan:</span> {{ $pengaduan->kategori_laporan }}</p>
                                 </div>
                             </div>
                         </div>
@@ -226,5 +219,12 @@
         @endif
 
     </main>
+
+ <!-- Footer -->
+    <footer class="py-8 px-4 bg-light border-t border-gray-200">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray text-sm">@2025 INTEGRADES. Hak cipta dilindungi.</p>
+        </div>
+    </footer>
 </body>
 </html>

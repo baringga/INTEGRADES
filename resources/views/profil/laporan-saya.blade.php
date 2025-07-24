@@ -48,7 +48,7 @@
                 </div>
             @empty
                 <div class="text-center py-16 bg-white border rounded-lg">
-                    <p class="text-gray-500">Anda belum pernah membuat pengaduan.</p>
+                    <p class="text-gray-500">Anda belum pernah membuat laporan.</p>
                 </div>
             @endforelse
         </div>
