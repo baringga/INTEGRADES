@@ -29,14 +29,21 @@
                             @endif
                             <h2 class="font-bold text-lg text-gray-800">{{ $pengaduan->judul }}</h2>
                             <p class="text-sm text-gray-500 mt-1"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
+                            <p class="text-sm text-gray-500"><span class="font-semibold">Kategori:</span> {{ $pengaduan->kategori }}</p>
                         </div>
-                        <span class="text-xs text-gray-400">{{ $pengaduan->created_at->diffForHumans() }}</span>
+                        <span class="text-xs text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
                     </div>
-                    <p class="text-gray-600 mt-3 text-sm">{{ $pengaduan->isi_pengaduan }}</p>
+                    <p class="text-gray-600 mt-3 text-sm"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
                     @if($pengaduan->foto)
-                    <div class="mt-4">
-                        <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan" class="rounded-lg max-w-sm">
-                    </div>
+                        <div class="mt-4">
+                            <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan" class="rounded-lg max-w-sm">
+                        </div>
+                    @endif
+                    @if($pengaduan->tanggapan)
+                        <div class="mt-4 p-4 bg-gray-50 rounded">
+                            <span class="font-semibold text-primary">Tanggapan:</span>
+                            <p class="text-gray-700 text-sm">{{ $pengaduan->tanggapan }}</p>
+                        </div>
                     @endif
                 </div>
             @empty
