@@ -18,6 +18,14 @@ class Pengaduan extends Model
         'lokasi',
         'foto',
         'status',
+        'kategori_laporan',
+        'kategori_laporan_custom',
+        'kelebihan_desa',
+        'kekurangan_desa',
+        'waktu',
+        'saran_aksi',
+        'latitude',
+        'longitude',
     ];
 
     /**

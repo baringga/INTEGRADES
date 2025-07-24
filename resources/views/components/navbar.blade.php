@@ -2,7 +2,13 @@
     <div class="container mx-auto px-4 flex items-center justify-between h-28">
         <a href="/" class="flex items-center">
             <img src="{{ asset('Logo.png') }}" alt="Logo" class="h-20 w-auto" />
-            <span class="font-bold text-4xl text-[#74A740] tracking-wide ml-5">INTEGRADES</span>
+            <span class="font-bold text-4xl text-[#74A740] tracking-wide ml-5">
+                @if(request()->is('/'))
+                    Welcome to INTEGRADES
+                @else
+                    INTEGRADES
+                @endif
+            </span>
         </a>
 
         <button id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false"
@@ -47,7 +53,7 @@
                 <li>
                     <a href="{{ route('pengaduan.create') }}"
                        class="bg-gray-100 text-[#74A740] px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-200 transition">
-                        Buat Pengaduan
+                        + Buat Pengaduan
                     </a>
                 </li>
 

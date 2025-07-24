@@ -92,6 +92,14 @@ return new class extends Migration {
             $table->string('lokasi', 255)->nullable();
             $table->string('foto', 255)->nullable();
             $table->string('status', 20)->default('dilaporkan'); // dilaporkan, diproses, selesai
+            $table->string('kategori_laporan', 100)->nullable();
+            $table->string('kategori_laporan_custom', 100)->nullable();
+            $table->string('kelebihan_desa', 255)->nullable();
+            $table->string('kekurangan_desa', 255)->nullable();
+            $table->dateTime('waktu')->nullable();
+            $table->string('saran_aksi', 255)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->timestamps();
         });
     }

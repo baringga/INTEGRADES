@@ -28,12 +28,16 @@
         {{-- Informasi Profil --}}
         <div class="flex items-center gap-6 mb-12 justify-center">
             <div class="w-30 h-30 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                {{-- Debug path --}}
+                @php
+                    echo '<!-- FOTO PROFIL: ' . $user->fotoProfil . ' -->';
+                @endphp
                 @if(empty($user->fotoProfil))
                     <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.25a7.25 7.25 0 0115 0v.25a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.25z" />
                     </svg>
                 @else
-                    <img src="{{ filter_var($user->fotoProfil, FILTER_VALIDATE_URL) ? $user->fotoProfil : asset('storage/' . $user->fotoProfil) }}" alt="Profile" class="w-full h-full object-cover" />
+                    <img src="{{ asset('storage/' . $user->fotoProfil) }}" alt="Profile" class="w-full h-full object-cover" />
                 @endif
             </div>
             <div class="flex flex-col items-start text-left">
