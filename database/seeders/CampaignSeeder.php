@@ -55,7 +55,7 @@ class CampaignSeeder extends Seeder
             ],
             [
                 'akun_id' => 5,
-                'nama' => 'Gotong Royong Bersih Lingkungan Sekitar',
+                'nama' => 'Pendampingan desa dalam pengelolaan sampah di sungai',
                 'waktu' => $now->copy()->addDays(7),
                 'waktu_diperbarui' => $now,
                 'deskripsi' => 'Warga bergotong royong membersihkan lingkungan dan memilah sampah untuk daur ulang. Kegiatan ini melibatkan seluruh warga sekitar untuk bersama-sama menjaga kebersihan lingkungan tempat tinggal. Selain membersihkan, peserta juga diajarkan cara memilah sampah organik dan anorganik agar dapat didaur ulang dan mengurangi volume sampah yang dibuang ke TPA.',

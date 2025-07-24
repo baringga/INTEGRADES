@@ -18,7 +18,7 @@
                 type="text"
                 name="q"
                 value="{{ request('q') }}"
-                placeholder="Cari data..."
+                placeholder="Tulis kata kunci untuk mencari..."
                 class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]"
             />
             <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]">
@@ -34,11 +34,63 @@
             </button>
         </form>
 
+          {{-- 5. Rekomendasi Campaign --}}
+            <section class="mb-8">
+                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-[#74A740]">Rekomendasi Campaign</h1>
+                    </div>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+                        @forelse($rekomendasiCampaign as $campaign)
+                            @include('components.campaign-item', ['campaign' => $campaign])
+                        @empty
+                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Saat ini tidak ada rekomendasi campaign.</p></div>
+                        @endforelse
+                    </div>
+                </div>
+            </section>
+
+           {{-- 3. Campaign yang Anda Ikuti --}}
+            <section class="mb-8">
+                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Ikuti</h1>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+                        @forelse($campaignDiikuti as $campaign)
+                            @include('components.campaign-item', ['campaign' => $campaign])
+                        @empty
+                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum mengikuti campaign apapun.</p></div>
+                        @endforelse
+                    </div>
+                    <div class="mt-6">
+                        {{ $campaignDiikuti->links() }}
+                    </div>
+                </div>
+            </section>
+
+            {{-- 4. Campaign yang Anda Buat --}}
+            <section class="mb-8">
+                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Buat</h1>
+                    </div>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+                        @forelse($campaignDibuat as $campaign)
+                            @include('components.campaign-item', ['campaign' => $campaign])
+                        @empty
+                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
+                        @endforelse
+                    </div>
+                </div>
+            </section>
+
+
         {{-- ====================================================== --}}
         {{-- BAGIAN 1: SEMUA LAPORAN WARGA (Untuk semua pengguna) --}}
         {{-- ====================================================== --}}
         <section class="mb-8">
-            <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
+            <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-3xl font-bold text-[#74A740]">Laporan Masyarakat</h1>
                     @auth
@@ -146,7 +198,7 @@
 
             {{-- 2. Laporan Anda --}}
             <section class="mb-8">
-                <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Laporan Anda</h1>
                     </div>
@@ -160,57 +212,6 @@
                             </div>
                         @empty
                             <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat laporan.</p></div>
-                        @endforelse
-                    </div>
-                </div>
-            </section>
-
-            {{-- 3. Campaign yang Anda Ikuti --}}
-            <section class="mb-8">
-                <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Ikuti</h1>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                        @forelse($campaignDiikuti as $campaign)
-                            @include('components.campaign-item', ['campaign' => $campaign])
-                        @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum mengikuti campaign apapun.</p></div>
-                        @endforelse
-                    </div>
-                    <div class="mt-6">
-                        {{ $campaignDiikuti->links() }}
-                    </div>
-                </div>
-            </section>
-
-            {{-- 4. Campaign yang Anda Buat --}}
-            <section class="mb-8">
-                <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Buat</h1>
-                    </div>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                        @forelse($campaignDibuat as $campaign)
-                            @include('components.campaign-item', ['campaign' => $campaign])
-                        @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
-                        @endforelse
-                    </div>
-                </div>
-            </section>
-
-            {{-- 5. Rekomendasi Campaign --}}
-            <section class="mb-8">
-                <div class="bg-[#eaf7e6] border-2 border-[#74A740] rounded-xl p-6 shadow">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-3xl font-bold text-[#74A740]">Rekomendasi Campaign</h1>
-                    </div>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                        @forelse($rekomendasiCampaign as $campaign)
-                            @include('components.campaign-item', ['campaign' => $campaign])
-                        @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Saat ini tidak ada rekomendasi campaign.</p></div>
                         @endforelse
                     </div>
                 </div>

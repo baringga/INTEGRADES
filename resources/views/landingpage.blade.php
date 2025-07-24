@@ -234,7 +234,7 @@
                     Cara termudah untuk aksi <br>peduli desa nyata.</br>
                 </h1>
                 <p class="text-lg md:text-xl mb-8 max-w-2xl opacity-90">
-                    Temukan dan ikuti aksi peduli desa di area kamu. Kontribusi sesuai dengan kemuampuan kamu untuk desa yang lebih sejahtra
+                    Temukan dan ikuti campaign peduli desa di area kamu. Kontribusi sesuai dengan kemuampuan kamu untuk desa yang lebih sejahtra
                     dan masyarakat yang lebih baik.
                 </p>
                 <a href="{{ route('register') }}">
@@ -264,10 +264,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-shine transition-all duration-300">
-                            Aksi Peduli UMKM
+                            Campaign Peduli UMKM
                         </h3>
                         <p class="text-gray leading-relaxed">
-                            Ikuti aksi peduli UMKM untuk masyarakat yang lebih sejahtera.
+                            Ikuti aksi peduli UMKM untuk masyarakat yang lebih sejahtera. Dibutuhkan volunteer yang berkopetensi di bidang ekonomi dan bisnis untuk membantu mengembangkan usaha kecil di desa.
                         </p>
                     </div>
                 </div>
@@ -282,10 +282,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-shine transition-all duration-300">
-                            Aksi Bersih Sungai
+                            Campaign Masyarakat Pesisir Sejahtera
                         </h3>
                         <p class="text-gray leading-relaxed">
-                            Bersihkan bantaran sungai dan lindungi sumber daya air kita bersama.
+                            Pengadaan budidaya dan hasil laut di pesisir untuk meningkatkan kesejahteraan masyarakat.
                         </p>
                     </div>
                 </div>
@@ -300,10 +300,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-shine transition-all duration-300">
-                            Aksi Bersih Hutan
+                            Campaign Pemanfaatan Hasil Hutan
                         </h3>
                         <p class="text-gray leading-relaxed">
-                            Jaga kelestarian hutan kita melalui partisipasi aktif dalam aksi kebersihan.
+                            Jaga kelestarian hutan kita agar kembali bermanfaat bagi masyarakat melalui partisipasi aktif dalam aksi pemanfaatan hasil hutan yang berkelanjutan.
                         </p>
                     </div>
                 </div>
