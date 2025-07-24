@@ -19,28 +19,30 @@
                 name="q"
                 value="{{ request('q') }}"
                 placeholder="Tulis kata kunci untuk mencari..."
-                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]"
+                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] bg-gray-100 h-12"
             />
-            <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740]">
-                <option value="">Semua Menu</option>
-                <option value="laporan_warga" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Masyarakat</option>
-                <option value="laporan_anda" {{ request('filter_menu') == 'laporan_anda' ? 'selected' : '' }}>Laporan Anda</option>
-                <option value="campaign_diikuti" {{ request('filter_menu') == 'campaign_diikuti' ? 'selected' : '' }}>Campaign yang Anda Ikuti</option>
-                <option value="campaign_dibuat" {{ request('filter_menu') == 'campaign_dibuat' ? 'selected' : '' }}>Campaign yang Anda Buat</option>
-                <option value="rekomendasi" {{ request('filter_menu') == 'rekomendasi' ? 'selected' : '' }}>Rekomendasi Campaign</option>
+            <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] h-12 bg-gray-100 font-bold text-center">
+                <option value="" class="text-[#74A740] text-center">Semua Menu</option>
+                <option value="laporan_warga" class="text-[#74A740] text-center" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Masyarakat</option>
+                <option value="laporan_anda" class="text-[#74A740] text-center" {{ request('filter_menu') == 'laporan_anda' ? 'selected' : '' }}>Laporan Anda</option>
+                <option value="campaign_diikuti" class="text-[#74A740] text-center" {{ request('filter_menu') == 'campaign_diikuti' ? 'selected' : '' }}>Campaign yang Anda Ikuti</option>
+                <option value="campaign_dibuat" class="text-[#74A740] text-center" {{ request('filter_menu') == 'campaign_dibuat' ? 'selected' : '' }}>Campaign yang Anda Buat</option>
+                <option value="rekomendasi" class="text-[#74A740] text-center" {{ request('filter_menu') == 'rekomendasi' ? 'selected' : '' }}>Rekomendasi Campaign</option>
             </select>
             <button type="submit" class="bg-[#74A740] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#a507834] transition">
                 Cari
             </button>
         </form>
 
-          {{-- 5. Rekomendasi Campaign --}}
+        {{-- Rekomendasi Campaign, Campaign yang Anda Buat, Campaign yang Anda Ikuti hanya untuk user 1 --}}
+        @if(Auth::user()->jenis_akun_id == 1)
+            {{-- 1. Rekomendasi Campaign --}}
             <section class="mb-8">
                 <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Rekomendasi Campaign</h1>
                     </div>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
                         @forelse($rekomendasiCampaign as $campaign)
                             @include('components.campaign-item', ['campaign' => $campaign])
                         @empty
@@ -50,7 +52,23 @@
                 </div>
             </section>
 
-           {{-- 3. Campaign yang Anda Ikuti --}}
+            {{-- 2. Campaign yang Anda Buat --}}
+            <section class="mb-8">
+                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Buat</h1>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+                        @forelse($campaignDibuat as $campaign)
+                            @include('components.campaign-item', ['campaign' => $campaign])
+                        @empty
+                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
+                        @endforelse
+                    </div>
+                </div>
+            </section>
+
+            {{-- 3. Campaign yang Anda Ikuti --}}
             <section class="mb-8">
                 <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
@@ -68,27 +86,9 @@
                     </div>
                 </div>
             </section>
+        @endif
 
-            {{-- 4. Campaign yang Anda Buat --}}
-            <section class="mb-8">
-                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Buat</h1>
-                    </div>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
-                        @forelse($campaignDibuat as $campaign)
-                            @include('components.campaign-item', ['campaign' => $campaign])
-                        @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
-                        @endforelse
-                    </div>
-                </div>
-            </section>
-
-
-        {{-- ====================================================== --}}
-        {{-- BAGIAN 1: SEMUA LAPORAN WARGA (Untuk semua pengguna) --}}
-        {{-- ====================================================== --}}
+        {{-- Laporan Masyarakat untuk semua user --}}
         <section class="mb-8">
             <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                 <div class="flex justify-between items-center mb-6">
@@ -101,11 +101,9 @@
                     </div>
                     @endauth
                 </div>
-
                 @if(session('success'))
                     <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-4" role="alert">{{ session('success') }}</div>
                 @endif
-
                 <div class="space-y-4">
                     @forelse($semuaPengaduan as $pengaduan)
                         <div class="bg-white p-5 rounded-lg border border-gray-200 transition hover:shadow-md">
@@ -123,14 +121,12 @@
                                 </div>
                                 <span class="text-sm text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
                             </div>
-
                             @if(!empty($pengaduan->foto))
                                 <div style="width:100%; text-align:center; margin: 1rem 0;">
                                     <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan"
                                          style="display:inline-block; max-width:500px; width:100%; height:auto; border-radius:16px; box-shadow:0 2px 8px #ccc;">
                                 </div>
                             @endif
-
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2 mb-2">
                                 <div class="bg-gray-50 border rounded-lg p-3">
                                     <p class="text-sm text-gray-500"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
@@ -158,31 +154,26 @@
                         </div>
                     @endforelse
                 </div>
-
                 @if($filterMenu == 'laporan_warga' || !$filterMenu)
                     <div class="mt-6">
                         {{ $semuaPengaduan->links() }}
                     </div>
                 @endif
-
                 @if($filterMenu == 'laporan_anda')
                     <div class="mt-6">
                         {{ $laporanAnda->links() }}
                     </div>
                 @endif
-
                 @if($filterMenu == 'campaign_diikuti')
                     <div class="mt-6">
                         {{ $campaignDiikuti->links() }}
                     </div>
                 @endif
-
                 @if($filterMenu == 'campaign_dibuat')
                     <div class="mt-6">
                         {{ $campaignDibuat->links() }}
                     </div>
                 @endif
-
                 @if($filterMenu == 'rekomendasi')
                     <div class="mt-6">
                         {{ $rekomendasiCampaign->links() }}
@@ -191,12 +182,8 @@
             </div>
         </section>
 
-        {{-- ====================================================== --}}
-        {{-- Blok Ini Hanya Tampil Untuk Volunteer Desa (ID 1) --}}
-        {{-- ====================================================== --}}
-        @if(Auth::user()->jenis_akun_id == 1)
-
-            {{-- 2. Laporan Anda --}}
+        {{-- Laporan Anda untuk user 1 dan 2 --}}
+        @if(Auth::user()->jenis_akun_id == 1 || Auth::user()->jenis_akun_id == 2)
             <section class="mb-8">
                 <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
@@ -216,9 +203,7 @@
                     </div>
                 </div>
             </section>
-
         @endif
-
     </main>
 
  <!-- Footer -->
