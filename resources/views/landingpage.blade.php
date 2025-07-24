@@ -231,11 +231,11 @@
                 <div class="relative z-20 flex flex-col items-center justify-center h-full text-center text-white px-8 animate-fade-in">
                     <!-- ...konten hero... -->
                 <h1 class="text-4xl md:text-5xl font-bold mb-6 max-w-4xl">
-                    Cara termudah untuk aksi lingkungan nyata.
+                    Cara termudah untuk aksi <br>peduli desa nyata.</br>
                 </h1>
                 <p class="text-lg md:text-xl mb-8 max-w-2xl opacity-90">
-                    Temukan dan ikuti aksi bersih-bersih di area kamu. Kontribusi mudah untuk lingkungan yang lebih lestari
-                    dan komunitas yang lebih sehat.
+                    Temukan dan ikuti aksi peduli desa di area kamu. Kontribusi sesuai dengan kemuampuan kamu untuk desa yang lebih sejahtra
+                    dan masyarakat yang lebih baik.
                 </p>
                 <a href="{{ route('register') }}">
                     <button class="bg-[#74A740] hover:bg-[#a507834] text-white px-8 py-3 text-lg font-semibold rounded-md transition-all duration-300 hover:scale-110 hover:shadow-xl animate-pulse hover:animate-none btn-hover-effect">
@@ -251,7 +251,7 @@
     <section class="py-16 px-4">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold text-dark mb-12 animate-fade-in hover:animate-bounce-subtle transition-all duration-300">
-                Pilihan Aksi Lingkungan
+                Pilihan Aksi Peduli Desa
             </h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Action Card 1 -->
@@ -264,10 +264,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-shine transition-all duration-300">
-                            Aksi Bersih Taman
+                            Aksi Peduli UMKM
                         </h3>
                         <p class="text-gray leading-relaxed">
-                            Ikuti aksi bersih taman Sabtu ini untuk lingkungan yang lebih asri.
+                            Ikuti aksi peduli UMKM untuk masyarakat yang lebih sejahtera.
                         </p>
                     </div>
                 </div>
@@ -326,7 +326,7 @@
                     </h4>
                     <p class="text-gray text-sm mb-4">Volunteer</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "INTEGRADES mempermudah saya menemukan aksi lingkungan yang relevan. Prosesnya cepat dan dampaknya langsung terasa."
+                        "INTEGRADES mempermudah saya menemukan aksi peduli desa yang relevan. Prosesnya cepat dan dampaknya langsung terasa bagi pribadi dan masyarakat sekitar."
                     </p>
                 </div>
 
@@ -340,7 +340,7 @@
                     </h4>
                     <p class="text-gray text-sm mb-4">Volunteer</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "Platform yang efektif untuk menyalurkan keinginan berkontribusi. INTEGRADES membantu mengorganisir aksi jadi lebih terstruktur."
+                        "Platform yang efektif untuk menyalurkan keinginan berkontribusi nyata. INTEGRADES membantu mengorganisir aksi jadi lebih terstruktur."
                     </p>
                 </div>
 
@@ -352,9 +352,9 @@
                     <h4 class="font-bold text-dark mb-1 group-hover:text-shine transition-all duration-300">
                         Dewi Lestari
                     </h4>
-                    <p class="text-gray text-sm mb-4">Volunteer</p>
+                    <p class="text-gray text-sm mb-4">Masyarakat Desa</p>
                     <p class="text-gray text-sm leading-relaxed">
-                        "Dengan INTEGRADES, melakukan aksi lingkungan jadi lebih mudah. Sangat membantu untuk mencapai tujuan bersama."
+                        "Dengan INTEGRADES, melakukan pengaduan permasalahan di masyarakat jadi lebih mudah. Sangat membantu untuk mencapai tujuan masyrakat yang sejahtera."
                     </p>
                 </div>
             </div>
