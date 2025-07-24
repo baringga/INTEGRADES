@@ -62,13 +62,13 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="block mb-1 font-semibold text-gray-600">Motivasi</label>
+                    <label class="block mb-1 font-semibold text-gray-600">Motivasi/URL Portofolio</label>
                     <textarea
                         name="motivasi"
                         class="w-full rounded-xl px-3 py-2 bg-[#DDEDEE] text-[#055A7A] focus:ring-2 focus:ring-[#055A7A] focus:outline-none"
                         maxlength="200"
                         rows="3"
-                        placeholder="Ceritakan motivasi Anda mengikuti campaign ini">{{ old('motivasi') }}</textarea>
+                        placeholder="Ceritakan motivasi Anda mengikuti campaign ini dan sebagai pendukung sertakan URL portofolio kamu">{{ old('motivasi') }}</textarea>
                     @error('motivasi')
                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                     @enderror
