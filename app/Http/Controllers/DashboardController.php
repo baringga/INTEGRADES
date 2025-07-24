@@ -49,11 +49,11 @@ class DashboardController extends Controller
 
         if (!$filterMenu || $filterMenu == 'campaign_diikuti') {
             $campaignDiikuti = Campaign::whereHas('partisipanCampaigns', function ($query) use ($user) {
-                    $query->where('akun_id', $user->id)->where('status', 'approved');
-                })
-                ->with('coverImage')
-                ->orderBy('waktu', 'desc')
-                ->paginate(6, ['*'], 'campaign_diikuti');
+                $query->where('akun_id', $user->id);
+            })
+            ->with('coverImage')
+            ->orderBy('waktu', 'desc')
+            ->paginate(6, ['*'], 'campaign_diikuti');
         }
 
         if (!$filterMenu || $filterMenu == 'campaign_dibuat') {
@@ -101,7 +101,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $campaigns = Campaign::whereHas('partisipanCampaigns', function ($query) use ($user) {
-            $query->where('akun_id', $user->id)->where('status', 'approved');
+            $query->where('akun_id', $user->id);
         })->with('coverImage')->orderBy('waktu', 'desc')->paginate(9);
 
         return view('all-campaigns', [ // Menggunakan view generik

@@ -116,8 +116,8 @@
                                     @else
                                         <p class="text-xs text-white bg-yellow-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Dilaporkan</p>
                                     @endif
-                                    <h1 class="font-bold text-xl text-gray-1000">{{ $pengaduan->judul }}</h1>
-                                    <p class="text-gray-600 mt-3 text-lg"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
+                                    <h1 class="font-bold text-xl text-gray-1000 break-words overflow-hidden whitespace-pre-line">{{ $pengaduan->judul }}</h1>
+                                    <p class="text-gray-600 mt-3 text-lg break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
                                 </div>
                                 <span class="text-sm text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
                             </div>
@@ -129,16 +129,16 @@
                             @endif
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2 mb-2">
                                 <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
+                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
                                 </div>
                                 <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kelebihan Desa:</span> {{ $pengaduan->kelebihan_desa }}</p>
+                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Kelebihan Desa:</span> {{ $pengaduan->kelebihan_desa }}</p>
                                 </div>
                                 <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kekurangan Desa:</span> {{ $pengaduan->kekurangan_desa }}</p>
+                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Kekurangan Desa:</span> {{ $pengaduan->kekurangan_desa }}</p>
                                 </div>
                                 <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Saran Aksi / Harapan:</span> {{ $pengaduan->saran_aksi }}</p>
+                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Saran Aksi / Harapan:</span> {{ $pengaduan->saran_aksi }}</p>
                                 </div>
                                 <div class="bg-gray-50 border rounded-sm p-3">
                                     <p class="text-sm text-gray-500"><span class="font-semibold">Pelapor:</span> {{ $pengaduan->akun->namaPengguna }}</p>
