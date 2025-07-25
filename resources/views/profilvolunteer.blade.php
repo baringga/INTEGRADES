@@ -8,7 +8,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body class="mb-20" style="background-color: #FDFEFE;">
+<body class="pt-5 pb-0" style="background-color: #FDFEFE;">
     @include('components.navbar')
 
     <main class="max-w-4xl mx-auto px-6 py-12" x-data="{ showEdit: false, tab: 'campaign_diikuti' }">
@@ -243,11 +243,21 @@
         img.classList.remove('hidden');
     }
     </script>
-     <!-- Footer -->
-    <footer class="py-8 px-4 bg-light border-t border-gray-200">
-        <div class="max-w-7xl mx-auto text-center">
-            <p class="text-gray text-sm">@2025 INTEGRADES. Hak cipta dilindungi.</p>
-        </div>
-    </footer>
+   <!-- Footer -->
+<footer class="mt-10 relative" style="
+        background-image: url('https://images.unsplash.com/photo-1661405001746-264a95ad6fea?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-size: cover;
+        background-position: center;
+        min-height: 200px;
+    ">
+
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <div class="relative z-10 flex flex-col items-center justify-center h-full py-16">
+        <span class="text-white text-lg">
+            © {{ date('Y') }} INTEGRADES. Hak cipta dilindungi
+        </span>
+    </div>
+</footer>
 </body>
 </html>
