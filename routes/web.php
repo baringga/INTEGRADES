@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/komentar/{id}/like', [KomentarController::class, 'like'])->name('komentar.like');
     Route::patch('/komentar/{id}', [KomentarController::class, 'update'])->name('komentar.update');
     Route::delete('/komentar/{id}', [KomentarController::class, 'destroy'])->name('komentar.destroy');
+    Route::post('/campaign/{id}', [\App\Http\Controllers\CampaignController::class, 'storeKomentar'])->name('campaign.storeKomentar');
 });
 
 // Handle 404

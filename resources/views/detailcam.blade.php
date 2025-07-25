@@ -258,7 +258,7 @@
         <div class="mx-14 mt-8 mb-6 border border-gray-200 rounded-xl p-4">
             {{-- Form Komentar --}}
             @if(auth()->check())
-                <form id="commentForm" class="flex items-center gap-3 mb-4" method="POST" action="{{ route('komentar.store', $campaign->id) }}">
+                <form id="commentForm" class="flex items-center gap-3 mb-4" method="POST" action="{{ url('/campaign/' . $campaign->id) }}">
                     @csrf
                     <img src="{{ filter_var(auth()->user()->fotoProfil, FILTER_VALIDATE_URL) ? auth()->user()->fotoProfil : asset('storage/' . auth()->user()->fotoProfil) }}" class="w-10 h-10 rounded-full">
                     <div class="flex-1">

@@ -200,4 +200,22 @@ class CampaignController extends Controller
         DB::table('campaign_ditandai')->where('akun_id', Auth::id())->where('campaign_id', $id)->delete();
         return back();
     }
+
+    /**
+     * Menyimpan komentar baru ke database.
+     */
+    public function storeKomentar(Request $request, $id)
+    {
+        $request->validate([
+            'komentar' => 'required|string|max:280',
+        ]);
+        \App\Models\Komentar::create([
+            'akun_id' => auth()->id(),
+            'campaign_id' => $id,
+            'komentar' => $request->komentar,
+            'waktu' => now(),
+            'updated_at' => now(),
+        ]);
+        return redirect()->back()->with('success', 'Komentar berhasil dikirim!');
+    }
 }
