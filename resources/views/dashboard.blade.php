@@ -182,7 +182,31 @@
                 </div>
             </section>
         @endif
-    </main>
+
+        {{-- Video Edukasi --}}
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold text-[#74A740] mb-4">Video Edukasi</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/v21ggfzMtGk" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/bNtjgbz_7QM" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/of-aGwSrsj0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/8wAQ2wsTp-8" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/dOLpfMGHU68" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="rounded-lg w-full h-56 md:h-64" src="https://www.youtube.com/embed/Vb48L3o78-o" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
 
  <!-- Footer -->
     <footer class="py-8 px-4 bg-light border-t border-gray-200">
