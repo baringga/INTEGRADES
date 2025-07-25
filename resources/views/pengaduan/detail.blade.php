@@ -1,4 +1,4 @@
-{{-- filepath: resources/views/pengaduan/detail.blade.php --}}
+{{-- filepath:  sources/views/pengaduan/detail.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -18,17 +18,6 @@
         <div class="mb-4">
             <strong class="text-[#6B3F22]">Lokasi Desa:</strong>
             <div class="text-gray-700">{{ $pengaduan->lokasi }}</div>
-            @if($pengaduan->latitude && $pengaduan->longitude)
-                <div id="map" style="height: 200px; border-radius: 0.75rem; margin-top: 0.5rem;"></div>
-                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var map = L.map('map').setView([{{ $pengaduan->latitude }}, {{ $pengaduan->longitude }}], 15);
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
-                        L.marker([{{ $pengaduan->latitude }}, {{ $pengaduan->longitude }}]).addTo(map);
-                    });
-                </script>
-            @endif
         </div>
         <div class="mb-4">
             <strong class="text-[#6B3F22]">Waktu Kejadian:</strong>

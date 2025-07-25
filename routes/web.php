@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     // Rute Pengaduan
     Route::get('/pengaduan/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
     Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+    Route::get('/pengaduan/{id}', [\App\Http\Controllers\PengaduanController::class, 'show'])->name('pengaduan.show');
+    Route::get('/pengaduan', [\App\Http\Controllers\PengaduanController::class, 'index'])->name('pengaduan.index');
 
     // Rute Campaign
     Route::get('/campaign/tambah', [CampaignController::class, 'create'])->name('campaign.tambah');

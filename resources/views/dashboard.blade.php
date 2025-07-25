@@ -105,80 +105,32 @@
                     <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-4" role="alert">{{ session('success') }}</div>
                 @endif
                 <div class="space-y-4">
-                    @forelse($semuaPengaduan as $pengaduan)
-                        <div class="bg-white p-5 rounded-lg border border-gray-200 transition hover:shadow-md">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    @if($pengaduan->status == 'selesai')
-                                        <p class="text-xs text-white bg-green-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Selesai</p>
-                                    @elseif($pengaduan->status == 'diproses')
-                                        <p class="text-xs text-white bg-blue-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Diproses</p>
-                                    @else
-                                        <p class="text-xs text-white bg-yellow-500 font-bold inline-block px-2 py-0.5 rounded-full mb-2">Dilaporkan</p>
-                                    @endif
-                                    <h1 class="font-bold text-xl text-gray-1000 break-words overflow-hidden whitespace-pre-line">{{ $pengaduan->judul }}</h1>
-                                    <p class="text-gray-600 mt-3 text-lg break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Isi Pengaduan:</span> {{ $pengaduan->isi_pengaduan }}</p>
-                                </div>
-                                <span class="text-sm text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</span>
+                    @foreach($semuaPengaduan->take(4) as $pengaduan)
+                        <div class="bg-white p-5 rounded-lg border border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h2 class="font-bold text-lg text-[#74A740]">{{ $pengaduan->judul }}</h2>
+                                <p class="text-sm text-gray-500"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
+                                <p class="text-xs text-gray-400">{{ $pengaduan->created_at->format('d M Y H:i') }}</p>
+                                <p class="text-gray-600 mt-2 line-clamp-2">{{ \Illuminate\Support\Str::limit($pengaduan->isi_pengaduan, 80) }}</p>
                             </div>
-                            @if(!empty($pengaduan->foto))
-                                <div style="width:100%; text-align:center; margin: 1rem 0;">
-                                    <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan"
-                                         style="display:inline-block; max-width:500px; width:100%; height:auto; border-radius:16px; box-shadow:0 2px 8px #ccc;">
-                                </div>
-                            @endif
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2 mb-2">
-                                <div class="bg-gray-50 border rounded-lg p-3">
-                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Kelebihan Desa:</span> {{ $pengaduan->kelebihan_desa }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Kekurangan Desa:</span> {{ $pengaduan->kekurangan_desa }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500 break-words overflow-hidden whitespace-pre-line"><span class="font-semibold">Saran Aksi / Harapan:</span> {{ $pengaduan->saran_aksi }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Pelapor:</span> {{ $pengaduan->akun->namaPengguna }}</p>
-                                </div>
-                                <div class="bg-gray-50 border rounded-sm p-3">
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Kategori Laporan:</span> {{ $pengaduan->kategori_laporan }}</p>
-                                </div>
+                            <div class="mt-3 md:mt-0 md:ml-6 flex flex-col items-end">
+                                <a href="{{ route('pengaduan.show', $pengaduan->id) }}" class="bg-[#74A740] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a507834] transition">
+                                    Lihat Detail
+                                </a>
                             </div>
                         </div>
-                    @empty
+                    @endforeach
+                    @if($semuaPengaduan->isEmpty())
                         <div class="text-center py-10 bg-white border rounded-lg">
-                            <p class="text-gray-500">Belum ada pengaduan yang dibuat.</p>
+                            <p class="text-gray-500">Belum ada laporan masyarakat.</p>
                         </div>
-                    @endforelse
+                    @endif
                 </div>
-                @if($filterMenu == 'laporan_warga' || !$filterMenu)
-                    <div class="mt-6">
-                        {{ $semuaPengaduan->links() }}
-                    </div>
-                @endif
-                @if($filterMenu == 'laporan_anda')
-                    <div class="mt-6">
-                        {{ $laporanAnda->links() }}
-                    </div>
-                @endif
-                @if($filterMenu == 'campaign_diikuti')
-                    <div class="mt-6">
-                        {{ $campaignDiikuti->links() }}
-                    </div>
-                @endif
-                @if($filterMenu == 'campaign_dibuat')
-                    <div class="mt-6">
-                        {{ $campaignDibuat->links() }}
-                    </div>
-                @endif
-                @if($filterMenu == 'rekomendasi')
-                    <div class="mt-6">
-                        {{ $rekomendasiCampaign->links() }}
-                    </div>
-                @endif
+                <div class="mt-6 flex justify-end">
+                    <a href="{{ route('pengaduan.index') }}" class="bg-[#E6F4EA] border border-[#74A740] text-[#74A740] px-6 py-2 rounded-lg font-semibold hover:bg-[#d0f0d6] transition">
+                        Lihat Semua
+                    </a>
+                </div>
             </div>
         </section>
 

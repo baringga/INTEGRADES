@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PengaduanController extends Controller
 {
-    // HAPUS FUNGSI index() DARI SINI KARENA SUDAH TIDAK DIGUNAKAN
+    // Menampilkan daftar pengaduan
+    public function index()
+    {
+        $pengaduan = \App\Models\Pengaduan::with('akun')->orderBy('created_at', 'desc')->paginate(10);
+        return view('pengaduan.index', compact('pengaduan'));
+    }
 
     // Menampilkan form untuk membuat pengaduan baru
     public function create()
@@ -53,5 +58,12 @@ class PengaduanController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Pengaduan berhasil dikirim!');
+    }
+
+    // Menampilkan detail pengaduan
+    public function show($id)
+    {
+        $pengaduan = \App\Models\Pengaduan::with('akun')->findOrFail($id);
+        return view('pengaduan.detail', compact('pengaduan'));
     }
 }
