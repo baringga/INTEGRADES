@@ -55,7 +55,7 @@
 
         {{-- Riwayat Pengaduan --}}
         <div>
-            <h2 class="text-xl font-bold text-center mb-4">Riwayat Pengaduan Saya</h2>
+            <h2 class="text-xl font-bold text-center mb-4">Riwayat Laporan Saya</h2>
             <div class="space-y-4">
                 @forelse($pengaduanSaya as $pengaduan)
                     <div class="bg-white p-4 rounded-lg border border-gray-200">

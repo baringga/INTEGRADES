@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/campaigns/diikuti', [DashboardController::class, 'campaignFollowed'])->name('campaign.followed');
     Route::get('/campaigns/dibuat', [DashboardController::class, 'campaignCreated'])->name('campaign.created');
     Route::get('/campaigns/rekomendasi', [DashboardController::class, 'allRekomendasi'])->name('campaign.recommendations');
+    Route::get('/campaign/semua', [CampaignController::class, 'listAll'])->name('campaign.all');
 
     // Fitur Lainnya
     Route::get('/search', [SearchController::class, 'search'])->name('search');

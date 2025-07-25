@@ -147,4 +147,20 @@ class DashboardController extends Controller
             'emptyMessage' => 'Saat ini tidak ada rekomendasi campaign.'
         ]);
     }
+
+    /**
+     * Menampilkan semua campaign.
+     */
+    public function allCampaigns()
+    {
+        $campaigns = \App\Models\Campaign::with('coverImage', 'partisipanCampaigns')
+            ->orderBy('waktu', 'desc')
+            ->paginate(9);
+
+        return view('sectioncamp1', [
+            'title' => 'Semua Campaign',
+            'campaigns' => $campaigns,
+            'emptyMessage' => 'Tidak ada campaign untuk ditampilkan'
+        ]);
+    }
 }

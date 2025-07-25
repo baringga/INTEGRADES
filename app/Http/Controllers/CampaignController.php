@@ -218,4 +218,20 @@ class CampaignController extends Controller
         ]);
         return redirect()->back()->with('success', 'Komentar berhasil dikirim!');
     }
+
+    /**
+     * Menampilkan semua campaign.
+     */
+    public function listAll()
+    {
+        $campaigns = \App\Models\Campaign::with('coverImage', 'partisipanCampaigns')
+            ->orderBy('waktu', 'desc')
+            ->paginate(9);
+
+        return view('all-campaigns', [
+            'title' => 'Semua Campaign',
+            'campaigns' => $campaigns,
+            'emptyMessage' => 'Tidak ada campaign untuk ditampilkan'
+        ]);
+    }
 }

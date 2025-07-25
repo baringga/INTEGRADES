@@ -15,16 +15,12 @@ class ProfilController extends Controller
     public function show()
     {
         $user = auth()->user();
-
-        // Campaign yang dibuat user
-        $campaigns = \App\Models\Campaign::where('akun_id', $user->id)->latest()->get();
-
-        // Campaign yang diikuti user (misal relasi many-to-many dengan tabel pivot 'partisipan')
         $campaignsDiikuti = $user->campaignsDiikuti()->latest()->get();
-        // Jika tidak ada relasi, sesuaikan query dengan struktur tabel partisipan Anda
+        $campaigns = $user->campaigns()->latest()->get(); // campaign yang dibuat user
+        $pengaduanSaya = $user->pengaduan()->latest()->get();
+        $komentarList = $user->komentar()->latest()->get();
 
-        // Kirim ke view
-        return view('profilvolunteer', compact('user', 'campaigns', 'campaignsDiikuti'));
+        return view('profilvolunteer', compact('user', 'campaignsDiikuti', 'campaigns', 'pengaduanSaya', 'komentarList'));
     }
 
     /**

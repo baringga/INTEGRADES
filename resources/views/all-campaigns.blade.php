@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Semua Campaign' }}</title>
@@ -14,7 +14,7 @@
                 {{ strtoupper($title) ?? 'SEMUA CAMPAIGN' }}
             </h1>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
             @forelse($campaigns as $campaign)
                 @if(!is_null($campaign->nama))
                     @include('components.campaign-item', ['campaign' => $campaign])
@@ -25,7 +25,6 @@
                 </div>
             @endforelse
         </div>
-
         <div class="mt-8">
             {{ $campaigns->links() }}
         </div>

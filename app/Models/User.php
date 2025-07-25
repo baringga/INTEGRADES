@@ -78,6 +78,6 @@ class User extends Authenticatable
      */
     public function campaignsDiikuti()
     {
-        return $this->belongsToMany(\App\Models\Campaign::class, 'partisipan', 'akun_id', 'campaign_id');
+        return $this->belongsToMany(Campaign::class, 'tb_gabung_campaign', 'id_volunteer', 'id_campaign');
     }
 }

@@ -7,6 +7,9 @@
     <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body>
-    @yield('content')
+    @include('partials.navbar')
+    <main>
+        @yield('content')
+    </main>
 </body>
 </html>

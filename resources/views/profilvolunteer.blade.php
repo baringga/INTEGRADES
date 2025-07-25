@@ -70,7 +70,7 @@
             </div>
             <div class="bg-white rounded-xl p-4 text-center shadow">
                 <div class="text-2xl font-bold text-[#74A740]">{{ $pengaduanSaya->count() }}</div>
-                <div class="text-gray-600 text-sm">Pengaduan</div>
+                <div class="text-gray-600 text-sm">Laporan</div>
             </div>
             <div class="bg-white rounded-xl p-4 text-center shadow">
                 <div class="text-2xl font-bold text-[#74A740]">{{ $komentarList->count() }}</div>
@@ -88,19 +88,20 @@
                     Campaign Dibuat
                 </button>
                 <button @click="tab = 'pengaduan_saya'" class="relative pb-3 font-medium" :class="tab === 'pengaduan_saya' ? 'text-gray-900 border-b-2 border-[#74A740]' : 'text-gray-500 hover:text-gray-900'">
-                    Pengaduan Saya
+                    Laporan Saya
                 </button>
                 <button @click="tab = 'komentar'" class="relative pb-3 font-medium" :class="tab === 'komentar' ? 'text-gray-900 border-b-2 border-[#74A740]' : 'text-gray-500 hover:text-gray-900'">
-                    Komentar
+                    Komentar Saya
                 </button>
             </div>
 
             {{-- Isi Tab --}}
             <div class="mt-4">
                 {{-- Tab Campaign Diikuti --}}
-                <div x-show="tab === 'campaign_diikuti'">
+                <div x-show="tab === 'campaign_diikuti'" x-cloak>
+                    <h2 class="text-lg font-bold mb-4">Campaign yang Kamu Ikuti</h2>
                     @forelse($campaignsDiikuti as $campaign)
-                        <div class="mb-6"> {{-- Tambahkan margin bawah di sini --}}
+                        <div class="relative mb-6">
                             @include('components.campaignprofile-item', ['campaign' => $campaign])
                         </div>
                     @empty
@@ -131,14 +132,45 @@
                 </div>
 
                 <div x-show="tab === 'pengaduan_saya'">
-                    <h2 class="text-lg font-bold mb-4">Pengaduan Saya</h2>
+                    <h2 class="text-lg font-bold mb-4">Laporan Saya</h2>
                     @forelse($pengaduanSaya as $pengaduan)
-                        <div class="bg-white p-4 rounded-lg border mb-2">
-                            <div class="font-semibold">{{ $pengaduan->judul }}</div>
-                            <div class="text-sm text-gray-600">{{ $pengaduan->isi }}</div>
+                        <div class="bg-white rounded-lg border overflow-hidden mb-6 shadow flex flex-col">
+                            @if($pengaduan->foto)
+                                <img src="{{ asset('storage/' . $pengaduan->foto) }}" alt="Foto Pengaduan" class="w-full h-48 object-cover">
+                            @endif
+                            <div class="flex-1 p-4 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-bold text-lg break-words text-[#74A740] flex-1 min-w-0">{{ $pengaduan->judul }}</h3>
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold shadow
+                                            @if($pengaduan->status == 'selesai')
+                                                bg-green-100 text-green-700 border border-green-400
+                                            @elseif($pengaduan->status == 'proses' || $pengaduan->status == 'diproses')
+                                                bg-yellow-100 text-yellow-700 border border-yellow-400
+                                            @elseif($pengaduan->status == 'ditolak')
+                                                bg-red-100 text-red-700 border border-red-400
+                                            @else
+                                                bg-gray-100 text-gray-700 border border-gray-400
+                                            @endif
+                                        ">
+                                            {{ ucfirst($pengaduan->status ?? 'belum diproses') }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mb-1"><span class="font-semibold">Lokasi:</span> {{ $pengaduan->lokasi }}</p>
+                                    <p class="text-xs text-gray-400 mb-2">{{ $pengaduan->created_at->format('d M Y H:i') }}</p>
+                                    <p class="text-gray-600 break-words">{{ \Illuminate\Support\Str::limit($pengaduan->isi, 80) }}</p>
+                                </div>
+                                <div class="mt-4 flex justify-end">
+                                    <a href="{{ route('pengaduan.show', $pengaduan->id) }}" class="bg-[#74A740] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-[#a507834] transition">
+                                        Lihat Detail
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     @empty
-                        <div class="text-gray-500">Belum ada pengaduan yang kamu buat.</div>
+                        <div class="bg-white p-4 rounded-lg border text-center text-gray-500">
+                            <p>Belum ada pengaduan yang kamu buat.</p>
+                        </div>
                     @endforelse
                 </div>
                 <div x-show="tab === 'komentar'">
