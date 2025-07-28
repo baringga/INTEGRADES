@@ -7,8 +7,9 @@
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="pt-5 pb-0" style="background-color: #FDFEFE;">
-    @include('components.navbar')
+<body class="pt-0 pb-0" style="background-color: #FDFEFE;">
+    @include('partials.navbar')
+    <main class="pt-0">
 
     <main class="max-w-4xl mx-auto px-6 py-12" x-data="{ showEdit: false }">
         {{-- Notifikasi --}}
@@ -119,5 +120,6 @@
         </span>
     </div>
 </footer>
+</main>
 </body>
 </html>

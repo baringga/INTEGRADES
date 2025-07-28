@@ -204,11 +204,9 @@
     }
     </style>
 </head>
-<body class="relative bg-light animate-fade-in pt-5 pb-0">
-    <div class="animated-gradient-bg"></div>
-    @include('components.navbar')
-    <!-- ...konten lain... -->
-
+<body class="bg-gray-50">
+    @include('partials.navbar')
+    <main class="pt-0">
     <!-- Hero Section -->
     <section class="relative z-10"> <!-- Hapus padding atas yang berlebihan -->
           <!-- OUTER SHADOW -->
@@ -234,7 +232,7 @@
                     Cara termudah untuk aksi <br>peduli desa nyata.</br>
                 </h1>
                 <p class="text-lg md:text-xl mb-8 max-w-2xl opacity-90">
-                    Temukan dan ikuti campaign peduli desa di area kamu. Kontribusi sesuai dengan kemuampuan kamu untuk desa yang lebih sejahtra
+                    Temukan dan ikuti campaign peduli desa di area kamu. Kontribusi sesuai dengan kemuapan kamu untuk desa yang lebih sejahtra
                     dan masyarakat yang lebih baik.
                 </p>
                 <a href="{{ route('register') }}">

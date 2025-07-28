@@ -6,9 +6,9 @@
     <title>Dashboard</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-50 pt-5 pb-0">
-    @include('components.navbar')
-
+<body class="bg-gray-50">
+    @include('partials.navbar')
+    <main class="pt-0">
     {{-- Notifikasi berhasil mendaftar campaign --}}
     @if(session('success'))
         <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-0 max-w-7xl mx-auto mt-4 w-full text-left" role="alert">
@@ -26,9 +26,9 @@
                 name="q"
                 value="{{ request('q') }}"
                 placeholder="Tulis kata kunci untuk mencari..."
-                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] bg-gray-100 h-12"
+                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] bg-white h-12"
             />
-            <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] h-12 bg-gray-100 font-bold text-center">
+            <select name="filter_menu" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#74A740] text-[#74A740] h-12 bg-white font-bold text-center">
                 <option value="" class="text-[#74A740] text-center">Semua Menu</option>
                 <option value="laporan_warga" class="text-[#74A740] text-center" {{ request('filter_menu') == 'laporan_warga' ? 'selected' : '' }}>Laporan Masyarakat</option>
                 <option value="laporan_anda" class="text-[#74A740] text-center" {{ request('filter_menu') == 'laporan_anda' ? 'selected' : '' }}>Laporan Anda</option>
@@ -45,7 +45,7 @@
         @if(Auth::user()->jenis_akun_id == 1)
             {{-- 1. Rekomendasi Campaign --}}
             <section class="mb-8">
-                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Rekomendasi Campaign</h1>
                     </div>
@@ -53,7 +53,7 @@
                         @forelse($rekomendasiCampaign as $campaign)
                             @include('components.campaign-item', ['campaign' => $campaign])
                         @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Saat ini tidak ada rekomendasi campaign.</p></div>
+                            <div class="col-span-3 text-center py-5 bg-white border border-[#74A740] rounded-lg"><p class="text-gray-500">Saat ini tidak ada rekomendasi campaign.</p></div>
                         @endforelse
                     </div>
                     <div class="mt-6 flex justify-end">
@@ -66,7 +66,7 @@
 
             {{-- 2. Campaign yang Anda Buat --}}
             <section class="mb-8">
-                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Buat</h1>
                     </div>
@@ -74,7 +74,7 @@
                         @forelse($campaignDibuat as $campaign)
                             @include('components.campaign-item', ['campaign' => $campaign])
                         @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
+                            <div class="col-span-3 text-center py-5 bg-white border border-[#74A740] rounded-lg"><p class="text-gray-500">Anda belum membuat campaign.</p></div>
                         @endforelse
                     </div>
                 </div>
@@ -82,7 +82,7 @@
 
             {{-- 3. Campaign yang Anda Ikuti --}}
             <section class="mb-8">
-                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Campaign yang Anda Ikuti</h1>
                     </div>
@@ -90,7 +90,7 @@
                         @forelse($campaignDiikuti as $campaign)
                             @include('components.campaign-item', ['campaign' => $campaign])
                         @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum mengikuti campaign apapun.</p></div>
+                            <div class="col-span-3 text-center py-5 bg-white border border-[#74A740] rounded-lg"><p class="text-gray-500">Anda belum mengikuti campaign apapun.</p></div>
                         @endforelse
                     </div>
                     <div class="mt-6">
@@ -102,7 +102,7 @@
 
         {{-- Laporan Masyarakat untuk semua user --}}
         <section class="mb-8">
-            <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+            <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-3xl font-bold text-[#74A740]">Laporan Masyarakat</h1>
                     @auth
@@ -147,7 +147,7 @@
                         </div>
                     @endforeach
                     @if($semuaPengaduan->isEmpty())
-                        <div class="text-center py-10 bg-white border rounded-lg">
+                        <div class="text-center py-10 bg-white border border-[#74A740] rounded-lg">
                             <p class="text-gray-500">Belum ada laporan masyarakat.</p>
                         </div>
                     @endif
@@ -163,7 +163,7 @@
         {{-- Laporan Anda untuk user 1 dan 2 --}}
         @if(Auth::user()->jenis_akun_id == 1 || Auth::user()->jenis_akun_id == 2)
             <section class="mb-8">
-                <div class="bg-[#00000] border-2 border-[#74A740] rounded-xl p-6 shadow">
+                <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
                     <div class="flex justify-between items-center mb-6">
                         <h1 class="text-3xl font-bold text-[#74A740]">Laporan Anda</h1>
                     </div>
@@ -176,7 +176,7 @@
                                <span class="text-xs text-gray-400 mt-2 block">{{ $laporan->created_at->diffForHumans() }}</span>
                             </div>
                         @empty
-                            <div class="col-span-3 text-center py-5 bg-white border rounded-lg"><p class="text-gray-500">Anda belum membuat laporan.</p></div>
+                            <div class="col-span-3 text-center py-5 bg-white border border-[#74A740] rounded-lg"><p class="text-gray-500">Anda belum membuat laporan.</p></div>
                         @endforelse
                     </div>
                 </div>
@@ -184,7 +184,7 @@
         @endif
 
         {{-- Video Edukasi --}}
-        <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <div class="bg-white border-2 border-[#74A740] rounded-xl p-6 shadow">
             <h2 class="text-2xl font-bold text-[#74A740] mb-4">Video Edukasi</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="aspect-w-16 aspect-h-9">
@@ -225,5 +225,6 @@
         </span>
     </div>
 </footer>
+</main>
 </body>
 </html>

@@ -8,8 +8,9 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body class="pt-5 pb-0" style="background-color: #FDFEFE;">
-    @include('components.navbar')
+<body class="" style="background-color: #FDFEFE;">
+    @include('partials.navbar')
+    <main class="pt-0">
 
     <main class="max-w-4xl mx-auto px-6 py-12" x-data="{ showEdit: false, tab: 'campaign_diikuti' }">
         {{-- Notifikasi --}}
@@ -259,5 +260,6 @@
         </span>
     </div>
 </footer>
+</main>
 </body>
 </html>
